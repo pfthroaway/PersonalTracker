@@ -1,1 +1,3 @@
-# PersonalTracker
+# Personal Tracker
+
+## This application merges my Finances, Fuel Tracker, Media Tracker, and Contact Lens Tracker applications into one application where each individual user can keep track of their information separately from other users. Each user is assigned a user ID, and that ID distinguishes which database should be accessed for that user. Each user can now track their finances, vehicles, movies, TV shows, books, music, and contact lenses in one consolidated place. 
