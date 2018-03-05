@@ -24,10 +24,10 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
                 if (await AppState.RenameAccount(_selectedAccount, TxtAccountName.Text))
                     ClosePage();
                 else
-                    AppState.DisplayNotification("Unable to process account name change.", "Finances");
+                    AppState.DisplayNotification("Unable to process account name change.", "Personal Tracker");
             }
             else
-                AppState.DisplayNotification("The account name can't be changed to what it already is.", "Finances");
+                AppState.DisplayNotification("The account name can't be changed to what it already is.", "Personal Tracker");
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => ClosePage();

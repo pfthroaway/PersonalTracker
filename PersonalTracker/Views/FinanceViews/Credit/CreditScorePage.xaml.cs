@@ -26,7 +26,7 @@ namespace PersonalTracker.Views.FinanceViews.Credit
         private async void BtnDeleteCreditScore_Click(object sender, RoutedEventArgs e)
         {
             if (AppState.YesNoNotification(
-                "Are you sure you want to delete this credit score? This action cannot be undone.", "Finances"))
+                "Are you sure you want to delete this credit score? This action cannot be undone.", "Personal Tracker"))
             {
                 await AppState.DeleteCreditScore(_selectedScore);
                 RefreshItemsSource();

@@ -63,7 +63,7 @@ namespace PersonalTracker.Models
             }
         }
 
-        /// <summary>The <see cref="User"/>'s <see cref="Finances"/>.</summary>
+        /// <summary>The <see cref="User"/>'s <see cref="Personal Tracker"/>.</summary>
         public Finances Finances
         {
             get => _finances;
@@ -249,7 +249,7 @@ namespace PersonalTracker.Models
         /// <param name="userID">The <see cref="User"/>'s ID.</param>
         /// <param name="username">The <see cref="User"/>'s login name.</param>
         /// <param name="password">The <see cref="User"/>'s hashed PBKDF2 password.</param>
-        /// <param name="finances">The <see cref="User"/>'s <see cref="Finances"</param>
+        /// <param name="finances">The <see cref="User"/>'s <see cref="Personal Tracker"</param>
         /// <param name="vehicles">The <see cref="User"/>'s <see cref="Vehicle"/>s.</param>
         /// <param name="lenses">The <see cref="User"/>'s <see cref="Contact"/> lenses.</param>
         /// <param name="media">The <see cref="User"/>'s <see cref="Media"/>.</param>

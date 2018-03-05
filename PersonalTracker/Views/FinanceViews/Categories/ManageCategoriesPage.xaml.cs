@@ -85,7 +85,7 @@ namespace PersonalTracker.Views.FinanceViews.Categories
 
         private async void BtnRemoveMajor_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this category will have their Major and Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name)} transactions. Are you sure you want to delete it and all related minor categories?", "Finances"))
+            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this category will have their Major and Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name)} transactions. Are you sure you want to delete it and all related minor categories?", "Personal Tracker"))
                 if (await AppState.RemoveMajorCategory(_selectedMajorCategory))
                     RefreshItemsSource();
         }
@@ -96,7 +96,7 @@ namespace PersonalTracker.Views.FinanceViews.Categories
 
         private async void BtnRemoveMinor_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this minor category will have their Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name && transaction.MinorCategory == _selectedMinorCategory)} transactions. Are you sure you want to delete it?", "Finances"))
+            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this minor category will have their Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name && transaction.MinorCategory == _selectedMinorCategory)} transactions. Are you sure you want to delete it?", "Personal Tracker"))
                 if (await AppState.RemoveMinorCategory(_selectedMajorCategory, _selectedMinorCategory))
                     RefreshItemsSource();
         }

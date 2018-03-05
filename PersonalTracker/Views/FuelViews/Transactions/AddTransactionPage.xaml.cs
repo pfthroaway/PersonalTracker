@@ -76,13 +76,13 @@ namespace PersonalTracker.Views.FuelViews.Transactions
             if (await AddTransaction())
                 ClosePage();
             else
-                AppState.DisplayNotification("Unable to process transaction.", "Fuel Tracker");
+                AppState.DisplayNotification("Unable to process transaction.", "Personal Tracker");
         }
 
         private async void BtnSaveAndDuplicate_Click(object sender, RoutedEventArgs e)
         {
             if (!await AddTransaction())
-                AppState.DisplayNotification("Unable to process transaction.", "Fuel Tracker");
+                AppState.DisplayNotification("Unable to process transaction.", "Personal Tracker");
         }
 
         private async void BtnSaveAndNew_Click(object sender, RoutedEventArgs e)
@@ -93,7 +93,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
                 TxtStore.Focus();
             }
             else
-                AppState.DisplayNotification("Unable to process transaction.", "Fuel Tracker");
+                AppState.DisplayNotification("Unable to process transaction.", "Personal Tracker");
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e) => Reset();

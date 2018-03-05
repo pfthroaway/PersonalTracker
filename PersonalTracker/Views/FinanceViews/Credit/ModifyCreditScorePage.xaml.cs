@@ -39,7 +39,7 @@ namespace PersonalTracker.Views.FinanceViews.Credit
                 EnumHelper.Parse<Providers>(CmbProvider.SelectedItem.ToString()), ChkFICO?.IsChecked ?? false)))
                 return true;
 
-            AppState.DisplayNotification("Unable to modify credit score.", "Finances");
+            AppState.DisplayNotification("Unable to modify credit score.", "Personal Tracker");
             return false;
         }
 

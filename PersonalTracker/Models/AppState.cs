@@ -22,9 +22,14 @@ namespace PersonalTracker.Models
     {
         #region User
 
+        /// <summary>The currently logged in <see cref="User"/>.</summary>
         internal static User CurrentUser;
 
-        internal static string CurrentUserDatabaseName, CurrentUserConnection;
+        /// <summary>The current <see cref="User"/>'s database name.</summary>
+        internal static string CurrentUserDatabaseName;
+
+        /// <summary>The current <see cref="User"/>'s database connection string.</summary>
+        internal static string CurrentUserConnection;
 
         #endregion User
 
@@ -96,6 +101,8 @@ namespace PersonalTracker.Models
         /// <returns>Next index in the User table.</returns>
         public static Task<int> GetNextUserIndex() => DatabaseInteraction.GetNextUserIndex();
 
+        /// <summary>Loads the current <see cref="User"/>'s infromation.</summary>
+        /// <returns></returns>
         public static async Task LoadCurrentUser()
         {
             DatabaseInteraction.VerifyUserDatabaseIntegrity();
@@ -348,7 +355,7 @@ namespace PersonalTracker.Models
                 success = true;
             }
             else
-                DisplayNotification("Unable to process transaction.", "Finances");
+                DisplayNotification("Unable to process transaction.", "Personal Tracker");
 
             return success;
         }
@@ -511,14 +518,14 @@ namespace PersonalTracker.Models
         public static async Task<bool> DeleteSeries(Series deleteSeries)
         {
             if (YesNoNotification($"Are you sure you want to delete {deleteSeries.Name}? This action cannot be undone.",
-              "Media Tracker"))
+              "Personal Tracker"))
             {
                 if (await DatabaseInteraction.DeleteSeries(deleteSeries))
                 {
                     CurrentUser.Media.DeleteSeries(deleteSeries);
                     return true;
                 }
-                DisplayNotification($"Unable to delete {deleteSeries.Name}.", "Media Tracker");
+                DisplayNotification($"Unable to delete {deleteSeries.Name}.", "Personal Tracker");
             }
             return false;
         }
@@ -548,7 +555,7 @@ namespace PersonalTracker.Models
                 CurrentUser.Media.ModifySeries(oldSeries, newSeries);
                 return true;
             }
-            DisplayNotification("Unable to modify television series.", "Media Tracker");
+            DisplayNotification("Unable to modify television series.", "Personal Tracker");
             return false;
         }
 
@@ -562,7 +569,7 @@ namespace PersonalTracker.Models
                 CurrentUser.Media.AddSeries(newSeries);
                 return true;
             }
-            DisplayNotification("Unable to add new television series.", "Media Tracker");
+            DisplayNotification("Unable to add new television series.", "Personal Tracker");
             return false;
         }
 

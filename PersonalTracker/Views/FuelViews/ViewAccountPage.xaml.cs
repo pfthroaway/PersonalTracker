@@ -61,7 +61,7 @@ namespace PersonalTracker.Views.FuelViews
             if (_selectedVehicle.Transactions.Count > 0)
                 message += $" You will also be deleting its {_selectedVehicle.Transactions.Count} fuel-ups.";
             message += " This action cannot be undone.";
-            if (AppState.YesNoNotification(message, "Fuel Tracker"))
+            if (AppState.YesNoNotification(message, "Personal Tracker"))
                 if (await AppState.DeleteVehicle(_selectedVehicle))
                 {
                     AppState.CurrentUser.RemoveVehicle(_selectedVehicle);

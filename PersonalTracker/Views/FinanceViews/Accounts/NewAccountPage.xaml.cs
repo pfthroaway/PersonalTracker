@@ -34,11 +34,11 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
                     if (await AppState.AddFinancialTransaction(newTransaction, newAccount))
                         ClosePage();
                     else
-                        AppState.DisplayNotification("Unable to process new account.", "Finances");
+                        AppState.DisplayNotification("Unable to process new account.", "Personal Tracker");
                 }
             }
             else
-                AppState.DisplayNotification("That account name already exists.", "Finances");
+                AppState.DisplayNotification("That account name already exists.", "Personal Tracker");
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => ClosePage();

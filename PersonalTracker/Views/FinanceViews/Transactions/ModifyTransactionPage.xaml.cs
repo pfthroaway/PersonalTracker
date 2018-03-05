@@ -71,10 +71,10 @@ namespace PersonalTracker.Views.FinanceViews.Transactions
                 if (await AppState.ModifyFinancialTransaction(newTransaction, _modifyTransaction))
                     ClosePage();
                 else
-                    AppState.DisplayNotification("Unable to modify transaction.", "Finances");
+                    AppState.DisplayNotification("Unable to modify transaction.", "Personal Tracker");
             }
             else
-                AppState.DisplayNotification("This transaction has not been modified.", "Finances");
+                AppState.DisplayNotification("This transaction has not been modified.", "Personal Tracker");
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => ClosePage();

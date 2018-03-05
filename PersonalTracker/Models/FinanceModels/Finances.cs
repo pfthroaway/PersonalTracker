@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace PersonalTracker.Models.FinanceModels
 {
+    /// <summary>Represents a collection of a <see cref="User"/>'s financial <see cref="Account"/>s and <see cref="FinancialTransaction"/>s.</summary>
     internal class Finances : INotifyPropertyChanged
     {
         private List<Account> _allAccounts = new List<Account>();

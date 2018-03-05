@@ -98,7 +98,7 @@ namespace PersonalTracker.Views.FinanceViews.Search
                 AppState.Navigate(searchResultsWindow);
             }
             else
-                AppState.DisplayNotification("No results found matching your search criteria.", "Finances");
+                AppState.DisplayNotification("No results found matching your search criteria.", "Personal Tracker");
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e) => Reset();

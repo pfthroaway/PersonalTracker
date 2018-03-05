@@ -46,7 +46,7 @@ namespace PersonalTracker.Views.FinanceViews.Credit
                 EnumHelper.Parse<Providers>(CmbProvider.SelectedItem.ToString()), ChkFICO?.IsChecked ?? false)))
                 return true;
 
-            AppState.DisplayNotification("Unable to add credit score.", "Finances");
+            AppState.DisplayNotification("Unable to add credit score.", "Personal Tracker");
             return false;
         }
 

@@ -23,7 +23,7 @@ namespace PersonalTracker.Models.LensesModels
             }
         }
 
-        /// <summary>Date on which the contact was inserted.</summary>
+        /// <summary>Date on which the contact needs to be replaced.</summary>
         public DateTime ReplacementDate
         {
             get => _replacementDate;
@@ -53,7 +53,7 @@ namespace PersonalTracker.Models.LensesModels
         /// <summary>Date on which the contact was inserted, formatted.</summary>
         public string DateToString => Date.ToString("yyyy/MM/dd");
 
-        /// <summary>Date on which the contact was inserted, formatted.</summary>
+        /// <summary>Date on which the contact needs to be replaced, formatted.</summary>
         public string ReplacementDateToString => ReplacementDate.ToString("yyyy/MM/dd");
 
         /// <summary>Side on which the contact was inserted, formatted.</summary>

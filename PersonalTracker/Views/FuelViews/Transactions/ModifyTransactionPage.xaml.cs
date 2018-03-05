@@ -54,7 +54,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
             if (await ModifyTransaction())
                 ClosePage();
             else
-                AppState.DisplayNotification("Unable to modify transaction.", "Fuel Tracker");
+                AppState.DisplayNotification("Unable to modify transaction.", "Personal Tracker");
         }
 
         private void BtnReset_Click(object sender, RoutedEventArgs e) => DisplayOriginalTransaction();

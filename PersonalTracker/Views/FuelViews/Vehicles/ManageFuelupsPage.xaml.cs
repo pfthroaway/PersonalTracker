@@ -56,7 +56,7 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
         private async void BtnDeleteTransaction_Click(object sender, RoutedEventArgs e)
         {
             if (AppState.YesNoNotification("Are you sure you want to delete this Transaction? This action cannot be undone.",
-                "Fuel Tracker"))
+                "Personal Tracker"))
                 if (await AppState.DeleteFuelTransaction(_selectedTransaction))
                 {
                     CurrentVehicle.RemoveTransaction(_selectedTransaction);

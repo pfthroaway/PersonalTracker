@@ -50,7 +50,7 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
 
         private async void BtnDeleteAccount_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.YesNoNotification("Are you sure you want to delete this account? All transactions associated with it will be lost forever!", "Finances"))
+            if (AppState.YesNoNotification("Are you sure you want to delete this account? All transactions associated with it will be lost forever!", "Personal Tracker"))
             {
                 if (await AppState.DeleteAccount(_selectedAccount))
                     ClosePage();
@@ -59,7 +59,7 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
 
         private async void BtnDeleteTransaction_Click(object sender, RoutedEventArgs e)
         {
-            if (AppState.YesNoNotification("Are you sure you want to delete this transaction? All data associated with it will be lost forever!", "Finances"))
+            if (AppState.YesNoNotification("Are you sure you want to delete this transaction? All data associated with it will be lost forever!", "Personal Tracker"))
             {
                 _selectedAccount.RemoveTransaction(_selectedTransaction);
                 if (await AppState.DeleteFinancialTransaction(_selectedTransaction, _selectedAccount))
