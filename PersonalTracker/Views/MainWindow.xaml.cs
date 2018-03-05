@@ -8,6 +8,9 @@ namespace PersonalTracker.Views
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window
     {
+        //TODO Fix comments everywhere.
+        //TODO Fix Finances implementation to be more streamlined.
+
         #region ScaleValue Depdency Property
 
         public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register("ScaleValue", typeof(double), typeof(MainWindow), new UIPropertyMetadata(1.0, new PropertyChangedCallback(OnScaleValueChanged), new CoerceValueCallback(OnCoerceScaleValue)));

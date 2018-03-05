@@ -127,6 +127,29 @@ namespace PersonalTracker.Models
         internal void AddContactLens(Contact newContact)
         {
             _lenses.Add(newContact);
+            UpdateContactLenses();
+        }
+
+        /// <summary>Modifies an existing <see cref="Contact"/> in the <see cref="User"/>'s lenses.</summary>
+        /// <param name="originalContact"><see cref="Contact"/> to be modified</param>
+        /// <param name="newContact"><see cref="Contact"/> with modifications</param>
+        internal void ModifyContactLens(Contact originalContact, Contact newContact)
+        {
+            _lenses.Replace(originalContact, newContact);
+            UpdateContactLenses();
+        }
+
+        /// <summary>Removes a <see cref="Contact"/> entry in the <see cref="User"/>'s lenses.</summary>
+        /// <param name="removeContact"><see cref="Contact"/> insertion to be added</param>
+        internal void RemoveContactLens(Contact removeContact)
+        {
+            _lenses.Remove(removeContact);
+            UpdateContactLenses();
+        }
+
+        /// <summary>Sorts and updates the <see cref="User"/>'s <see cref="Contact"/> collection.</summary>
+        private void UpdateContactLenses()
+        {
             _lenses = _lenses.OrderByDescending(contact => contact.Date).ThenBy(contact => contact.SideToString).ToList();
             OnPropertyChanged("Lenses");
         }
@@ -172,7 +195,7 @@ namespace PersonalTracker.Models
         }
 
         /// <summary>Assigns a collection of <see cref="Vehicle"/>s to a <see cref="User"/>.</summary>
-        /// <param name="lenses">Collection of <see cref="Vehicle"/>s to be assigned</param>
+        /// <param name="vehicles">Collection of <see cref="Vehicle"/>s to be assigned</param>
         internal void SetVehicles(IEnumerable<Vehicle> vehicles)
         {
             List<Vehicle> newVehicles = new List<Vehicle>();
@@ -227,8 +250,8 @@ namespace PersonalTracker.Models
         /// <param name="username">The <see cref="User"/>'s login name.</param>
         /// <param name="password">The <see cref="User"/>'s hashed PBKDF2 password.</param>
         /// <param name="finances">The <see cref="User"/>'s <see cref="Finances"</param>
-        /// <param name="fuel">The <see cref="User"/>'s <see cref="Fuel"/>.</param>
-        /// <param name="lenses">The <see cref="User"/>'s <see cref="ContactLenses"/>.</param>
+        /// <param name="vehicles">The <see cref="User"/>'s <see cref="Vehicle"/>s.</param>
+        /// <param name="lenses">The <see cref="User"/>'s <see cref="Contact"/> lenses.</param>
         /// <param name="media">The <see cref="User"/>'s <see cref="Media"/>.</param>
         public User(int userID, string username, string password, Finances finances, IEnumerable<Vehicle> vehicles, IEnumerable<Contact> lenses, Media media)
         {

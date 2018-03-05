@@ -44,13 +44,11 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
         #region Text Manipulation
 
         /// <summary>Handles all the TextBoxes TextChanged events.</summary>
+        /// <param name="sender">TextBox whose text has changed</param>
+        /// <param name="e">Event</param>
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
-            bool enabled = TxtNickname.Text.Length > 0 && TxtMake.Text.Length > 0 && TxtModel.Text.Length > 0 &&
-                           TxtYear.Text.Length == 4 && (TxtNickname.Text != UnmodifiedVehicle.Nickname ||
-                                                        TxtMake.Text != UnmodifiedVehicle.Make ||
-                                                        TxtModel.Text != UnmodifiedVehicle.Model ||
-                                                        TxtYear.Text != UnmodifiedVehicle.Year.ToString());
+            bool enabled = TxtNickname.Text.Length > 0 && TxtMake.Text.Length > 0 && TxtModel.Text.Length > 0 && TxtYear.Text.Length == 4 && (TxtNickname.Text != UnmodifiedVehicle.Nickname || TxtMake.Text != UnmodifiedVehicle.Make || TxtModel.Text != UnmodifiedVehicle.Model || TxtYear.Text != UnmodifiedVehicle.Year.ToString());
             BtnSave.IsEnabled = enabled;
             BtnReset.IsEnabled = enabled;
         }

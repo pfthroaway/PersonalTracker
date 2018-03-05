@@ -1,7 +1,6 @@
 ﻿using Extensions;
 using Extensions.ListViewHelp;
 using PersonalTracker.Models;
-using PersonalTracker.Models.FinanceModels;
 using PersonalTracker.Models.FinanceModels.Data;
 using PersonalTracker.Views.FinanceViews.Accounts;
 using PersonalTracker.Views.FinanceViews.Categories;

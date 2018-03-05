@@ -4,6 +4,7 @@ using Extensions.ListViewHelp;
 using PersonalTracker.Models;
 using PersonalTracker.Models.LensesModels;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,6 +14,7 @@ namespace PersonalTracker.Views.LensesViews
     public partial class LensesPage
     {
         private ListViewSort _sort = new ListViewSort();
+        private Contact _selectedContact = new Contact();
 
         /// <summary>Adds a new contact to the database</summary>
         /// <param name="sides">Sides on which contacts are being added</param>
@@ -54,6 +56,12 @@ namespace PersonalTracker.Views.LensesViews
             BtnAddRight.IsEnabled = enabled;
         }
 
+        private void ToggleModifyDelete(bool enabled)
+        {
+            BtnDeleteContact.IsEnabled = enabled;
+            BtnModifyContact.IsEnabled = enabled;
+        }
+
         #region Click
 
         private void BtnAddBoth_Click(object sender, RoutedEventArgs e) => NewContact(Side.Left, Side.Right);
@@ -64,12 +72,16 @@ namespace PersonalTracker.Views.LensesViews
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => AppState.GoBack();
 
-        private void BtnModifyContact_Click(object sender, RoutedEventArgs e)
+        private async void BtnDeleteContact_Click(object sender, RoutedEventArgs e)
         {
-            //TODO Implement modification and deletion of contact lenses.
-            //TODO Fix comments everywhere.
-            //TODO Fix Finances implementation to be more streamlined.
+            if (AppState.YesNoNotification("Are you sure you want to delete this contact? This action cannot be undone.", "Personal Tracker"))
+            {
+                await AppState.RemoveContact(_selectedContact);
+                RefreshItemsSource();
+            }
         }
+
+        private void BtnModifyContact_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new ModifyContactPage(_selectedContact));
 
         private void LVContactsColumnHeader_Click(object sender, RoutedEventArgs e) => _sort =
             Functions.ListViewColumnHeaderClick(sender, _sort, LVContacts, "#CCCCCC");
@@ -97,8 +109,20 @@ namespace PersonalTracker.Views.LensesViews
         private void DateNewContact_SelectedDateChanged(object sender, SelectionChangedEventArgs e) =>
             ToggleButtons(DateNewContact.Text.Length > 0);
 
-        private void LVContacts_SelectionChanged(object sender, SelectionChangedEventArgs e) => BtnModifyContact.IsEnabled = LVContacts.SelectedIndex >= 0;
+        private void LVContacts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LVContacts.SelectedIndex >= 0)
+            {
+                ToggleModifyDelete(true);
+                _selectedContact = (Contact)LVContacts.SelectedItem;
+            }
+            else
+            {
+                ToggleModifyDelete(false);
+                _selectedContact = new Contact();
+            }
 
-        #endregion Page-Manipulation Methods
+            #endregion Page-Manipulation Methods
+        }
     }
 }

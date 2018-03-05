@@ -178,9 +178,7 @@ namespace PersonalTracker.Models.FuelModels
         {
             if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
             if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
-            return DateTime.Equals(left.Date, right.Date) &&
-                   string.Equals(left.Store, right.Store, StringComparison.OrdinalIgnoreCase) &&
-                   left.TranscationID == right.TranscationID && left.VehicleID == right.VehicleID && left.Odometer == right.Odometer && left.Range == right.Range && left.Distance == right.Distance && left.Gallons == right.Gallons && left.Odometer == right.Odometer && left.Price == right.Price;
+            return DateTime.Equals(left.Date, right.Date) && string.Equals(left.Store, right.Store, StringComparison.OrdinalIgnoreCase) && left.TranscationID == right.TranscationID && left.VehicleID == right.VehicleID && left.Odometer == right.Odometer && left.Range == right.Range && left.Distance == right.Distance && left.Gallons == right.Gallons && left.Odometer == right.Odometer && left.Price == right.Price;
         }
 
         public override bool Equals(object obj) => Equals(this, obj as FuelTransaction);

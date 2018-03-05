@@ -21,11 +21,11 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" Text="Date Inserted:" TextAlignment="Center" Margin="0,0,10,10" />
         <TextBlock Grid.Column="1" Grid.Row="0" Text="Replacement Date:" TextAlignment="Center" Margin="0,0,0,5" />
-        <DatePicker x:Name="InsertionDate" Grid.Column="0" Grid.Row="1" Width="200" Margin="0,0,10,5" />
+        <DatePicker x:Name="InsertionDate" Grid.Column="0" Grid.Row="1" Width="200" Margin="0,0,10,10" />
         <DatePicker x:Name="ReplacementDate" Grid.Column="1" Grid.Row="1" Width="200" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Text="Side:" TextAlignment="Center" Margin="0,0,0,5" />
         <ComboBox x:Name="CmbSide" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="100" Margin="0,0,0,10" />
-        <Button x:Name="BtnSubmit" Grid.Column="0" Grid.Row="4" Width="190" Content="_Submit" IsDefault="True" IsEnabled="False" Margin="0,0,10,0" />
-        <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="4" Width="190" Content="_Cancel" IsCancel="True" Margin="0,0,10,0" />
+        <Button x:Name="BtnSubmit" Grid.Column="0" Grid.Row="4" Content="_Submit" Click="BtnSubmit_Click" IsDefault="True" Margin="0,0,10,0" />
+        <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="4" Content="_Cancel" Click="BtnCancel_Click" IsCancel="True" />
     </Grid>
 </Page>

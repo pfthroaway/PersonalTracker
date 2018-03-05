@@ -49,14 +49,14 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
         }
 
         /// <summary>Handles all the TextBoxes Txt_TextChanged events.</summary>
+        /// <param name="sender">TextBox whose text has changed</param>
+        /// <param name="e">Event</param>
         private void Txt_TextChanged(object sender, TextChangedEventArgs e) => TextChanged();
 
         private void TextChanged()
         {
-            BtnAddVehicle.IsEnabled = TxtNickname.Text.Length > 0 && TxtMake.Text.Length > 0 &&
-                                      TxtModel.Text.Length > 0 && TxtYear.Text.Length == 4;
-            BtnReset.IsEnabled = TxtNickname.Text.Length > 0 || TxtMake.Text.Length > 0 || TxtModel.Text.Length > 0 ||
-                                 TxtYear.Text.Length > 0;
+            BtnAddVehicle.IsEnabled = TxtNickname.Text.Length > 0 && TxtMake.Text.Length > 0 && TxtModel.Text.Length > 0 && TxtYear.Text.Length == 4;
+            BtnReset.IsEnabled = TxtNickname.Text.Length > 0 || TxtMake.Text.Length > 0 || TxtModel.Text.Length > 0 || TxtYear.Text.Length > 0;
         }
 
         private void Txt_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);

@@ -68,10 +68,7 @@ namespace PersonalTracker.Models
 
         #region Constructors
 
-        public Media(IEnumerable<Series> series)
-        {
-            AssignSeries(series);
-        }
+        public Media(IEnumerable<Series> series) => AssignSeries(series);
 
         #endregion Constructors
     }

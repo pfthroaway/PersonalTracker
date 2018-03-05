@@ -31,8 +31,7 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
         /// <summary>Refreshes the ListView's ItemsSource.</summary>
         internal void RefreshItemsSource()
         {
-            CurrentVehicle = AppState.CurrentUser.Vehicles.ToList()
-                .Find(vehicle => vehicle.Nickname == CurrentVehicle.Nickname);
+            CurrentVehicle = AppState.CurrentUser.Vehicles.ToList().Find(vehicle => vehicle.VehicleID == CurrentVehicle.VehicleID);
             LVTransactions.ItemsSource = CurrentVehicle.Transactions;
             LVTransactions.Items.Refresh();
             DataContext = CurrentVehicle;
@@ -75,6 +74,7 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
 
         private void BtnSearchTransactions_Click(object sender, RoutedEventArgs e)
         {
+            //TODO Implement Searching Fuel Transactions
         }
 
         private void LVTransactions_SelectionChanged(object sender, SelectionChangedEventArgs e)

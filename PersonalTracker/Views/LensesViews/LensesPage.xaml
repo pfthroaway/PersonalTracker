@@ -9,8 +9,8 @@
       Title="Contact Lens Tracker">
     <Grid x:Name="Grid" Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,14 +41,19 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock Grid.Column="0" Grid.Row="1" Text="Insertion Date:" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Insertion Date:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,10" />
         <DatePicker x:Name="DateNewContact" Grid.Column="1" Grid.Row="1" Width="200" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDateChanged="DateNewContact_SelectedDateChanged" Margin="0,0,0,10" />
-        <TextBlock Grid.Column="0" Grid.Row="2" Text="Replace in:" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Replace in:" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,0,10" />
         <ComboBox x:Name="CmbLength" Grid.Column="1" Grid.Row="2" Width="200" Margin="0,0,0,10" />
-        <Button x:Name="BtnAddLeft" Grid.Column="0" Grid.Row="3" Width="145" Content="Add _Left" Click="BtnAddLeft_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnAddRight" Grid.Column="1" Grid.Row="3" Width="145" Content="Add _Right" Click="BtnAddRight_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnAddBoth" Grid.Column="0" Grid.Row="4" Width="145" Content="Add Both" Click="BtnAddBoth_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnModifyContact" Grid.Column="1" Grid.Row="4" Width="145" Content="_Modify" Click="BtnModifyContact_Click" IsEnabled="False" Margin="0,0,0,10" />
-        <Button x:Name="BtnBack" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Width="145" Content="Back" Click="BtnBack_Click" IsCancel="True" />
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="BtnAddBoth" Width="140" Content="_Add Both" Click="BtnAddBoth_Click" IsEnabled="False" IsDefault="True" Margin="0,0,10,0" />
+            <Button x:Name="BtnAddLeft" Width="140" Content="Add _Left" Click="BtnAddLeft_Click" IsEnabled="False"  Margin="0,0,10,0" />
+            <Button x:Name="BtnAddRight" Width="140" Content="Add _Right" Click="BtnAddRight_Click" IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button x:Name="BtnModifyContact" Width="140" Content="_Modify" Click="BtnModifyContact_Click" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnDeleteContact" Width="140" Content="_Delete" Click="BtnDeleteContact_Click" IsEnabled="False" Margin="0,0,10,0" />
+            <Button x:Name="BtnBack" Width="140" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+        </StackPanel>
     </Grid>
 </Page>

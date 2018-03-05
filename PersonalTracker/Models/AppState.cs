@@ -410,6 +410,31 @@ namespace PersonalTracker.Models
             return false;
         }
 
+        /// <summary>Modifies an existing contact in the database.</summary>
+        /// <param name="originalContact">Contact to be modified</param>
+        /// <param name="newContact">Contact with modifications</param>
+        internal static async Task<bool> ModifyContact(Contact originalContact, Contact newContact)
+        {
+            if (await DatabaseInteraction.ModifyContact(originalContact, newContact))
+            {
+                CurrentUser.ModifyContactLens(originalContact, newContact);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>Removes a contact from the database.</summary>
+        /// <param name="removeContact">Contact to be removed</param>
+        internal static async Task<bool> RemoveContact(Contact removeContact)
+        {
+            if (await DatabaseInteraction.RemoveContact(removeContact))
+            {
+                CurrentUser.RemoveContactLens(removeContact);
+                return true;
+            }
+            return false;
+        }
+
         #endregion Contact Lens Manipulation
 
         #region Transaction Management

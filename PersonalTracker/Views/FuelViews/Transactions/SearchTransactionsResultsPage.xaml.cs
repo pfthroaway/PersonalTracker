@@ -6,10 +6,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
     /// <summary>Interaction logic for SearchTransactionsResultsPage.xaml</summary>
     public partial class SearchTransactionsResultsPage
     {
-        public SearchTransactionsResultsPage()
-        {
-            InitializeComponent();
-        }
+        public SearchTransactionsResultsPage() => InitializeComponent();
 
         private void SearchTransactionsResultsPage_OnLoaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
     }

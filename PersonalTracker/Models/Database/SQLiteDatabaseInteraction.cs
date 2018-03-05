@@ -525,7 +525,7 @@ namespace PersonalTracker.Models.Database
         /// <returns>Next Transactions ID value</returns>
         public async Task<int> GetNextFinancialTransactionIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Transactions'");
+            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FinancialTransactions'");
 
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
@@ -626,7 +626,7 @@ namespace PersonalTracker.Models.Database
         {
             SQLiteCommand cmd = new SQLiteCommand
             {
-                CommandText = "REMOVE FROM Contacts WHERE [Date] = @date AND [Side] = @side AND [ReplacementDate] = @replacementDate"
+                CommandText = "DELETE FROM Contacts WHERE [Date] = @date AND [Side] = @side AND [ReplacementDate] = @replacementDate"
             };
             cmd.Parameters.AddWithValue("@date", removeContact.DateToString);
             cmd.Parameters.AddWithValue("@side", removeContact.SideToString);
@@ -658,7 +658,7 @@ namespace PersonalTracker.Models.Database
         /// <returns>Next TransactionID value</returns>
         public async Task<int> GetNextFuelTransactionIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Transactions'");
+            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FuelTransactions'");
 
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
@@ -812,13 +812,13 @@ namespace PersonalTracker.Models.Database
         /// <summary>Deletes a Series from the database.</summary>
         /// <param name="deleteSeries">Series to be deleted</param>
         /// <returns>True if successful</returns>
-        public async Task<bool> DeleteSeries(Series deleteSeries)
+        public Task<bool> DeleteSeries(Series deleteSeries)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Series WHERE [Name] = @name AND [PremiereDate] = @date" };
             cmd.Parameters.AddWithValue("@name", deleteSeries.Name);
             cmd.Parameters.AddWithValue("@date", deleteSeries.PremiereDateToString);
 
-            return await SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Delete
@@ -849,7 +849,7 @@ namespace PersonalTracker.Models.Database
         /// <param name="oldSeries">Original series</param>
         /// <param name="newSeries">Series to replace original</param>
         /// <returns>True if successful</returns>
-        public async Task<bool> ModifySeries(Series oldSeries, Series newSeries)
+        public Task<bool> ModifySeries(Series oldSeries, Series newSeries)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Series SET [Name] = @name, [PremiereDate] = @premiereDate, [Rating] = @rating, [Seasons] = @seasons, [Episodes] = @episodes, [Status] = @status, [Channel] = @channel, [FinaleDate] = @finaleDate, [Day] = @day, [Time] = @time, [ReturnDate] = @returnDate WHERE [Name] = @oldName" };
             cmd.Parameters.AddWithValue("@name", newSeries.Name);
@@ -865,13 +865,13 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@returnDate", newSeries.ReturnDate);
             cmd.Parameters.AddWithValue("@oldName", oldSeries.Name);
 
-            return await SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Saves a new Series to the database.</summary>
         /// <param name="newSeries">Series to be saved</param>
         /// <returns>True if successful</returns>
-        public async Task<bool> NewSeries(Series newSeries)
+        public Task<bool> NewSeries(Series newSeries)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Series([Name], [PremiereDate], [Rating], [Seasons], [Episodes], [Status], [Channel], [FinaleDate], [Day], [Time], [ReturnDate]) VALUES(@name, @premiereDate, @rating, @seasons, @episodes, @status, @channel, @finaleDate, @day, @time, @returnDate)" };
             cmd.Parameters.AddWithValue("@name", newSeries.Name);
@@ -886,7 +886,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@time", newSeries.TimeToString);
             cmd.Parameters.AddWithValue("@returnDate", newSeries.ReturnDate);
 
-            return await SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Save

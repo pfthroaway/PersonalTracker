@@ -171,6 +171,7 @@ namespace PersonalTracker.Models.FuelModels
         /// <summary>Updates data-binding for MPG-related Properties</summary>
         private void UpdateProperties()
         {
+            OnPropertyChanged("Transactions");
             OnPropertyChanged("MPG");
             OnPropertyChanged("MPGToString");
             OnPropertyChanged("MPGToStringWithText");
@@ -189,7 +190,6 @@ namespace PersonalTracker.Models.FuelModels
             OnPropertyChanged("AverageTotalPrice");
             OnPropertyChanged("AverageTotalPriceToString");
             OnPropertyChanged("AverageTotalPriceToStringWithText");
-            OnPropertyChanged("Transactions");
         }
 
         #endregion Transaction Management

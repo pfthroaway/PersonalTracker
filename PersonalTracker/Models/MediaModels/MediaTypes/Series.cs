@@ -139,10 +139,10 @@ namespace PersonalTracker.Models.MediaModels.MediaTypes
         public string EpisodesToString => Episodes != 0 ? $"Episodes: {Episodes}" : "";
 
         /// <summary>Time the series currently airs, formatted.</summary>
-        public string TimeToString => !string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing || Status == SeriesStatus.Hiatus ? Time.ToString("hh:mm tt") : "";
+        public string TimeToString => (!string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing) || Status == SeriesStatus.Hiatus ? Time.ToString("hh:mm tt") : "";
 
         /// <summary>Day of week, formatted.</summary>
-        public string DayToString => !string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing || Status == SeriesStatus.Hiatus ? Day.ToString() : "";
+        public string DayToString => (!string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing) || Status == SeriesStatus.Hiatus ? Day.ToString() : "";
 
         /// <summary>Date the series first aired, formatted to string.</summary>
         public string PremiereDateToString => PremiereDate != DateTime.MinValue ? $"{PremiereDate:yyyy/MM/dd}" : "";
@@ -175,11 +175,7 @@ namespace PersonalTracker.Models.MediaModels.MediaTypes
         {
             if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
             if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
-            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) &&
-                 DateTime.Equals(left.Time, right.Time) && left.Rating == right.Rating &&
-                 string.Equals(left.Channel, right.Channel, StringComparison.OrdinalIgnoreCase) &&
-                 string.Equals(left.ReturnDate, right.ReturnDate, StringComparison.OrdinalIgnoreCase) &&
-                 left.Seasons == right.Seasons && left.Episodes == right.Episodes && left.Status == right.Status && left.Day == right.Day && DateTime.Equals(left.PremiereDate, right.PremiereDate) && DateTime.Equals(left.FinaleDate, right.FinaleDate);
+            return string.Equals(left.Name, right.Name, StringComparison.OrdinalIgnoreCase) && DateTime.Equals(left.Time, right.Time) && left.Rating == right.Rating && string.Equals(left.Channel, right.Channel, StringComparison.OrdinalIgnoreCase) && string.Equals(left.ReturnDate, right.ReturnDate, StringComparison.OrdinalIgnoreCase) && left.Seasons == right.Seasons && left.Episodes == right.Episodes && left.Status == right.Status && left.Day == right.Day && DateTime.Equals(left.PremiereDate, right.PremiereDate) && DateTime.Equals(left.FinaleDate, right.FinaleDate);
         }
 
         public sealed override bool Equals(object obj) => Equals(this, obj as Series);
