@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 
 namespace PersonalTracker.Models.Database
 {
+    /// <summary>Represents SQLite implementation of all required database interaction methods.</summary>
     internal class SQLiteDatabaseInteraction : IDatabaseInteraction
     {
         private const string _DATABASENAME = "Users.sqlite";
@@ -178,8 +179,8 @@ namespace PersonalTracker.Models.Database
 
         #region Load
 
-        /// <summary>Loads all Accounts.</summary>
-        /// <returns>Returns all Accounts</returns>
+        /// <summary>Loads all <see cref="Account"/>s.</summary>
+        /// <returns>Returns all <see cref="Account"/>s</returns>
         public async Task<List<Account>> LoadAccounts()
         {
             List<Account> allAccounts = new List<Account>();
@@ -213,8 +214,8 @@ namespace PersonalTracker.Models.Database
             return allAccounts;
         }
 
-        /// <summary>Loads all Account types.</summary>
-        /// <returns>Returns all Account types</returns>
+        /// <summary>Loads all <see cref="Account"/> types.</summary>
+        /// <returns>Returns all <see cref="Account"/> types</returns>
         public async Task<List<string>> LoadAccountTypes()
         {
             List<string> allAccountTypes = new List<string>();
@@ -226,8 +227,8 @@ namespace PersonalTracker.Models.Database
             return allAccountTypes;
         }
 
-        /// <summary>Loads all Categories.</summary>
-        /// <returns>Returns all Categories</returns>
+        /// <summary>Loads all <see cref="Category"/>s.</summary>
+        /// <returns>Returns all <see cref="Category"/>s</returns>
         public async Task<List<Category>> LoadCategories()
         {
             List<Category> allCategories = new List<Category>();
@@ -256,8 +257,8 @@ namespace PersonalTracker.Models.Database
             return allCategories;
         }
 
-        /// <summary>Loads all credit scores from the database.</summary>
-        /// <returns>List of all credit scores</returns>
+        /// <summary>Loads all <see cref="CreditScore"/>s from the database.</summary>
+        /// <returns>List of all <see cref="CreditScore"/>s</returns>
         public async Task<List<CreditScore>> LoadCreditScores()
         {
             List<CreditScore> scores = new List<CreditScore>();
@@ -274,8 +275,8 @@ namespace PersonalTracker.Models.Database
 
         #region Account Manipulation
 
-        /// <summary>Adds an account to the database.</summary>
-        /// <param name="account">Account to be added</param>
+        /// <summary>Adds an <see cref="Account"/> to the database.</summary>
+        /// <param name="account"><see cref="Account"/> to be added</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> AddAccount(Account account)
         {
@@ -291,8 +292,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Deletes an account from the database.</summary>
-        /// <param name="account">Account to be deleted</param>
+        /// <summary>Deletes an <see cref="Account"/> from the database.</summary>
+        /// <param name="account"><see cref="Account"/> to be deleted</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> DeleteAccount(Account account)
         {
@@ -302,9 +303,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Renames an account in the database.</summary>
-        /// <param name="account">Account to be renamed</param>
-        /// <param name="newAccountName">New account's name</param>
+        /// <summary>Renames an <see cref="Account"/> in the database.</summary>
+        /// <param name="account"><see cref="Account"/> to be renamed</param>
+        /// <param name="newAccountName">New <see cref="Account"/>'s name</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> RenameAccount(Account account, string newAccountName)
         {
@@ -323,10 +324,10 @@ namespace PersonalTracker.Models.Database
 
         #region Category Management
 
-        /// <summary>Inserts a new Category into the database.</summary>
-        /// <param name="selectedCategory">Selected Major Category</param>
-        /// <param name="newName">Name for new Category</param>
-        /// <param name="isMajor">Is the category being added a Major Category?</param>
+        /// <summary>Inserts a new <see cref="Category"/> into the database.</summary>
+        /// <param name="selectedCategory">Selected Major <see cref="Category"/></param>
+        /// <param name="newName">Name for new <see cref="Category"/></param>
+        /// <param name="isMajor">Is the <see cref="Category"/> being added a Major <see cref="Category"/>?</param>
         /// <returns>Returns true if successful.</returns>
         public Task<bool> AddCategory(Category selectedCategory, string newName, bool isMajor)
         {
@@ -348,12 +349,12 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Rename a category in the database.</summary>
-        /// <param name="selectedCategory">Category to rename</param>
-        /// <param name="newName">New name of the Category</param>
-        /// <param name="oldName">Old name of the Category</param>
-        /// <param name="isMajor">Is the category being renamed a Major Category?</param>
-        /// <returns></returns>
+        /// <summary>Renames a <see cref="Category"/> in the database.</summary>
+        /// <param name="selectedCategory"><see cref="Category"/> to rename</param>
+        /// <param name="newName">New name of the <see cref="Category"/></param>
+        /// <param name="oldName">Old name of the <see cref="Category"/></param>
+        /// <param name="isMajor">Is the <see cref="Category"/> being renamed a Major <see cref="Category"/>?</param>
+        /// <returns>True if successful</returns>
         public Task<bool> RenameCategory(Category selectedCategory, string newName, string oldName, bool isMajor)
         {
             SQLiteCommand cmd = new SQLiteCommand
@@ -369,7 +370,7 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Removes a Major Category from the database, as well as removes it from all Transactions which utilize it.</summary>
+        /// <summary>Removes a Major <see cref="Category"/> from the database, as well as removes it from all <see cref="FinancialTransaction"/>s which utilize it.</summary>
         /// <param name="selectedCategory">Selected Major Category to delete</param>
         /// <returns>Returns true if operation successful</returns>
         public Task<bool> RemoveMajorCategory(Category selectedCategory)
@@ -385,9 +386,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Removes a Major Category from the database, as well as removes it from all Transactions which utilize it.</summary>
-        /// <param name="selectedCategory">Selected Major Category</param>
-        /// <param name="minorCategory">Selected Minor Category to delete</param>
+        /// <summary>Removes a Minor <see cref="Category"/> from the database, as well as removes it from all <see cref="FinancialTransaction"/>s which utilize it.</summary>
+        /// <param name="selectedCategory">Selected Major <see cref="Category"/></param>
+        /// <param name="minorCategory">Selected Minor <see cref="Category"/> to delete</param>
         /// <returns>Returns true if operation successful</returns>
         public Task<bool> RemoveMinorCategory(Category selectedCategory, string minorCategory)
         {
@@ -407,8 +408,8 @@ namespace PersonalTracker.Models.Database
 
         #region Credit Score Management
 
-        /// <summary>Adds a new credit score to the database.</summary>
-        /// <param name="newScore">Score to be added</param>
+        /// <summary>Adds a new <see cref="CreditScore"/> to the database.</summary>
+        /// <param name="newScore"><see cref="CreditScore"/> to be added</param>
         /// <returns>True if successful</returns>
         public Task<bool> AddCreditScore(CreditScore newScore)
         {
@@ -426,8 +427,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Deletes a credit score from the database</summary>
-        /// <param name="deleteScore">Score to be deleted</param>
+        /// <summary>Deletes a <see cref="CreditScore"/> from the database</summary>
+        /// <param name="deleteScore"><see cref="CreditScore"/> to be deleted</param>
         /// <returns>True if successful</returns>
         public Task<bool> DeleteCreditScore(CreditScore deleteScore)
         {
@@ -445,9 +446,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Modifies a credit score in the database.</summary>
-        /// <param name="oldScore">Original score</param>
-        /// <param name="newScore">Modified score</param>
+        /// <summary>Modifies a <see cref="CreditScore"/> in the database.</summary>
+        /// <param name="oldScore">Original <see cref="CreditScore"/></param>
+        /// <param name="newScore">Modified <see cref="CreditScore"/></param>
         /// <returns>True if successful</returns>
         public Task<bool> ModifyCreditScore(CreditScore oldScore, CreditScore newScore)
         {
@@ -472,11 +473,11 @@ namespace PersonalTracker.Models.Database
 
         #endregion Credit Score Management
 
-        #region Transaction Management
+        #region Financial Transaction Management
 
-        /// <summary>Adds a transaction to an account and the database</summary>
-        /// <param name="transaction">Transaction to be added</param>
-        /// <param name="account">Account the transaction will be added to</param>
+        /// <summary>Adds a <see cref="FinancialTransaction"/> to an account and the database</summary>
+        /// <param name="transaction"><see cref="FinancialTransaction"/> to be added</param>
+        /// <param name="account"><see cref="Account"/> the <see cref="FinancialTransaction"/> will be added to</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> AddFinancialTransaction(FinancialTransaction transaction, Account account)
         {
@@ -498,9 +499,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Deletes a transaction from the database.</summary>
-        /// <param name="transaction">Transaction to be deleted</param>
-        /// <param name="account">Account the transaction will be deleted from</param>
+        /// <summary>Deletes a <see cref="FinancialTransaction"/> from the database.</summary>
+        /// <param name="transaction"><see cref="FinancialTransaction"/> to be deleted</param>
+        /// <param name="account"><see cref="Account"/> the <see cref="FinancialTransaction"/> will be deleted from</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> DeleteFinancialTransaction(FinancialTransaction transaction, Account account)
         {
@@ -521,8 +522,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Gets the next Transaction ID autoincrement value in the database for the Transactions table.</summary>
-        /// <returns>Next Transactions ID value</returns>
+        /// <summary>Gets the next <see cref="FinancialTransaction"/> ID autoincrement value in the database for the <see cref="FinancialTransaction"/>s table.</summary>
+        /// <returns>Next <see cref="FinancialTransaction"/>s ID value</returns>
         public async Task<int> GetNextFinancialTransactionIndex()
         {
             DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FinancialTransactions'");
@@ -530,9 +531,9 @@ namespace PersonalTracker.Models.Database
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
 
-        /// <summary>Modifies the selected Transaction in the database.</summary>
+        /// <summary>Modifies the selected <see cref="FinancialTransaction"/> in the database.</summary>
         /// <param name="newTransaction">Transaction to replace the current one in the database</param>
-        /// <param name="oldTransaction">Current Transaction in the database</param>
+        /// <param name="oldTransaction">Current <see cref="FinancialTransaction"/> in the database</param>
         /// <returns>Returns true if successful</returns>
         public Task<bool> ModifyFinancialTransaction(FinancialTransaction newTransaction, FinancialTransaction oldTransaction)
         {
@@ -561,7 +562,7 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        #endregion Transaction Management
+        #endregion Financial Transaction Management
 
         #endregion Finances
 
@@ -569,8 +570,8 @@ namespace PersonalTracker.Models.Database
 
         #region Contact Lens Manipulation
 
-        /// <summary>Adds a new contact insertion to the database.</summary>
-        /// <param name="newContact">Contact insertion to be added</param>
+        /// <summary>Adds a new <see cref="Contact"/> insertion to the database.</summary>
+        /// <param name="newContact"><see cref="Contact"/> insertion to be added</param>
         public Task<bool> AddContact(Contact newContact)
         {
             SQLiteCommand cmd = new SQLiteCommand
@@ -585,8 +586,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Loads all contact insertions from the database.</summary>
-        /// <returns>All contact insertions</returns>
+        /// <summary>Loads all <see cref="Contact"/> insertions from the database.</summary>
+        /// <returns>All <see cref="Contact"/> insertions</returns>
         public async Task<List<Contact>> LoadContacts()
         {
             List<Contact> allContacts = new List<Contact>();
@@ -601,9 +602,10 @@ namespace PersonalTracker.Models.Database
             return allContacts;
         }
 
-        /// <summary>Modifies an existing contact in the database.</summary>
-        /// <param name="originalContact">Contact to be modified</param>
-        /// <param name="newContact">Contact with modifications</param>
+        /// <summary>Modifies an existing <see cref="Contact"/> in the database.</summary>
+        /// <param name="originalContact"><see cref="Contact"/> to be modified</param>
+        /// <param name="newContact"><see cref="Contact"/> with modifications</param>
+        /// <returns>True if successful</returns>
         public Task<bool> ModifyContact(Contact originalContact, Contact newContact)
         {
             SQLiteCommand cmd = new SQLiteCommand
@@ -620,8 +622,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Removes a contact from the database.</summary>
-        /// <param name="removeContact">Contact to be removed</param>
+        /// <summary>Removes a <see cref="Contact"/> from the database.</summary>
+        /// <param name="removeContact"><see cref="Contact"/> to be removed</param>
+        /// <returns>True if successful</returns>
         public Task<bool> RemoveContact(Contact removeContact)
         {
             SQLiteCommand cmd = new SQLiteCommand
@@ -643,9 +646,9 @@ namespace PersonalTracker.Models.Database
 
         #region Fuel Transaction Management
 
-        /// <summary>Deletes a Transaction from the database.</summary>
-        /// <param name="deleteTransaction">Transaction to be deleted</param>
-        /// <returns>Returns true if deletion successful</returns>
+        /// <summary>Deletes a <see cref="FuelTransaction"/> from the database.</summary>
+        /// <param name="deleteTransaction"><see cref="FuelTransaction"/> to be deleted</param>
+        /// <returns>Returns true if deletion is successful</returns>
         public Task<bool> DeleteFuelTransaction(FuelTransaction deleteTransaction)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM FuelTransactions WHERE [TransactionID] = @transactionID" };
@@ -654,8 +657,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Gets the next TransactionID autoincrement value in the database for the Vehicle table.</summary>
-        /// <returns>Next TransactionID value</returns>
+        /// <summary>Gets the next <see cref="FuelTransaction"/> ID autoincrement value in the database for the <see cref="Vehicle"/ table.</summary>
+        /// <returns>Next <see cref="FuelTransaction"/> ID value</returns>
         public async Task<int> GetNextFuelTransactionIndex()
         {
             DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FuelTransactions'");
@@ -663,9 +666,9 @@ namespace PersonalTracker.Models.Database
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
 
-        /// <summary>Loads all Transactions associated with a specific Vehicle.</summary>
-        /// <param name="vehicleID">Vehicle ID</param>
-        /// <returns>Returns all Transactions associated with a specific Vehicle.</returns>
+        /// <summary>Loads all <see cref="FuelTransaction"/>s associated with a specific <see cref="Vehicle"/.</summary>
+        /// <param name="vehicleID"><see cref="Vehicle"/> ID</param>
+        /// <returns>Returns all <see cref="FuelTransaction"/>s associated with a specific <see cref="Vehicle"/.</returns>
         public async Task<List<FuelTransaction>> LoadFuelTransactions(int vehicleID)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM FuelTransactions WHERE VehicleID = @id" };
@@ -684,10 +687,10 @@ namespace PersonalTracker.Models.Database
             return transactions;
         }
 
-        /// <summary>Modifies an existing Transaction.</summary>
-        /// <param name="oldTransaction">Existing Transaction</param>
-        /// <param name="newTransaction">New Transaction</param>
-        /// <returns>Returns true if modification successful</returns>
+        /// <summary>Modifies an existing <see cref="FuelTransaction"/>.</summary>
+        /// <param name="oldTransaction">Existing <see cref="FuelTransaction"/></param>
+        /// <param name="newTransaction">New <see cref="FuelTransaction"/></param>
+        /// <returns>Returns true if modification is successful</returns>
         public Task<bool> ModifyFuelTransaction(FuelTransaction oldTransaction, FuelTransaction newTransaction)
         {
             SQLiteCommand cmd = new SQLiteCommand
@@ -708,9 +711,9 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Adds a new Transaction to the database.</summary>
-        /// <param name="newTransaction">Transaction to be added</param>
-        /// <returns>Returns true if add successful</returns>
+        /// <summary>Adds a new <see cref="FuelTransaction"/> to the database.</summary>
+        /// <param name="newTransaction"><see cref="FuelTransaction"/> to be added</param>
+        /// <returns>Returns true if add is successful</returns>
         public Task<bool> NewFuelTransaction(FuelTransaction newTransaction)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO FuelTransactions([VehicleID], [Store], [Date], [Octane], [Distance], [Gallons], [Price], [Odometer], [Range])VALUES(@id, @store, @date, @octane, @distance, @gallons, @price, @odometer, @range)" };
@@ -730,10 +733,10 @@ namespace PersonalTracker.Models.Database
 
         #region Vehicle Management
 
-        /// <summary>Changes details in the database regarding a Vehicle.</summary>
-        /// <param name="oldVehicle">Old Vehicle details</param>
-        /// <param name="newVehicle">New Vehicle details</param>
-        /// <returns>Returns true if modification successful</returns>
+        /// <summary>Changes details in the database regarding a <see cref="Vehicle"/>.</summary>
+        /// <param name="oldVehicle">Old <see cref="Vehicle"/> details</param>
+        /// <param name="newVehicle">New <see cref="Vehicle"/> details</param>
+        /// <returns>Returns true if modification is successful</returns>
         public Task<bool> ModifyVehicle(Vehicle oldVehicle, Vehicle newVehicle)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Vehicles SET [Nickname] = @name, [Make] = @make, [Model] = @model, [Year] = @year WHERE [VehicleID] = @vehicleID" };
@@ -745,8 +748,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Deletes a Vehicle and all associated Transactions from the database.</summary>
-        /// <param name="deleteVehicle">Vehicle to be deleted</param>
+        /// <summary>Deletes a <see cref="Vehicle"/> and all associated <see cref="FuelTransaction"/>s from the database.</summary>
+        /// <param name="deleteVehicle"><see cref="Vehicle"/> to be deleted</param>
         /// <returns>Returns true if deletion is successful.</returns>
         public Task<bool> DeleteVehicle(Vehicle deleteVehicle)
         {
@@ -756,8 +759,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Gets the next VehicleID autoincrement value in the database for the Vehicle table.</summary>
-        /// <returns>Next VehicleID value</returns>
+        /// <summary>Gets the next <see cref="Vehicle"/> ID autoincrement value in the database for the Vehicle table.</summary>
+        /// <returns>Next <see cref="Vehicle"/> ID value</returns>
         public async Task<int> GetNextVehicleIndex()
         {
             DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Vehicles'");
@@ -767,8 +770,8 @@ namespace PersonalTracker.Models.Database
             return 1;
         }
 
-        /// <summary>Loads all Vehicles associated with a User.</summary>
-        /// <returns>All Vehicles associated with a User</returns>
+        /// <summary>Loads all <see cref="Vehicle"/> associated with a <see cref="User"/>.</summary>
+        /// <returns>All <see cref="Vehicle"/> associated with a <see cref="User"/></returns>
         public async Task<List<Vehicle>> LoadVehicles()
         {
             DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Vehicles");
@@ -788,9 +791,9 @@ namespace PersonalTracker.Models.Database
             return vehicles;
         }
 
-        /// <summary>Adds a new Vehicle to the database.</summary>
-        /// <param name="newVehicle">Vehicle to be added</param>
-        /// <returns>Returns whether the Vehicle was successfully added</returns>
+        /// <summary>Adds a new <see cref="Vehicle"/> to the database.</summary>
+        /// <param name="newVehicle"><see cref="Vehicle"/> to be added</param>
+        /// <returns>Returns true if the <see cref="Vehicle"/> was successfully added</returns>
         public Task<bool> NewVehicle(Vehicle newVehicle)
         {
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Vehicles([Nickname], [Make], [Model], [Year])VALUES(@name, @make, @model, @year)" };
@@ -809,8 +812,8 @@ namespace PersonalTracker.Models.Database
 
         #region Delete
 
-        /// <summary>Deletes a Series from the database.</summary>
-        /// <param name="deleteSeries">Series to be deleted</param>
+        /// <summary>Deletes a <see cref="Series"/> from the database.</summary>
+        /// <param name="deleteSeries"><see cref="Series"/> to be deleted</param>
         /// <returns>True if successful</returns>
         public Task<bool> DeleteSeries(Series deleteSeries)
         {
@@ -825,8 +828,8 @@ namespace PersonalTracker.Models.Database
 
         #region Load
 
-        /// <summary>Loads all Series from the database.</summary>
-        /// <returns>All Series</returns>
+        /// <summary>Loads all <see cref="Series"/> from the database.</summary>
+        /// <returns>All <see cref="Series"/></returns>
         public async Task<List<Series>> LoadSeries()
         {
             List<Series> allSeries = new List<Series>();
@@ -845,9 +848,9 @@ namespace PersonalTracker.Models.Database
 
         #region Save
 
-        /// <summary>Modifies a Series in the database.</summary>
-        /// <param name="oldSeries">Original series</param>
-        /// <param name="newSeries">Series to replace original</param>
+        /// <summary>Modifies a <see cref="Series"/> in the database.</summary>
+        /// <param name="oldSeries">Original <see cref="Series"/></param>
+        /// <param name="newSeries"><see cref="Series"/> to replace original</param>
         /// <returns>True if successful</returns>
         public Task<bool> ModifySeries(Series oldSeries, Series newSeries)
         {
@@ -868,8 +871,8 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Saves a new Series to the database.</summary>
-        /// <param name="newSeries">Series to be saved</param>
+        /// <summary>Saves a new <see cref="Series"/> to the database.</summary>
+        /// <param name="newSeries"><see cref="Series"/> to be saved</param>
         /// <returns>True if successful</returns>
         public Task<bool> NewSeries(Series newSeries)
         {

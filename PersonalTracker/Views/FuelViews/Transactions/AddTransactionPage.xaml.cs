@@ -14,10 +14,13 @@ namespace PersonalTracker.Views.FuelViews.Transactions
     /// <summary>Interaction logic for AddTransaction.xaml</summary>
     public partial class AddTransactionPage
     {
+        /// <summary>Previous Page so that its ItemsSource can be updated prior to navigating back to it.</summary>
         internal ManageFuelupsPage PreviousPage { get; set; }
+
+        /// <summary><see cref="Vehicle"/> to which the <see cref="FuelTransaction"/> is being added.</summary>
         internal Vehicle CurrentVehicle { get; set; }
 
-        /// <summary>Attempts to add a Transaction to the database.</summary>
+        /// <summary>Attempts to add a <see cref="FuelTransaction"/> to the database.</summary>
         /// <returns>Returns true if successfully added</returns>
         private async Task<bool> AddTransaction()
         {

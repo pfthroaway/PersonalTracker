@@ -4,7 +4,6 @@ using Extensions.ListViewHelp;
 using PersonalTracker.Models;
 using PersonalTracker.Models.LensesModels;
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,7 +15,7 @@ namespace PersonalTracker.Views.LensesViews
         private ListViewSort _sort = new ListViewSort();
         private Contact _selectedContact = new Contact();
 
-        /// <summary>Adds a new contact to the database</summary>
+        /// <summary>Adds a new <see cref="Contact"/> to the database</summary>
         /// <param name="sides">Sides on which contacts are being added</param>
         private async void NewContact(params Side[] sides)
         {
@@ -47,7 +46,7 @@ namespace PersonalTracker.Views.LensesViews
             LVContacts.Items.Refresh();
         }
 
-        /// <summary>Toggles the Buttons on the Page.</summary>
+        /// <summary>Toggles the Add Buttons on the Page.</summary>
         /// <param name="enabled">Should the buttons be enabled?</param>
         private void ToggleButtons(bool enabled)
         {
@@ -56,6 +55,8 @@ namespace PersonalTracker.Views.LensesViews
             BtnAddRight.IsEnabled = enabled;
         }
 
+        /// <summary>Toggles the Modify and Delete Buttons on the Page.</summary>
+        /// <param name="enabled">Should the buttons be enabled?</param>
         private void ToggleModifyDelete(bool enabled)
         {
             BtnDeleteContact.IsEnabled = enabled;

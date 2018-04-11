@@ -28,10 +28,12 @@ namespace PersonalTracker.Views
 
         #region Data-Binding
 
+        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this,
-            new PropertyChangedEventArgs(property));
+        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
+        /// <param name="property">Name of Property whose value has changed</param>
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 
@@ -59,6 +61,7 @@ namespace PersonalTracker.Views
 
         #region Page-Manipulation Methods
 
+        /// <summary>Closes the Page.</summary>
         private void ClosePage() => AppState.GoBack();
 
         public TrackerPage()

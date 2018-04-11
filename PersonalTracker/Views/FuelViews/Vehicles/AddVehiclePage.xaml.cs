@@ -53,6 +53,7 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
         /// <param name="e">Event</param>
         private void Txt_TextChanged(object sender, TextChangedEventArgs e) => TextChanged();
 
+        /// <summary>Enables Buttons based on the value of the TextBoxes.</summary>
         private void TextChanged()
         {
             BtnAddVehicle.IsEnabled = TxtNickname.Text.Length > 0 && TxtMake.Text.Length > 0 && TxtModel.Text.Length > 0 && TxtYear.Text.Length == 4;

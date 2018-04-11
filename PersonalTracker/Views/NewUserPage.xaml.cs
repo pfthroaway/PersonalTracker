@@ -50,6 +50,7 @@ namespace PersonalTracker.Views
 
         #region Page-Manipulation Methods
 
+        /// <summary>Closes the Page.</summary>
         private void ClosePage() => AppState.GoBack();
 
         public NewUserPage()

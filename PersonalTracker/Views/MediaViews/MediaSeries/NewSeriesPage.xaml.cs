@@ -39,7 +39,7 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
             TxtReturnDate.Text = "";
         }
 
-        /// <summary>Saves the current series.</summary>
+        /// <summary>Saves the current <see cref="Series"/>.</summary>
         private async Task Save()
         {
             Series newSeries = new Series(TxtName.Text.Trim(), DateTimeHelper.Parse(DatePremiere.SelectedDate), DecimalHelper.Parse(TxtRating.Text.Trim()), Int32Helper.Parse(TxtSeasons.Text.Trim()), Int32Helper.Parse(TxtEpisodes.Text.Trim()), (SeriesStatus)CmbStatus.SelectedIndex, TxtChannel.Text.Trim(), DateTimeHelper.Parse(DateFinale.SelectedDate), CmbDay.SelectedIndex >= 0 ? (DayOfWeek)CmbDay.SelectedIndex : DayOfWeek.Sunday, DateTimeHelper.Parse(TxtTime.Text.Trim()), TxtReturnDate.Text.Trim());
@@ -93,10 +93,6 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
         private void Decimal_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Decimals);
 
         private void Integer_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Integers);
-
-        private void Date_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-        }
 
         #endregion PreviewKeyDown
 

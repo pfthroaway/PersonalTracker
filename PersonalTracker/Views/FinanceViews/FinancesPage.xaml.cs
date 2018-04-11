@@ -16,7 +16,10 @@ namespace PersonalTracker.Views.FinanceViews
     /// <summary>Interaction logic for FinancesPage.xaml</summary>
     public partial class FinancesPage
     {
+        //TODO Fix Finances implementation to use ReadOnlyCollections.
+
         private List<Account> _allAccounts;
+
         private ListViewSort _sort = new ListViewSort();
 
         /// <summary>Refreshes the ListView's ItemsSource.</summary>

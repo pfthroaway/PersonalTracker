@@ -10,6 +10,7 @@
         WindowState="Maximized"
         ResizeMode="CanResize"
         SizeToContent="Manual"
+        Icon="Platinum.ico"
         Loaded="WindowMain_Loaded">
     <Grid x:Name="Grid" Margin="10">
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="LoginPage.xaml" SizeChanged="MainFrame_OnSizeChanged">

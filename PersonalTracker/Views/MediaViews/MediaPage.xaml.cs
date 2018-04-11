@@ -7,6 +7,9 @@ namespace PersonalTracker.Views.MediaViews
     /// <summary> Interaction logic for MediaPage.xaml </summary>
     public partial class MediaPage
     {
+        //TODO Implement other types of Media: film, books, and music.
+        //TODO Make Media Tracker more easily navigated.
+
         #region Click
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => AppState.GoBack();

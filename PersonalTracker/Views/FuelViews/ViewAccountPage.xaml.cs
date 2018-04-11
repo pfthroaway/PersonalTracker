@@ -17,7 +17,7 @@ namespace PersonalTracker.Views.FuelViews
         private ListViewSort _sort = new ListViewSort();
         private Vehicle _selectedVehicle;
 
-        /// <summary>The currently selected Vehicle.</summary>
+        /// <summary>The currently selected <see cref="Vehicle"/>.</summary>
         public Vehicle SelectedVehicle
         {
             get => _selectedVehicle;
@@ -46,10 +46,12 @@ namespace PersonalTracker.Views.FuelViews
 
         #region Data-Binding
 
+        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this,
-            new PropertyChangedEventArgs(property));
+        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
+        /// <param name="property">Name of Property whose value has changed</param>
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 

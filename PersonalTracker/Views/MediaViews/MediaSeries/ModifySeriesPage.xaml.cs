@@ -15,12 +15,13 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
     /// <summary>Interaction logic for ModifySeriesPage.xaml</summary>
     public partial class ModifySeriesPage
     {
+        /// <summary>The <see cref="Series"/> that is currently being modified.</summary>
         internal Series SelectedSeries { get; set; }
 
         /// <summary>Checks whether the Save buttons should be enabled.</summary>
         private void CheckButton() => BtnSave.IsEnabled = TxtName.Text.Length > 0 && DatePremiere.Text.Length > 0 && TxtRating.Text.Length > 0 && TxtSeasons.Text.Length > 0 && TxtEpisodes.Text.Length > 0 && CmbStatus.SelectedIndex >= 0 && (TxtName.Text != SelectedSeries.Name || DatePremiere.Text != SelectedSeries.PremiereDateToString || DecimalHelper.Parse(TxtRating.Text) != SelectedSeries.Rating || Int32Helper.Parse(TxtSeasons.Text) != SelectedSeries.Seasons || Int32Helper.Parse(TxtEpisodes.Text) != SelectedSeries.Episodes || (SeriesStatus)CmbStatus.SelectedIndex != SelectedSeries.Status);
 
-        /// <summary>Resets all controls to empty.</summary>
+        /// <summary>Resets all controls to original <see cref="Series"/> values.</summary>
         private void Reset()
         {
             TxtName.Text = SelectedSeries.Name;
@@ -84,10 +85,6 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
         private void Decimal_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Decimals);
 
         private void Integer_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Integers);
-
-        private void Date_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-        }
 
         #endregion PreviewKeyDown
 

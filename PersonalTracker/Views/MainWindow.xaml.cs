@@ -8,9 +8,6 @@ namespace PersonalTracker.Views
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     public partial class MainWindow : Window
     {
-        //TODO Fix comments everywhere.
-        //TODO Fix Finances implementation to be more streamlined.
-
         #region ScaleValue Depdency Property
 
         public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register("ScaleValue", typeof(double), typeof(MainWindow), new UIPropertyMetadata(1.0, new PropertyChangedCallback(OnScaleValueChanged), new CoerceValueCallback(OnCoerceScaleValue)));
@@ -61,9 +58,12 @@ namespace PersonalTracker.Views
 
         #region Data-Binding
 
+        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this,
+        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
+        /// <param name="property">Name of Property whose value has changed</param>
+        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this,
             new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding

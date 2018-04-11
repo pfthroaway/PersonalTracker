@@ -16,7 +16,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
         internal FuelTransaction UnmodifiedTransaction, ModifiedTransaction;
         internal Vehicle CurrentVehicle;
 
-        /// <summary>Attempts to add a Transaction to the database.</summary>
+        /// <summary>Attempts to add a <see cref="FuelTransaction"/> to the database.</summary>
         /// <returns>Returns true if successfully added</returns>
         private async Task<bool> ModifyTransaction()
         {
@@ -34,7 +34,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
             return false;
         }
 
-        /// <summary>Displays the original Transaction.</summary>
+        /// <summary>Displays the original <see cref="FuelTransaction"/>.</summary>
         internal void DisplayOriginalTransaction()
         {
             TransactionDate.SelectedDate = UnmodifiedTransaction.Date;
