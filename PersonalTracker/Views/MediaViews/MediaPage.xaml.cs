@@ -16,7 +16,7 @@ namespace PersonalTracker.Views.MediaViews
 
         #region Television
 
-        private void BtnTelevisionAll_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new AllTelevisionPage());
+        private void BtnTelevisionAll_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new TelevisionPage());
 
         private void BtnTelevisionAiring_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new AiringPage());
 
