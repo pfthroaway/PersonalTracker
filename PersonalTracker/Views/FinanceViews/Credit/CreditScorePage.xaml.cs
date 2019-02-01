@@ -57,7 +57,6 @@ namespace PersonalTracker.Views.FinanceViews.Credit
 
         private async void CreditScorePage_Loaded(object sender, RoutedEventArgs e)
         {
-            AppState.CalculateScale(Grid);
             await LoadScores();
             RefreshItemsSource();
         }

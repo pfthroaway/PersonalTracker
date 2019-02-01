@@ -99,11 +99,7 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
 
         public ManageFuelupsPage() => InitializeComponent();
 
-        private void ManageVehiclePage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void ManageVehiclePage_OnLoaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         #endregion Page-Manipulation Methods
     }

@@ -4,10 +4,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
-      Loaded="CategorizedMonthlyReportPage_Loaded"
       Style="{StaticResource PageStyle}"
       Title="Finances - Categorized Monthly Report">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

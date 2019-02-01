@@ -51,8 +51,6 @@ namespace PersonalTracker.Views.FinanceViews.Search
 
         public SearchResultsPage() => InitializeComponent();
 
-        private void SearchResultsPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

@@ -12,15 +12,9 @@
         SizeToContent="Manual"
         Icon="Platinum.ico"
         Loaded="WindowMain_Loaded">
-    <Grid x:Name="Grid" Margin="10">
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="LoginPage.xaml" SizeChanged="MainFrame_OnSizeChanged">
-            <Frame.LayoutTransform>
-                <ScaleTransform x:Name="ApplicationScaleTransform"
-                                CenterX="0"
-                                CenterY="0"
-                                ScaleX="{Binding ElementName=WindowMain, Path=ScaleValue}"
-                                ScaleY="{Binding ElementName=WindowMain, Path=ScaleValue}" />
-            </Frame.LayoutTransform>
-        </Frame>
-    </Grid>
+    <Viewbox Stretch="Uniform" Margin="20">
+        <Grid>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="LoginPage.xaml" />
+        </Grid>
+    </Viewbox>
 </Window>

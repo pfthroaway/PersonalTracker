@@ -7,7 +7,7 @@
       Title="Fuel Tracker - Manage Vehicle"
       Style="{StaticResource PageStyle}"
       Loaded="ManageVehiclePage_OnLoaded">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

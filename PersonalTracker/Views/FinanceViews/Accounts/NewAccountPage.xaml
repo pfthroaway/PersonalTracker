@@ -5,9 +5,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
-      Loaded="NewAccountPage_Loaded"
       Title="Finances - New Account">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="50">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

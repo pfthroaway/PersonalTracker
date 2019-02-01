@@ -116,14 +116,12 @@ namespace PersonalTracker.Views.FinanceViews.Categories
 
         public ManageCategoriesPage() => InitializeComponent();
 
-        private void ManageCategoriesPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void ManageCategoriesPage_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         private void LVMajor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //TODO Find out why the text isn't being displayed in the Minor Categories ListView when a Major Category is selected. The collection is loaded into memory correctly, but isn't displaying text.
+
             if (LVMajor.SelectedIndex >= 0)
             {
                 _selectedMajorCategory = (Category)LVMajor.SelectedValue;

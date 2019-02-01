@@ -7,7 +7,7 @@ using System.Windows.Controls;
 namespace PersonalTracker.Views.LensesViews
 {
     /// <summary>Interaction logic for ModifyContactPage.xaml</summary>
-    public partial class ModifyContactPage : Page
+    public partial class ModifyLensesPage : Page
     {
         private Contact _originalContact, _modifiedContact;
 
@@ -47,15 +47,13 @@ namespace PersonalTracker.Views.LensesViews
 
         #region Page-Manipulation Methods
 
-        internal ModifyContactPage(Contact selectedContact)
+        internal ModifyLensesPage(Contact selectedContact)
         {
             InitializeComponent();
             CmbSide.Items.Add("Left");
             CmbSide.Items.Add("Right");
             LoadContact(selectedContact);
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

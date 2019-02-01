@@ -128,8 +128,6 @@ namespace PersonalTracker.Views.FinanceViews.Transactions
             CmbTransferTo.ItemsSource = _allAccounts;
         }
 
-        private void NewTransferPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void TxtTransferAmount_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Decimals);
 
         private void TxtTransferAmount_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);

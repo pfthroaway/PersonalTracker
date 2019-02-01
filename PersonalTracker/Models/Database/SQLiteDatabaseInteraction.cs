@@ -48,7 +48,7 @@ namespace PersonalTracker.Models.Database
                "CREATE TABLE `Books` (`Name` TEXT NOT NULL COLLATE NOCASE, `Author` TEXT NOT NULL COLLATE NOCASE); " +
                "CREATE TABLE `Films` (`Name` TEXT NOT NULL COLLATE NOCASE, `Released` TEXT NOT NULL, `Rating` NUMERIC NOT NULL); " +
                "CREATE TABLE `Music` (`Artist` TEXT NOT NULL COLLATE NOCASE, `Album` TEXT NOT NULL); " +
-               "CREATE TABLE `Series` (`Name` TEXT NOT NULL COLLATE NOCASE, `PremiereDate` TEXT, `Rating` NUMERIC, `Seasons` INTEGER, `Episodes` INTEGER, `Status` INTEGER NOT NULL, `Channel` TEXT, `FinaleDate` TEXT, `Day` INTEGER, `Time` TEXT, `ReturnDate` TEXT); "
+               "CREATE TABLE `Television` (`Name` TEXT NOT NULL COLLATE NOCASE, `PremiereDate` TEXT, `Rating` NUMERIC, `Seasons` INTEGER, `Episodes` INTEGER, `Status` INTEGER NOT NULL, `Channel` TEXT, `FinaleDate` TEXT, `Day` INTEGER, `Time` TEXT, `ReturnDate` TEXT); "
             };
 
             await SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
@@ -808,16 +808,80 @@ namespace PersonalTracker.Models.Database
 
         #endregion Fuel
 
+        #region Books
+
+        /// <summary>Deletes a <see cref="Book"/> from the database.</summary>
+        /// <param name="deleteBook"><see cref="Book"/> to be deleted</param>
+        /// <returns>True if successful</returns>
+        public Task<bool> DeleteBook(Book deleteBook)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Books WHERE [Name] = @name AND [Author] = @author" };
+            cmd.Parameters.AddWithValue("@name", deleteBook.Name);
+            cmd.Parameters.AddWithValue("@author", deleteBook.Author);
+
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+        }
+
+        /// <summary>Loads all <see cref="Book"/>s from the database.</summary>
+        /// <returns>All <see cref="Book"/>s</returns>
+        public async Task<List<Book>> LoadBooks()
+        {
+            List<Book> allBooks = new List<Book>();
+            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Books");
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                    allBooks.Add(new Book(dr["Name"].ToString(), dr["Author"].ToString(), dr["Series"].ToString(), DecimalHelper.Parse(dr["Rating"]), Int32Helper.Parse(dr["Year"])));
+            }
+
+            return allBooks;
+        }
+
+        /// <summary>Modifies a <see cref="Book"/> in the database.</summary>
+        /// <param name="oldBook">Original <see cref="Book"/></param>
+        /// <param name="newBook"><see cref="Book"/> to replace original</param>
+        /// <returns>True if successful</returns>
+        public Task<bool> ModifyBook(Book oldBook, Book newBook)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Books SET [Name] = @newName, [Author] = @newAuthor, [Series] = @newSeries, [Rating] = @newRating, [Year] = @newYear WHERE [Name] = @oldName AND [Author] = @oldAuthor" };
+            cmd.Parameters.AddWithValue("@newName", newBook.Name);
+            cmd.Parameters.AddWithValue("@newAuthor", newBook.Author);
+            cmd.Parameters.AddWithValue("@newSeries", newBook.Series);
+            cmd.Parameters.AddWithValue("@newRating", newBook.Rating);
+            cmd.Parameters.AddWithValue("@newYear", newBook.Year);
+            cmd.Parameters.AddWithValue("@oldName", oldBook.Name);
+            cmd.Parameters.AddWithValue("@oldAuthor", oldBook.Author);
+
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+        }
+
+        /// <summary>Saves a new <see cref="Book"/> to the database.</summary>
+        /// <param name="newBook"><see cref="Book"/> to be saved</param>
+        public Task<bool> NewBook(Book newBook)
+        {
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Books([Name], [Author], [Series], [Rating], [Year]) VALUES(@name, @author, @series, @rating, @year)" };
+            cmd.Parameters.AddWithValue("@name", newBook.Name);
+            cmd.Parameters.AddWithValue("@author", newBook.Author);
+            cmd.Parameters.AddWithValue("@series", newBook.Series);
+            cmd.Parameters.AddWithValue("@rating", newBook.Rating);
+            cmd.Parameters.AddWithValue("@year", newBook.Year);
+
+            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+        }
+
+        #endregion Books
+
         #region Television
 
         #region Delete
 
-        /// <summary>Deletes a <see cref="Series"/> from the database.</summary>
-        /// <param name="deleteSeries"><see cref="Series"/> to be deleted</param>
+        /// <summary>Deletes a <see cref="Television"/> from the database.</summary>
+        /// <param name="deleteSeries"><see cref="Television"/> to be deleted</param>
         /// <returns>True if successful</returns>
         public Task<bool> DeleteSeries(Series deleteSeries)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Series WHERE [Name] = @name AND [PremiereDate] = @date" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Television WHERE [Name] = @name AND [PremiereDate] = @date" };
             cmd.Parameters.AddWithValue("@name", deleteSeries.Name);
             cmd.Parameters.AddWithValue("@date", deleteSeries.PremiereDateToString);
 
@@ -828,33 +892,33 @@ namespace PersonalTracker.Models.Database
 
         #region Load
 
-        /// <summary>Loads all <see cref="Series"/> from the database.</summary>
-        /// <returns>All <see cref="Series"/></returns>
+        /// <summary>Loads all <see cref="Television"/> from the database.</summary>
+        /// <returns>All <see cref="Television"/></returns>
         public async Task<List<Series>> LoadSeries()
         {
-            List<Series> allSeries = new List<Series>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Series");
+            List<Series> allTelevision = new List<Series>();
+            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Television");
 
             if (ds.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
-                    allSeries.Add(new Series(dr["Name"].ToString(), DateTimeHelper.Parse(dr["PremiereDate"]), DecimalHelper.Parse(dr["Rating"]), Int32Helper.Parse(dr["Seasons"]), Int32Helper.Parse(dr["Episodes"]), (SeriesStatus)Int32Helper.Parse(dr["Status"]), dr["Channel"].ToString(), DateTimeHelper.Parse(dr["FinaleDate"]), (DayOfWeek)Int32Helper.Parse(dr["Day"]), DateTimeHelper.Parse(dr["Time"]), dr["ReturnDate"].ToString()));
+                    allTelevision.Add(new Series(dr["Name"].ToString(), DateTimeHelper.Parse(dr["PremiereDate"]), DecimalHelper.Parse(dr["Rating"]), Int32Helper.Parse(dr["Seasons"]), Int32Helper.Parse(dr["Episodes"]), (SeriesStatus)Int32Helper.Parse(dr["Status"]), dr["Channel"].ToString(), DateTimeHelper.Parse(dr["FinaleDate"]), (DayOfWeek)Int32Helper.Parse(dr["Day"]), DateTimeHelper.Parse(dr["Time"]), dr["ReturnDate"].ToString()));
             }
 
-            return allSeries;
+            return allTelevision;
         }
 
         #endregion Load
 
         #region Save
 
-        /// <summary>Modifies a <see cref="Series"/> in the database.</summary>
-        /// <param name="oldSeries">Original <see cref="Series"/></param>
-        /// <param name="newSeries"><see cref="Series"/> to replace original</param>
+        /// <summary>Modifies a <see cref="Television"/> in the database.</summary>
+        /// <param name="oldSeries">Original <see cref="Television"/></param>
+        /// <param name="newSeries"><see cref="Television"/> to replace original</param>
         /// <returns>True if successful</returns>
         public Task<bool> ModifySeries(Series oldSeries, Series newSeries)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Series SET [Name] = @name, [PremiereDate] = @premiereDate, [Rating] = @rating, [Seasons] = @seasons, [Episodes] = @episodes, [Status] = @status, [Channel] = @channel, [FinaleDate] = @finaleDate, [Day] = @day, [Time] = @time, [ReturnDate] = @returnDate WHERE [Name] = @oldName" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "UPDATE Television SET [Name] = @name, [PremiereDate] = @premiereDate, [Rating] = @rating, [Seasons] = @seasons, [Episodes] = @episodes, [Status] = @status, [Channel] = @channel, [FinaleDate] = @finaleDate, [Day] = @day, [Time] = @time, [ReturnDate] = @returnDate WHERE [Name] = @oldName" };
             cmd.Parameters.AddWithValue("@name", newSeries.Name);
             cmd.Parameters.AddWithValue("@premiereDate", newSeries.PremiereDateToString);
             cmd.Parameters.AddWithValue("@rating", newSeries.Rating);
@@ -871,12 +935,12 @@ namespace PersonalTracker.Models.Database
             return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
-        /// <summary>Saves a new <see cref="Series"/> to the database.</summary>
-        /// <param name="newSeries"><see cref="Series"/> to be saved</param>
+        /// <summary>Saves a new <see cref="Television"/> to the database.</summary>
+        /// <param name="newSeries"><see cref="Television"/> to be saved</param>
         /// <returns>True if successful</returns>
         public Task<bool> NewSeries(Series newSeries)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Series([Name], [PremiereDate], [Rating], [Seasons], [Episodes], [Status], [Channel], [FinaleDate], [Day], [Time], [ReturnDate]) VALUES(@name, @premiereDate, @rating, @seasons, @episodes, @status, @channel, @finaleDate, @day, @time, @returnDate)" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "INSERT INTO Television([Name], [PremiereDate], [Rating], [Seasons], [Episodes], [Status], [Channel], [FinaleDate], [Day], [Time], [ReturnDate]) VALUES(@name, @premiereDate, @rating, @seasons, @episodes, @status, @channel, @finaleDate, @day, @time, @returnDate)" };
             cmd.Parameters.AddWithValue("@name", newSeries.Name);
             cmd.Parameters.AddWithValue("@premiereDate", newSeries.PremiereDateToString);
             cmd.Parameters.AddWithValue("@rating", newSeries.Rating);

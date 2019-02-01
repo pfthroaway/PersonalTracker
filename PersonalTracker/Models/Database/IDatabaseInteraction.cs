@@ -263,6 +263,29 @@ namespace PersonalTracker.Models.Database
 
         #endregion Fuel
 
+        #region Books
+
+        /// <summary>Deletes a <see cref="Book"/> from the database.</summary>
+        /// <param name="deleteBook"><see cref="Book"/> to be deleted</param>
+        /// <returns>True if successful</returns>
+        Task<bool> DeleteBook(Book deleteBook);
+
+        /// <summary>Loads all <see cref="Book"/>s from the database.</summary>
+        /// <returns>All <see cref="Book"/>s</returns>
+        Task<List<Book>> LoadBooks();
+
+        /// <summary>Modifies a <see cref="Book"/> in the database.</summary>
+        /// <param name="oldBook">Original <see cref="Book"/></param>
+        /// <param name="newBook"><see cref="Book"/> to replace original</param>
+        /// <returns>True if successful</returns>
+        Task<bool> ModifyBook(Book oldBook, Book newBook);
+
+        /// <summary>Saves a new <see cref="Book"/> to the database.</summary>
+        /// <param name="newBook"><see cref="Book"/> to be saved</param>
+        Task<bool> NewBook(Book newBook);
+
+        #endregion Books
+
         #region Television
 
         #region Delete

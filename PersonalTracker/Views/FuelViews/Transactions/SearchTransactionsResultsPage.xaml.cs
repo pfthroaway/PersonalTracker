@@ -7,7 +7,5 @@ namespace PersonalTracker.Views.FuelViews.Transactions
     public partial class SearchTransactionsResultsPage
     {
         public SearchTransactionsResultsPage() => InitializeComponent();
-
-        private void SearchTransactionsResultsPage_OnLoaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
     }
 }

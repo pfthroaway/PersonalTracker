@@ -7,7 +7,7 @@
       Style="{StaticResource PageStyle}"
       Loaded="MainPage_Loaded"
       Title="Finances - View Accounts">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

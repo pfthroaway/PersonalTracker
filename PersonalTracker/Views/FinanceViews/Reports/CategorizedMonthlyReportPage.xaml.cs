@@ -37,8 +37,6 @@ namespace PersonalTracker.Views.FinanceViews.Reports
 
         public CategorizedMonthlyReportPage() => InitializeComponent();
 
-        private void CategorizedMonthlyReportPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

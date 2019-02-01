@@ -7,7 +7,7 @@
       Style="{StaticResource PageStyle}"
       Title="Finances - Add Credit Score"
       Loaded="AddCreditScorePage_Loaded">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

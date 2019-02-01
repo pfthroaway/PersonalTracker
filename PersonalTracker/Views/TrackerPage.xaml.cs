@@ -72,12 +72,7 @@ namespace PersonalTracker.Views
             LoadUser();
         }
 
-        private void TrackerPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-
-            WelcomeMessage = $"Welcome, {AppState.CurrentUser.Username}!";
-        }
+        private void TrackerPage_Loaded(object sender, RoutedEventArgs e) => WelcomeMessage = $"Welcome, {AppState.CurrentUser.Username}!";
 
         #endregion Page-Manipulation Methods
     }

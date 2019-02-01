@@ -78,8 +78,6 @@ namespace PersonalTracker.Views.FuelViews.Vehicles
             TxtNickname.Focus();
         }
 
-        private void AddVehiclePage_OnLoaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page Manipulation
     }
 }

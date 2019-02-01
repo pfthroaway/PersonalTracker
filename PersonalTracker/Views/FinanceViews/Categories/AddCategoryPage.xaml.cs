@@ -49,8 +49,6 @@ namespace PersonalTracker.Views.FinanceViews.Categories
 
         public AddCategoryPage() => InitializeComponent();
 
-        private void AddCategoryPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void TxtName_OnGotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
 
         private void TxtName_TextChanged(object sender, TextChangedEventArgs e) => BtnSubmit.IsEnabled =

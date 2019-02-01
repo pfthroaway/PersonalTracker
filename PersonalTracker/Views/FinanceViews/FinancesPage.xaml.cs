@@ -63,11 +63,7 @@ namespace PersonalTracker.Views.FinanceViews
 
         public FinancesPage() => InitializeComponent();
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void MainPage_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         #endregion Page-Manipulation Methods
     }

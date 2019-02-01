@@ -46,8 +46,6 @@ namespace PersonalTracker.Views.FinanceViews.Transactions
             LVTransactions.ItemsSource = _allTransactions;
         }
 
-        private void ViewAllTransactionsPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

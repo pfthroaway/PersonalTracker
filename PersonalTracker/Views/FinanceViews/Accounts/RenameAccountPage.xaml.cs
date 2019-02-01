@@ -41,8 +41,6 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
 
         public RenameAccountPage() => InitializeComponent();
 
-        private void RenameAccountPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

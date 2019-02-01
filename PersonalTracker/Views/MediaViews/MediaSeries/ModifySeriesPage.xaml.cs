@@ -116,11 +116,7 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
             CmbDay.Items.Add("Saturday");
         }
 
-        private void ModifySeriesPage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            Reset();
-        }
+        private void ModifySeriesPage_OnLoaded(object sender, RoutedEventArgs e) => Reset();
 
         #endregion Window-Manipulation Methods
     }

@@ -71,11 +71,7 @@ namespace PersonalTracker.Views.FinanceViews.Credit
             CmbProvider.Items.Add("Equifax");
         }
 
-        private void AddCreditScorePage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Reset();
-            AppState.CalculateScale(Grid);
-        }
+        private void AddCreditScorePage_Loaded(object sender, RoutedEventArgs e) => Reset();
 
         private void CmbProvider_SelectionChanged(object sender, SelectionChangedEventArgs e) => TextChanged();
 

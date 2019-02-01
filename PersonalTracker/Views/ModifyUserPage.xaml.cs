@@ -10,7 +10,5 @@ namespace PersonalTracker.Views
         //TODO Fully implement modification of User credentials, perhaps via an Admin interface. If adding an Admin interface, add an auditing system to see modifications.
 
         public ModifyUserPage() => InitializeComponent();
-
-        private void ModifyUserPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
     }
 }

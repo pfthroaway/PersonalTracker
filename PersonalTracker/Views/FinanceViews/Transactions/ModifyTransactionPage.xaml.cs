@@ -136,8 +136,6 @@ namespace PersonalTracker.Views.FinanceViews.Transactions
             CmbMinorCategory.ItemsSource = _selectedCategory.MinorCategories;
         }
 
-        private void ModifyTransactionPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void TxtInflowOutflow_PreviewKeyDown(object sender, KeyEventArgs e) => Functions.PreviewKeyDown(e, KeyType.Decimals);
 
         private void Txt_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);

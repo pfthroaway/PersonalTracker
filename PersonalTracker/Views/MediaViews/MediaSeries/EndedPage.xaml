@@ -7,7 +7,7 @@
       Style="{StaticResource PageStyle}"
       Loaded="EndedPage_OnLoaded"
       Title="Completed Series">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

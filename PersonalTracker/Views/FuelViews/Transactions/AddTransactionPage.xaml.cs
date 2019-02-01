@@ -149,11 +149,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
             TxtStore.Focus();
         }
 
-        private void AddTransactionPage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            DataContext = CurrentVehicle;
-        }
+        private void AddTransactionPage_OnLoaded(object sender, RoutedEventArgs e) => DataContext = CurrentVehicle;
 
         #endregion Page-Manipulation Methods
     }

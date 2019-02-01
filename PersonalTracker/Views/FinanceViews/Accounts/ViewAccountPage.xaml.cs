@@ -110,11 +110,7 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
 
         public ViewAccountPage() => InitializeComponent();
 
-        private void ViewAccountPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void ViewAccountPage_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         private void LVTransactionsColumnHeader_Click(object sender, RoutedEventArgs e) => _sort = Functions.ListViewColumnHeaderClick(sender, _sort, LVTransactions, "#CCCCCC");
 

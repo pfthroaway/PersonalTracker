@@ -5,10 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       x:Name="PageModifyTransaction"
       mc:Ignorable="d"
-      Loaded="ModifyTransactionPage_Loaded"
       Title="Finances - Modify Transaction"
       Style="{StaticResource PageStyle}">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

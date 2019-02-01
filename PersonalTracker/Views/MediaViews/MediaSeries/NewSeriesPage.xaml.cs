@@ -114,8 +114,6 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
             TxtName.Focus();
         }
 
-        private void NewSeriesPage_OnLoaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

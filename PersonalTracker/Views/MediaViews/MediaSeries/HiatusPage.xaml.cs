@@ -81,11 +81,7 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
             DataContext = _selectedSeries;
         }
 
-        private void HiatusPage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void HiatusPage_OnLoaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         #endregion Window-Manipulation Methods
     }

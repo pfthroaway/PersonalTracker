@@ -71,8 +71,6 @@ namespace PersonalTracker.Views.FinanceViews.Accounts
             CmbAccountTypes.ItemsSource = _allAccountTypes;
         }
 
-        private void NewAccountPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void CmbAccountTypes_SelectionChanged(object sender, SelectionChangedEventArgs e) => TextChanged();
 
         private void Txt_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);

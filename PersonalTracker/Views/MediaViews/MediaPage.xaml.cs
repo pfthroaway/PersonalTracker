@@ -14,40 +14,22 @@ namespace PersonalTracker.Views.MediaViews
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) => AppState.GoBack();
 
-        #region Television
-
-        private void BtnTelevisionAll_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new TelevisionPage());
-
-        private void BtnTelevisionAiring_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new AiringPage());
-
-        private void BtnTelevisionHiatus_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new HiatusPage());
-
-        private void BtnTelevisionEnded_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new EndedPage());
-
-        private void BtnTelevisionAddNew_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new NewSeriesPage());
-
-        #endregion Television
-
-        #region Film
-
-        private void BtnFilmReleased_Click(object sender, RoutedEventArgs e)
+        private void BtnBooks_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void BtnFilmUpcoming_Click(object sender, RoutedEventArgs e)
+        private void BtnFilms_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void BtnFilmAddNew_Click(object sender, RoutedEventArgs e)
+        private void BtnMusic_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        #endregion Film
+        private void BtnTelevision_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new TelevisionPage());
 
         #endregion Click
 
         public MediaPage() => InitializeComponent();
-
-        private void MainPage_OnLoaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
     }
 }

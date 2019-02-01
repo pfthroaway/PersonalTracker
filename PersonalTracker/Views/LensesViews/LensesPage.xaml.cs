@@ -82,7 +82,7 @@ namespace PersonalTracker.Views.LensesViews
             }
         }
 
-        private void BtnModifyContact_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new ModifyContactPage(_selectedContact));
+        private void BtnModifyContact_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new ModifyLensesPage(_selectedContact));
 
         private void LVContactsColumnHeader_Click(object sender, RoutedEventArgs e) => _sort =
             Functions.ListViewColumnHeaderClick(sender, _sort, LVContacts, "#CCCCCC");
@@ -101,11 +101,7 @@ namespace PersonalTracker.Views.LensesViews
             CmbLength.SelectedIndex = 0;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void MainPage_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         private void DateNewContact_SelectedDateChanged(object sender, SelectionChangedEventArgs e) =>
             ToggleButtons(DateNewContact.Text.Length > 0);

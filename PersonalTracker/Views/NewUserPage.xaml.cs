@@ -59,8 +59,6 @@ namespace PersonalTracker.Views
             TxtUsername.Focus();
         }
 
-        private void NewUserPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void TxtUsername_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
 
         private void Pswd_GotFocus(object sender, RoutedEventArgs e) => Functions.PasswordBoxGotFocus(sender);

@@ -54,8 +54,6 @@ namespace PersonalTracker.Views.FinanceViews.Categories
 
         public RenameCategoryPage() => InitializeComponent();
 
-        private void RenameCategoryPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         private void TxtName_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
 
         private void TxtName_TextChanged(object sender, TextChangedEventArgs e) => BtnSubmit.IsEnabled =

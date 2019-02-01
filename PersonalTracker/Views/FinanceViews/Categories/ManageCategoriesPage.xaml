@@ -7,7 +7,7 @@
       Loaded="ManageCategoriesPage_Loaded"
       Style="{StaticResource PageStyle}"
       Title="Finances - Manage Categories">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

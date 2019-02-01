@@ -5,8 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
-      Title="Fuel Tracker - Add Fuel-up"
-      Loaded="SearchTransactionsResultsPage_OnLoaded">
-    <Grid x:Name="Grid" Margin="10">
+      Title="Fuel Tracker - Add Fuel-up">
+    <Grid>
     </Grid>
 </Page>

@@ -83,11 +83,7 @@ namespace PersonalTracker.Views.MediaViews.MediaSeries
 
         public AllTelevisionPage() => InitializeComponent();
 
-        private void AllTelevisionPage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            RefreshItemsSource();
-        }
+        private void AllTelevisionPage_OnLoaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
 
         #endregion Window-Manipulation Methods
     }

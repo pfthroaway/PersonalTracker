@@ -81,8 +81,6 @@ namespace PersonalTracker.Views.FinanceViews.Reports
             LVMonths.ItemsSource = _allMonths;
         }
 
-        private void MonthlyReportPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);
-
         #endregion Page-Manipulation Methods
     }
 }

@@ -7,7 +7,7 @@
       Title="Fuel Tracker - Modify Fuel-up"
       Style="{StaticResource PageStyle}"
       Loaded="ModifyTransactionPage_OnLoaded">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -59,7 +59,7 @@
         <TextBox x:Name="TxtGallons" Grid.Column="0" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
         <TextBox x:Name="TxtPrice" Grid.Column="1" Grid.Row="4" Width="200" MaxLength="30" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" TextChanged="Decimal_TextChanged" Margin="0,0,10,10" />
         <TextBox x:Name="TxtOdometer" Grid.Column="2" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" ToolTip="You can either input the current odometer reading or the distance since the last fuel-up." ToolTipService.ShowDuration="5000" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtRange" Grid.Column="3" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Txt_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtRange" Grid.Column="3" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Txt_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
         <StackPanel Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button x:Name="BtnSave" Width="125" Content="_Save" Click="BtnSave_Click" IsDefault="True" IsEnabled="False" Margin="0,0,20,0" />
             <Button x:Name="BtnReset" Width="125" Content="_Reset" Click="BtnReset_Click" Margin="0,0,20,0" />

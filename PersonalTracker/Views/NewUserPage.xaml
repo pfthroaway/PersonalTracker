@@ -5,9 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
-      Loaded="NewUserPage_Loaded"
       Title="Personal Tracker - New User">
-    <Grid x:Name="Grid" Margin="10">
+    <Grid Margin="50">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

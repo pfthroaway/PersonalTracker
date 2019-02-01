@@ -108,11 +108,7 @@ namespace PersonalTracker.Views.FuelViews.Transactions
             TxtStore.Focus();
         }
 
-        private void ModifyTransactionPage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            AppState.CalculateScale(Grid);
-            DisplayOriginalTransaction();
-        }
+        private void ModifyTransactionPage_OnLoaded(object sender, RoutedEventArgs e) => DisplayOriginalTransaction();
 
         #endregion Page-Manipulation Methods
     }
