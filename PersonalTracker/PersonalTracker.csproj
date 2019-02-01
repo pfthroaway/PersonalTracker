@@ -77,8 +77,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\FinanceModels\Categories\Category.cs" />
-    <Compile Include="Models\FinanceModels\Database\IDatabaseInteraction.cs" />
-    <Compile Include="Models\FinanceModels\Database\SQLiteDatabaseInteraction.cs" />
     <Compile Include="Models\FinanceModels\Data\Account.cs" />
     <Compile Include="Models\FinanceModels\Data\CreditScore.cs" />
     <Compile Include="Models\FinanceModels\Data\FinancialTransaction.cs" />

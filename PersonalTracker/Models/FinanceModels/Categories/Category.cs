@@ -44,7 +44,7 @@ namespace PersonalTracker.Models.FinanceModels.Categories
         {
             if (MinorCategories.Count > 0)
             {
-                MinorCategories = new List<string>(MinorCategories.OrderBy(category => category));
+                MinorCategories = new List<string>(MinorCategories.OrderBy(category => category).ToList());
                 OnPropertyChanged("MinorCategories");
             }
         }
