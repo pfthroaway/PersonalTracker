@@ -6,6 +6,6 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="Personal Tracker - Modify User">
-    <Grid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
     </Grid>
 </Page>

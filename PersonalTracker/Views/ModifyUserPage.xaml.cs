@@ -1,6 +1,4 @@
-﻿using PersonalTracker.Models;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace PersonalTracker.Views
 {

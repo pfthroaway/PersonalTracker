@@ -2,13 +2,13 @@
 using Extensions.DatabaseHelp;
 using Extensions.DataTypeHelpers;
 using Extensions.Encryption;
-using PersonalTracker.Models.FinanceModels.Categories;
-using PersonalTracker.Models.FinanceModels.Data;
-using PersonalTracker.Models.FinanceModels.Enums;
-using PersonalTracker.Models.FuelModels;
-using PersonalTracker.Models.LensesModels;
-using PersonalTracker.Models.MediaModels.Enums;
-using PersonalTracker.Models.MediaModels.MediaTypes;
+using PersonalTracker.Finances.Models.Categories;
+using PersonalTracker.Finances.Models.Data;
+using PersonalTracker.Finances.Models.Enums;
+using PersonalTracker.Fuel.Models;
+using PersonalTracker.Lenses.Models;
+using PersonalTracker.Media.Models.Enums;
+using PersonalTracker.Media.Models.MediaTypes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,49 +24,24 @@ namespace PersonalTracker.Models.Database
     internal class SQLiteDatabaseInteraction : IDatabaseInteraction
     {
         private const string _DATABASENAME = "Users.sqlite";
-        private readonly string _con = $"Data Source={_DATABASENAME}; foreign keys = TRUE; Version = 3;";
+        private readonly string _con = $"Data Source={UsersDatabaseLocation}; foreign keys = TRUE; Version = 3;";
+        private static readonly string UsersDatabaseLocation = Path.Combine(AppData.Location, _DATABASENAME);
 
         #region Database Interaction
-
-        [Obsolete]
-        /// <summary>Creates a database for the current <see cref="User"/>.</summary>
-        public async void CreateCurrentUserDatabase()
-        {
-            SQLiteConnection.CreateFile(AppState.CurrentUserDatabaseName);
-
-            SQLiteCommand cmd = new SQLiteCommand
-            {
-                CommandText = "CREATE TABLE `AccountTypes` (`Name` TEXT NOT NULL UNIQUE, PRIMARY KEY(`Name`)); " +
-               "CREATE TABLE `Accounts` (`Name` TEXT NOT NULL UNIQUE, `Type` TEXT NOT NULL, `Balance` NUMERIC NOT NULL, PRIMARY KEY(`Name`)); " +
-               "CREATE TABLE `CreditScores` (`ID` INTEGER PRIMARY KEY AUTOINCREMENT,`Date` TEXT NOT NULL, `Source` TEXT NOT NULL, `Score` INTEGER NOT NULL, `Provider` TEXT NOT NULL, `FICO` INTEGER NOT NULL); " +
-               "CREATE TABLE `MajorCategories` (`Name` TEXT NOT NULL UNIQUE, PRIMARY KEY(`Name`)); " +
-               "CREATE TABLE `MinorCategories` ( `MajorCategory` TEXT NOT NULL, `MinorCategory` TEXT NOT NULL, FOREIGN KEY(`MajorCategory`) REFERENCES `MajorCategories`(`Name`) ON UPDATE CASCADE ON DELETE CASCADE, PRIMARY KEY(`MajorCategory`,`MinorCategory`)); " +
-               "CREATE TABLE `FinanceTransactions` (`ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `Date` TEXT NOT NULL, `Payee` TEXT NOT NULL, `MajorCategory` TEXT NOT NULL, `MinorCategory` TEXT NOT NULL, `Memo` TEXT, `Outflow` NUMERIC NOT NULL, `Inflow` NUMERIC NOT NULL, `Account` TEXT NOT NULL, FOREIGN KEY(`Account`) REFERENCES `Accounts`(`Name`) ON UPDATE CASCADE ON DELETE CASCADE);" +
-               "CREATE TABLE `Contacts` (`Date`	TEXT NOT NULL, `Side` TEXT NOT NULL, `ReplacementDate` TEXT NOT NULL); " +
-               "CREATE TABLE `FuelTransactions` (`TransactionID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `VehicleID` INTEGER NOT NULL, `Store` TEXT NOT NULL, `Date` TEXT NOT NULL, `Octane`	INTEGER NOT NULL, `Distance` NUMERIC NOT NULL, `Gallons`	NUMERIC NOT NULL, `Price` NUMERIC NOT NULL, `Odometer` NUMERIC NOT NULL, `Range` INTEGER, FOREIGN KEY(`VehicleID`) REFERENCES `Vehicles`(`VehicleID`)); " +
-               "CREATE TABLE `Vehicles` (`VehicleID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `UserID` INTEGER NOT NULL, `Nickname`	TEXT NOT NULL, `Make` TEXT NOT NULL, `Model` TEXT NOT NULL, `Year` TEXT NOT NULL); " +
-               "CREATE TABLE `Books` (`Name` TEXT NOT NULL COLLATE NOCASE, `Author` TEXT NOT NULL COLLATE NOCASE); " +
-               "CREATE TABLE `Films` (`Name` TEXT NOT NULL COLLATE NOCASE, `Released` TEXT NOT NULL, `Rating` NUMERIC NOT NULL); " +
-               "CREATE TABLE `Music` (`Artist` TEXT NOT NULL COLLATE NOCASE, `Album` TEXT NOT NULL); " +
-               "CREATE TABLE `Television` (`Name` TEXT NOT NULL COLLATE NOCASE, `PremiereDate` TEXT, `Rating` NUMERIC, `Seasons` INTEGER, `Episodes` INTEGER, `Status` INTEGER NOT NULL, `Channel` TEXT, `FinaleDate` TEXT, `Day` INTEGER, `Time` TEXT, `ReturnDate` TEXT); "
-            };
-
-            await SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
-        }
 
         /// <summary>Creates a database for the current <see cref="User"/>.</summary>
         public void VerifyUserDatabaseIntegrity()
         {
-            if (!File.Exists(AppState.CurrentUserDatabaseName))
+            if (!File.Exists(Path.Combine(AppData.Location, AppState.CurrentUserDatabaseName)))
             {
-                Functions.VerifyFileIntegrity(Assembly.GetExecutingAssembly().GetManifestResourceStream($"PersonalTracker.UserDB.sqlite"), "UserDB.sqlite");
+                Functions.VerifyFileIntegrity(Assembly.GetExecutingAssembly().GetManifestResourceStream("PersonalTracker.UserDB.sqlite"), "UserDB.sqlite", AppData.Location);
                 File.Move("UserDB.sqlite", AppState.CurrentUserDatabaseName);
             }
         }
 
         /// <summary>Verifies that the requested database exists and that its file size is greater than zero. If not, it extracts the embedded database file to the local output folder.</summary>
         public void VerifyDatabaseIntegrity() => Functions.VerifyFileIntegrity(
-            Assembly.GetExecutingAssembly().GetManifestResourceStream($"PersonalTracker.{_DATABASENAME}"), _DATABASENAME);
+            Assembly.GetExecutingAssembly().GetManifestResourceStream($"PersonalTracker.{_DATABASENAME}"), _DATABASENAME, AppData.Location);
 
         #endregion Database Interaction
 
@@ -81,7 +56,7 @@ namespace PersonalTracker.Models.Database
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM Users WHERE Username = @name" };
             cmd.Parameters.AddWithValue("name", username);
 
-            DataSet ds = await SQLite.FillDataSet(_con, cmd);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
 
             return ds.Tables[0].Rows.Count > 0 && PBKDF2.ValidatePassword(password, ds.Tables[0].Rows[0]["Password"].ToString());
         }
@@ -96,7 +71,7 @@ namespace PersonalTracker.Models.Database
                 CommandText = "SELECT * FROM Users WHERE [Username] = @username"
             };
             cmd.Parameters.AddWithValue("@username", createUser.Username);
-            DataSet ds = await SQLite.FillDataSet(_con, cmd);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
 
             if (ds.Tables[0].Rows.Count == 0)
             {
@@ -106,7 +81,7 @@ namespace PersonalTracker.Models.Database
                 };
                 cmd.Parameters.AddWithValue("@username", createUser.Username);
                 cmd.Parameters.AddWithValue("@password", createUser.Password);
-                return await SQLite.ExecuteCommand(_con, cmd);
+                return await SQLiteHelper.ExecuteCommand(_con, cmd);
             }
             else
             {
@@ -126,14 +101,14 @@ namespace PersonalTracker.Models.Database
             };
             cmd.Parameters.AddWithValue("@id", deleteUser.UserID);
 
-            return SQLite.ExecuteCommand(_con, cmd);
+            return SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
         /// <summary>Gets the next index in the User table.</summary>
         /// <returns>Next index in the User table.</returns>
         public async Task<int> GetNextUserIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Users'");
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Users'");
 
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
@@ -149,7 +124,7 @@ namespace PersonalTracker.Models.Database
             };
 
             cmd.Parameters.AddWithValue("@username", username);
-            DataSet ds = await SQLite.FillDataSet(_con, cmd);
+            DataSet ds = await SQLiteHelper.FillDataSet(_con, cmd);
 
             return new User(Int32Helper.Parse(ds.Tables[0].Rows[0]["UserID"]), ds.Tables[0].Rows[0]["Username"].ToString(), ds.Tables[0].Rows[0]["Password"].ToString());
         }
@@ -170,7 +145,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldName", oldUser.Username);
             cmd.Parameters.AddWithValue("@oldPassword", oldUser.Password);
 
-            return SQLite.ExecuteCommand(_con, cmd);
+            return SQLiteHelper.ExecuteCommand(_con, cmd);
         }
 
         #endregion User Management
@@ -184,12 +159,12 @@ namespace PersonalTracker.Models.Database
         public async Task<List<Account>> LoadAccounts()
         {
             List<Account> allAccounts = new List<Account>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Accounts");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Accounts");
 
             if (ds.Tables[0].Rows.Count > 0)
                 allAccounts.AddRange(from DataRow dr in ds.Tables[0].Rows select new Account(dr["Name"].ToString(), EnumHelper.Parse<AccountTypes>(dr["Type"].ToString()), new List<FinancialTransaction>()));
 
-            ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM FinancialTransactions");
+            ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM FinancialTransactions");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
@@ -219,7 +194,7 @@ namespace PersonalTracker.Models.Database
         public async Task<List<string>> LoadAccountTypes()
         {
             List<string> allAccountTypes = new List<string>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM AccountTypes");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM AccountTypes");
 
             if (ds.Tables[0].Rows.Count > 0)
                 allAccountTypes.AddRange(from DataRow dr in ds.Tables[0].Rows select dr["Name"].ToString());
@@ -232,12 +207,12 @@ namespace PersonalTracker.Models.Database
         public async Task<List<Category>> LoadCategories()
         {
             List<Category> allCategories = new List<Category>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM MajorCategories");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM MajorCategories");
 
             if (ds.Tables[0].Rows.Count > 0)
                 allCategories.AddRange(from DataRow dr in ds.Tables[0].Rows select new Category(dr["Name"].ToString(), new List<string>()));
 
-            ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM MinorCategories");
+            ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM MinorCategories");
 
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -262,7 +237,7 @@ namespace PersonalTracker.Models.Database
         public async Task<List<CreditScore>> LoadCreditScores()
         {
             List<CreditScore> scores = new List<CreditScore>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM CreditScores");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM CreditScores");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 scores.AddRange(from DataRow dr in ds.Tables[0].Rows select new CreditScore(DateTimeHelper.Parse(dr["Date"]), dr["Source"].ToString(), Int32Helper.Parse(dr["Score"]), EnumHelper.Parse<Providers>(dr["Provider"].ToString()), BoolHelper.Parse(dr["FICO"])));
@@ -289,7 +264,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@name", account.Name);
             cmd.Parameters.AddWithValue("@type", account.AccountType);
             cmd.Parameters.AddWithValue("@balance", account.Balance);
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Deletes an <see cref="Account"/> from the database.</summary>
@@ -300,7 +275,7 @@ namespace PersonalTracker.Models.Database
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM Accounts WHERE [Name] = @name" };
             cmd.Parameters.AddWithValue("@name", account.Name);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Renames an <see cref="Account"/> in the database.</summary>
@@ -317,7 +292,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@newAccountName", newAccountName);
             cmd.Parameters.AddWithValue("@oldAccountName", oldAccountName);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Account Manipulation
@@ -346,7 +321,7 @@ namespace PersonalTracker.Models.Database
                 cmd.Parameters.AddWithValue("@minorCategory", newName);
             }
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Renames a <see cref="Category"/> in the database.</summary>
@@ -367,7 +342,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldName", oldName);
             cmd.Parameters.AddWithValue("@majorCategory", selectedCategory.Name);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Removes a Major <see cref="Category"/> from the database, as well as removes it from all <see cref="FinancialTransaction"/>s which utilize it.</summary>
@@ -383,7 +358,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@name", selectedCategory.Name);
             cmd.Parameters.AddWithValue("@newName", "");
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Removes a Minor <see cref="Category"/> from the database, as well as removes it from all <see cref="FinancialTransaction"/>s which utilize it.</summary>
@@ -401,7 +376,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@minorCategory", minorCategory);
             cmd.Parameters.AddWithValue("@newMinorName", "");
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Category Management
@@ -424,7 +399,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@provider", newScore.ProviderToString);
             cmd.Parameters.AddWithValue("@fico", Int32Helper.Parse(newScore.FICO));
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Deletes a <see cref="CreditScore"/> from the database</summary>
@@ -443,7 +418,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@provider", deleteScore.ProviderToString);
             cmd.Parameters.AddWithValue("@fico", Int32Helper.Parse(deleteScore.FICO));
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Modifies a <see cref="CreditScore"/> in the database.</summary>
@@ -468,7 +443,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldProvider", oldScore.ProviderToString);
             cmd.Parameters.AddWithValue("@oldFico", Int32Helper.Parse(oldScore.FICO));
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Credit Score Management
@@ -496,7 +471,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@name", transaction.Account);
             cmd.Parameters.AddWithValue("@balance", account.Balance);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Deletes a <see cref="FinancialTransaction"/> from the database.</summary>
@@ -519,14 +494,14 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@inflow", transaction.Inflow);
             cmd.Parameters.AddWithValue("@account", account.Name);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Gets the next <see cref="FinancialTransaction"/> ID autoincrement value in the database for the <see cref="FinancialTransaction"/>s table.</summary>
         /// <returns>Next <see cref="FinancialTransaction"/>s ID value</returns>
         public async Task<int> GetNextFinancialTransactionIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FinancialTransactions'");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FinancialTransactions'");
 
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
@@ -559,7 +534,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldInflow", oldTransaction.Inflow);
             cmd.Parameters.AddWithValue("@oldAccount", oldTransaction.Account);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Financial Transaction Management
@@ -583,7 +558,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@side", newContact.SideToString);
             cmd.Parameters.AddWithValue("@replacementDate", newContact.ReplacementDateToString);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Loads all <see cref="Contact"/> insertions from the database.</summary>
@@ -591,7 +566,7 @@ namespace PersonalTracker.Models.Database
         public async Task<List<Contact>> LoadContacts()
         {
             List<Contact> allContacts = new List<Contact>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Contacts");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Contacts");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 allContacts.AddRange(from DataRow dr in ds.Tables[0].Rows select new Contact(DateTimeHelper.Parse(dr["Date"]), EnumHelper.Parse<Side>(dr["Side"].ToString()), DateTimeHelper.Parse(dr["ReplacementDate"])));
@@ -619,7 +594,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldSide", originalContact.SideToString);
             cmd.Parameters.AddWithValue("@oldReplacementDate", originalContact.ReplacementDateToString);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Removes a <see cref="Contact"/> from the database.</summary>
@@ -635,7 +610,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@side", removeContact.SideToString);
             cmd.Parameters.AddWithValue("@replacementDate", removeContact.ReplacementDateToString);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Contact Lens Manipulation
@@ -654,14 +629,14 @@ namespace PersonalTracker.Models.Database
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM FuelTransactions WHERE [TransactionID] = @transactionID" };
             cmd.Parameters.AddWithValue("@transactionID", deleteTransaction.TranscationID);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Gets the next <see cref="FuelTransaction"/> ID autoincrement value in the database for the <see cref="Vehicle"/ table.</summary>
         /// <returns>Next <see cref="FuelTransaction"/> ID value</returns>
         public async Task<int> GetNextFuelTransactionIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FuelTransactions'");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'FuelTransactions'");
 
             return ds.Tables[0].Rows.Count > 0 ? Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1 : 1;
         }
@@ -674,7 +649,7 @@ namespace PersonalTracker.Models.Database
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "SELECT * FROM FuelTransactions WHERE VehicleID = @id" };
             cmd.Parameters.AddWithValue("@id", vehicleID);
 
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, cmd);
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, cmd);
 
             List<FuelTransaction> transactions = new List<FuelTransaction>();
 
@@ -708,7 +683,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@range", newTransaction.Range);
             cmd.Parameters.AddWithValue("@transactionID", newTransaction.TranscationID);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Adds a new <see cref="FuelTransaction"/> to the database.</summary>
@@ -726,7 +701,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@price", newTransaction.Price);
             cmd.Parameters.AddWithValue("@odometer", newTransaction.Odometer);
             cmd.Parameters.AddWithValue("@range", newTransaction.Range);
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Fuel Transaction Management
@@ -745,7 +720,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@model", newVehicle.Model);
             cmd.Parameters.AddWithValue("@year", newVehicle.Year);
             cmd.Parameters.AddWithValue("@vehicleID", oldVehicle.VehicleID);
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Deletes a <see cref="Vehicle"/> and all associated <see cref="FuelTransaction"/>s from the database.</summary>
@@ -756,14 +731,14 @@ namespace PersonalTracker.Models.Database
             SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM FuelTransactions WHERE [VehicleID] = @vehicleID, DELETE FROM Vehicles WHERE [VehicleID] = @vehicleID" };
             cmd.Parameters.AddWithValue("@vehicleID", deleteVehicle.VehicleID);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Gets the next <see cref="Vehicle"/> ID autoincrement value in the database for the Vehicle table.</summary>
         /// <returns>Next <see cref="Vehicle"/> ID value</returns>
         public async Task<int> GetNextVehicleIndex()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Vehicles'");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM SQLITE_SEQUENCE WHERE name = 'Vehicles'");
 
             if (ds.Tables[0].Rows.Count > 0)
                 return Int32Helper.Parse(ds.Tables[0].Rows[0]["seq"]) + 1;
@@ -774,7 +749,7 @@ namespace PersonalTracker.Models.Database
         /// <returns>All <see cref="Vehicle"/> associated with a <see cref="User"/></returns>
         public async Task<List<Vehicle>> LoadVehicles()
         {
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Vehicles");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Vehicles");
             List<Vehicle> vehicles = new List<Vehicle>();
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -801,7 +776,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@make", newVehicle.Make);
             cmd.Parameters.AddWithValue("@model", newVehicle.Model);
             cmd.Parameters.AddWithValue("@year", newVehicle.Year);
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Vehicle Management
@@ -819,7 +794,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@name", deleteBook.Name);
             cmd.Parameters.AddWithValue("@author", deleteBook.Author);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Loads all <see cref="Book"/>s from the database.</summary>
@@ -827,7 +802,7 @@ namespace PersonalTracker.Models.Database
         public async Task<List<Book>> LoadBooks()
         {
             List<Book> allBooks = new List<Book>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Books");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Books");
 
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -853,7 +828,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@oldName", oldBook.Name);
             cmd.Parameters.AddWithValue("@oldAuthor", oldBook.Author);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Saves a new <see cref="Book"/> to the database.</summary>
@@ -867,7 +842,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@rating", newBook.Rating);
             cmd.Parameters.AddWithValue("@year", newBook.Year);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Books
@@ -885,7 +860,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@name", deleteSeries.Name);
             cmd.Parameters.AddWithValue("@date", deleteSeries.PremiereDateToString);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Delete
@@ -897,7 +872,7 @@ namespace PersonalTracker.Models.Database
         public async Task<List<Series>> LoadSeries()
         {
             List<Series> allTelevision = new List<Series>();
-            DataSet ds = await SQLite.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Television");
+            DataSet ds = await SQLiteHelper.FillDataSet(AppState.CurrentUserConnection, "SELECT * FROM Television");
 
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -932,7 +907,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@returnDate", newSeries.ReturnDate);
             cmd.Parameters.AddWithValue("@oldName", oldSeries.Name);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         /// <summary>Saves a new <see cref="Television"/> to the database.</summary>
@@ -953,7 +928,7 @@ namespace PersonalTracker.Models.Database
             cmd.Parameters.AddWithValue("@time", newSeries.TimeToString);
             cmd.Parameters.AddWithValue("@returnDate", newSeries.ReturnDate);
 
-            return SQLite.ExecuteCommand(AppState.CurrentUserConnection, cmd);
+            return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
         }
 
         #endregion Save

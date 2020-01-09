@@ -1,10 +1,11 @@
 ﻿using Extensions;
-using PersonalTracker.Models.FinanceModels;
-using PersonalTracker.Models.FinanceModels.Categories;
-using PersonalTracker.Models.FinanceModels.Data;
-using PersonalTracker.Models.FuelModels;
-using PersonalTracker.Models.LensesModels;
-using PersonalTracker.Models.MediaModels.MediaTypes;
+using PersonalTracker.Finances.Models;
+using PersonalTracker.Finances.Models.Categories;
+using PersonalTracker.Finances.Models.Data;
+using PersonalTracker.Fuel.Models;
+using PersonalTracker.Lenses.Models;
+using PersonalTracker.Media.Models;
+using PersonalTracker.Media.Models.MediaTypes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,16 +15,16 @@ using System.Linq;
 namespace PersonalTracker.Models
 {
     /// <summary>Represents a User in the Personal Tracker.</summary>
-    internal class User : INotifyPropertyChanged, IEquatable<User>
+    public class User : INotifyPropertyChanged, IEquatable<User>
     {
         #region Fields
 
         private int _userID;
         private string password, username;
-        private Finances _finances = new Finances(new List<Account>(), new List<string>(), new List<Category>());
+        private AllFinances _finances = new AllFinances(new List<Account>(), new List<string>(), new List<Category>());
         private List<Contact> _lenses = new List<Contact>();
         private List<Vehicle> _vehicles = new List<Vehicle>();
-        private Media _media = new Media(new List<Series>());
+        private AllMedia _media = new AllMedia(new List<Series>());
 
         #endregion Fields
 
@@ -64,7 +65,7 @@ namespace PersonalTracker.Models
         }
 
         /// <summary>The <see cref="User"/>'s <see cref="Personal Tracker"/>.</summary>
-        public Finances Finances
+        public AllFinances Finances
         {
             get => _finances;
             set
@@ -86,7 +87,7 @@ namespace PersonalTracker.Models
         //}
 
         /// <summary>The <see cref="User"/>'s <see cref="Media"/>.</summary>
-        public Media Media
+        public AllMedia Media
         {
             get => _media;
             set
@@ -104,7 +105,7 @@ namespace PersonalTracker.Models
         public string UserIDToString => UserID.ToString().PadLeft(5, '0');
 
         /// <summary>List of all Vehicles the User owns.</summary>
-        internal ReadOnlyCollection<Vehicle> Vehicles => new ReadOnlyCollection<Vehicle>(_vehicles);
+        public ReadOnlyCollection<Vehicle> Vehicles => new ReadOnlyCollection<Vehicle>(_vehicles);
 
         /// <summary>The <see cref="User"/>'s <see cref="ContactLenses"/>.</summary>
         public ReadOnlyCollection<Contact> Lenses => new ReadOnlyCollection<Contact>(_lenses);
@@ -126,7 +127,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Adds a new contact insertion to the <see cref="User"/>'s lenses.</summary>
         /// <param name="newContact">Contact insertion to be added</param>
-        internal void AddContactLens(Contact newContact)
+        public void AddContactLens(Contact newContact)
         {
             _lenses.Add(newContact);
             UpdateContactLenses();
@@ -135,7 +136,7 @@ namespace PersonalTracker.Models
         /// <summary>Modifies an existing <see cref="Contact"/> in the <see cref="User"/>'s lenses.</summary>
         /// <param name="originalContact"><see cref="Contact"/> to be modified</param>
         /// <param name="newContact"><see cref="Contact"/> with modifications</param>
-        internal void ModifyContactLens(Contact originalContact, Contact newContact)
+        public void ModifyContactLens(Contact originalContact, Contact newContact)
         {
             _lenses.Replace(originalContact, newContact);
             UpdateContactLenses();
@@ -143,7 +144,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Removes a <see cref="Contact"/> entry in the <see cref="User"/>'s lenses.</summary>
         /// <param name="removeContact"><see cref="Contact"/> insertion to be added</param>
-        internal void RemoveContactLens(Contact removeContact)
+        public void RemoveContactLens(Contact removeContact)
         {
             _lenses.Remove(removeContact);
             UpdateContactLenses();
@@ -158,7 +159,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Assigns a collection of <see cref="Contact"/> lenses to a <see cref="User"/>.</summary>
         /// <param name="lenses">Collection of <see cref="Contact"/> lenses to be assigned</param>
-        internal void SetLenses(IEnumerable<Contact> lenses)
+        public void SetLenses(IEnumerable<Contact> lenses)
         {
             List<Contact> newContacts = new List<Contact>();
             newContacts.AddRange(lenses);
@@ -171,7 +172,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Adds a Vehicle to the list of vehicles.</summary>
         /// <param name="newVehicle">Vehicle to be removed</param>
-        internal void AddVehicle(Vehicle newVehicle)
+        public void AddVehicle(Vehicle newVehicle)
         {
             _vehicles.Add(newVehicle);
             _vehicles = _vehicles.OrderBy(vehicle => vehicle.Nickname).ToList();
@@ -181,7 +182,7 @@ namespace PersonalTracker.Models
         /// <summary>Modifies a Vehicle in the list of Vehicles.</summary>
         /// <param name="oldVehicle">Original Vehicle to be replaced</param>
         /// <param name="newVehicle">New Vehicle to replace old</param>
-        internal void ModifyVehicle(Vehicle oldVehicle, Vehicle newVehicle)
+        public void ModifyVehicle(Vehicle oldVehicle, Vehicle newVehicle)
         {
             _vehicles.Replace(oldVehicle, newVehicle);
             _vehicles = _vehicles.OrderBy(trans => trans.Nickname).ToList();
@@ -190,7 +191,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Removes a Vehicle from the list of vehicles.</summary>
         /// <param name="vehicle">Vehicle to be removed</param>
-        internal void RemoveVehicle(Vehicle vehicle)
+        public void RemoveVehicle(Vehicle vehicle)
         {
             _vehicles.Remove(vehicle);
             OnPropertyChanged("Vehicles");
@@ -198,7 +199,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Assigns a collection of <see cref="Vehicle"/>s to a <see cref="User"/>.</summary>
         /// <param name="vehicles">Collection of <see cref="Vehicle"/>s to be assigned</param>
-        internal void SetVehicles(IEnumerable<Vehicle> vehicles)
+        public void SetVehicles(IEnumerable<Vehicle> vehicles)
         {
             List<Vehicle> newVehicles = new List<Vehicle>();
             newVehicles.AddRange(vehicles);
@@ -211,8 +212,8 @@ namespace PersonalTracker.Models
 
         private static bool Equals(User left, User right)
         {
-            if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
-            if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
+            if (left is null && right is null) return true;
+            if (left is null ^ right is null) return false;
             return left.UserID == right.UserID && string.Equals(left.Username, right.Username, StringComparison.OrdinalIgnoreCase) && string.Equals(left.Password, right.Password) && left.Finances == right.Finances && left.Vehicles == right.Vehicles && left.Media == right.Media && left.Lenses == right.Lenses;
         }
 
@@ -255,7 +256,7 @@ namespace PersonalTracker.Models
         /// <param name="vehicles">The <see cref="User"/>'s <see cref="Vehicle"/>s.</param>
         /// <param name="lenses">The <see cref="User"/>'s <see cref="Contact"/> lenses.</param>
         /// <param name="media">The <see cref="User"/>'s <see cref="Media"/>.</param>
-        public User(int userID, string username, string password, Finances finances, IEnumerable<Vehicle> vehicles, IEnumerable<Contact> lenses, Media media)
+        public User(int userID, string username, string password, AllFinances finances, IEnumerable<Vehicle> vehicles, IEnumerable<Contact> lenses, AllMedia media)
         {
             UserID = userID;
             Username = username;

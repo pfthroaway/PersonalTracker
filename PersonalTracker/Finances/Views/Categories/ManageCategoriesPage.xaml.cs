@@ -1,0 +1,151 @@
+﻿using Extensions;
+using Extensions.ListViewHelp;
+using PersonalTracker.Finances.Models.Categories;
+using PersonalTracker.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace PersonalTracker.Finances.Views.Categories
+{
+    /// <summary>Interaction logic for ManageCategoriesWindow.xaml</summary>
+    public partial class ManageCategoriesPage
+    {
+        private ListViewSort _lvMajor = new ListViewSort();
+        private ListViewSort _lvMinor = new ListViewSort();
+        private List<Category> _allCategories = AppState.CurrentUser.Finances.AllCategories;
+        private Category _selectedMajorCategory;
+        private string _selectedMinorCategory;
+
+        /// <summary>Refreshes the Items Source of the LVMajor ListBox.</summary>
+        internal void RefreshItemsSource()
+        {
+            _allCategories = AppState.CurrentUser.Finances.AllCategories;
+            _selectedMajorCategory = new Category();
+            LVMajor.UnselectAll();
+            LVMajor.ItemsSource = _allCategories;
+            LVMajor.Items.Refresh();
+            LVMinor.DataContext = _selectedMajorCategory.MinorCategories;
+        }
+
+        #region Control-Toggle Methods
+
+        /// <summary>Toggles the IsEnabled state of all the Window controls relating to major categories.</summary>
+        /// <param name="toggle">Toggle control true or false</param>
+        private void ToggleMajorEnabled(bool toggle)
+        {
+            BtnRenameMajor.IsEnabled = toggle;
+            BtnRemoveMajor.IsEnabled = toggle;
+        }
+
+        /// <summary>Toggles the IsEnabled state of all the Window controls relating to minor categories.</summary>
+        /// <param name="toggle">Toggle control true or false</param>
+        private void ToggleMinorEnabled(bool toggle)
+        {
+            BtnAddMinor.IsEnabled = toggle;
+            BtnRenameMinor.IsEnabled = toggle;
+            BtnRemoveMinor.IsEnabled = toggle;
+            LVMinor.IsEnabled = toggle;
+        }
+
+        #endregion Control-Toggle Methods
+
+        #region Window-Displaying Methods
+
+        /// <summary>Displays the AddCategoryWindow</summary>
+        /// <param name="isMajor">Is the category being added a Major Category?</param>
+        private void ShowAddCategoryWindow(bool isMajor)
+        {
+            AddCategoryPage addCategoryWindow = new AddCategoryPage();
+            addCategoryWindow.LoadWindow(_selectedMajorCategory, isMajor);
+            LVMajor.ItemsSource = null;
+            LVMinor.ItemsSource = null;
+            AppState.Navigate(addCategoryWindow);
+        }
+
+        /// <summary>Displays the AddCategoryWindow</summary>
+        /// <param name="isMajor">Is the category being added a Major Category?</param>
+        private void ShowRenameCategoryWindow(bool isMajor)
+        {
+            RenameCategoryPage categoryRenameWindow = new RenameCategoryPage();
+            categoryRenameWindow.LoadWindow(_selectedMajorCategory, _selectedMinorCategory, isMajor);
+            LVMajor.ItemsSource = null;
+            LVMinor.ItemsSource = null;
+            AppState.Navigate(categoryRenameWindow);
+        }
+
+        #endregion Window-Displaying Methods
+
+        #region Click Methods
+
+        private void BtnAddMajor_Click(object sender, RoutedEventArgs e) => ShowAddCategoryWindow(true);
+
+        private void BtnRenameMajor_Click(object sender, RoutedEventArgs e) => ShowRenameCategoryWindow(true);
+
+        private async void BtnRemoveMajor_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this category will have their Major and Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name)} transactions. Are you sure you want to delete it and all related minor categories?", "Personal Tracker"))
+                if (await AppState.RemoveMajorCategory(_selectedMajorCategory))
+                    RefreshItemsSource();
+        }
+
+        private void BtnAddMinor_Click(object sender, RoutedEventArgs e) => ShowAddCategoryWindow(false);
+
+        private void BtnRenameMinor_Click(object sender, RoutedEventArgs e) => ShowRenameCategoryWindow(false);
+
+        private async void BtnRemoveMinor_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppState.YesNoNotification($"This will remove this category forever. Any existing transactions using this minor category will have their Minor Category data removed. This will affect {AppState.CurrentUser.Finances.AllTransactions.Count(transaction => transaction.MajorCategory == _selectedMajorCategory.Name && transaction.MinorCategory == _selectedMinorCategory)} transactions. Are you sure you want to delete it?", "Personal Tracker"))
+                if (await AppState.RemoveMinorCategory(_selectedMajorCategory, _selectedMinorCategory))
+                    RefreshItemsSource();
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
+
+        private void LVMajorColumnHeader_Click(object sender, RoutedEventArgs e) => _lvMajor = Functions.ListViewColumnHeaderClick(sender, _lvMajor, LVMajor, "#CCCCCC");
+
+        private void LVMinorColumnHeader_Click(object sender, RoutedEventArgs e) => _lvMinor = Functions.ListViewColumnHeaderClick(sender, _lvMinor, LVMinor, "#CCCCCC");
+
+        #endregion Click Methods
+
+        #region Page-Manipulation Methods
+
+        /// <summary>Closes the Page.</summary>
+        private void ClosePage() => AppState.GoBack();
+
+        public ManageCategoriesPage() => InitializeComponent();
+
+        private void ManageCategoriesPage_Loaded(object sender, RoutedEventArgs e) => RefreshItemsSource();
+
+        private void LVMajor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LVMajor.SelectedIndex >= 0)
+            {
+                _selectedMajorCategory = (Category)LVMajor.SelectedValue;
+                LVMinor.ItemsSource = _selectedMajorCategory.MinorCategories;
+                ToggleMajorEnabled(true);
+                BtnAddMinor.IsEnabled = true;
+                LVMinor.IsEnabled = true;
+            }
+            else
+            {
+                _selectedMajorCategory = new Category();
+                LVMinor.ItemsSource = new List<string>();
+                ToggleMajorEnabled(false);
+                ToggleMinorEnabled(false);
+            }
+
+            LVMinor.UnselectAll();
+            LVMinor.Items.Refresh();
+        }
+
+        private void LVMinor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _selectedMinorCategory = LVMinor.SelectedIndex >= 0 ? LVMinor.SelectedItem.ToString() : "";
+            ToggleMinorEnabled(LVMinor.SelectedIndex >= 0);
+        }
+
+        #endregion Page-Manipulation Methods
+    }
+}

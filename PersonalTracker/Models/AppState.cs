@@ -1,13 +1,13 @@
 ﻿using Extensions;
 using Extensions.Enums;
 using PersonalTracker.Models.Database;
-using PersonalTracker.Models.FinanceModels;
-using PersonalTracker.Models.FinanceModels.Categories;
-using PersonalTracker.Models.FinanceModels.Data;
-using PersonalTracker.Models.FinanceModels.Sorting;
-using PersonalTracker.Models.FuelModels;
-using PersonalTracker.Models.LensesModels;
-using PersonalTracker.Models.MediaModels.MediaTypes;
+using PersonalTracker.Finances.Models.Data;
+using PersonalTracker.Finances.Models.Categories;
+
+using PersonalTracker.Finances.Models.Sorting;
+using PersonalTracker.Fuel.Models;
+using PersonalTracker.Lenses.Models;
+using PersonalTracker.Media.Models.MediaTypes;
 using PersonalTracker.Views;
 using System;
 using System.Collections.Generic;
@@ -15,44 +15,51 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using PersonalTracker.Finances.Models;
+using PersonalTracker.Media.Models;
+using System.IO;
 
 namespace PersonalTracker.Models
 {
-    internal static class AppState
+    public static class AppState
     {
         #region User
 
         /// <summary>The currently logged in <see cref="User"/>.</summary>
-        internal static User CurrentUser;
+        public static User CurrentUser;
 
         /// <summary>The current <see cref="User"/>'s database name.</summary>
-        internal static string CurrentUserDatabaseName;
+        public static string CurrentUserDatabaseName;
 
         /// <summary>The current <see cref="User"/>'s database connection string.</summary>
-        internal static string CurrentUserConnection;
+        public static string CurrentUserConnection;
 
         #endregion User
+
+        internal static void FileManagement()
+        {
+            if (!Directory.Exists(AppData.Location))
+                Directory.CreateDirectory(AppData.Location);
+            DatabaseInteraction.VerifyDatabaseIntegrity();
+        }
 
         #region Database Interaction
 
         private static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
-
-        /// <summary>Verifies that the requested database exists and that its file size is greater than zero. If not, it extracts the embedded database file to the local output folder.</summary>
-        public static void VerifyDatabaseIntegrity() => DatabaseInteraction.VerifyDatabaseIntegrity();
 
         #endregion Database Interaction
 
         #region Navigation
 
         /// <summary>Instance of MainWindow currently loaded</summary>
-        internal static MainWindow MainWindow { get; set; }
+        public static MainWindow MainWindow { get; set; }
 
         /// <summary>Navigates to selected Page.</summary>
         /// <param name="newPage">Page to navigate to.</param>
-        internal static void Navigate(Page newPage) => MainWindow.MainFrame.Navigate(newPage);
+        public static void Navigate(Page newPage) => MainWindow.MainFrame.Navigate(newPage);
 
         /// <summary>Navigates to the previous Page.</summary>
-        internal static void GoBack()
+        public static void GoBack()
         {
             if (MainWindow.MainFrame.CanGoBack)
                 MainWindow.MainFrame.GoBack();
@@ -78,19 +85,19 @@ namespace PersonalTracker.Models
         /// <returns>True if successful</returns>
         public static Task<bool> DeleteUser(User deleteUser) => DatabaseInteraction.DeleteUser(deleteUser);
 
-        /// <summary>Gets the next index in the User table.</summary>
-        /// <returns>Next index in the User table.</returns>
+        /// <summary>Gets the next index in the <see cref="User"/> table.</summary>
+        /// <returns>Next index in the <see cref="User"/> table.</returns>
         public static Task<int> GetNextUserIndex() => DatabaseInteraction.GetNextUserIndex();
 
         /// <summary>Loads the current <see cref="User"/>'s infromation.</summary>
-        /// <returns></returns>
+        /// <returns>Current User</returns>
         public static async Task LoadCurrentUser()
         {
             DatabaseInteraction.VerifyUserDatabaseIntegrity();
             CurrentUser.SetLenses(new List<Contact>(await DatabaseInteraction.LoadContacts()));
             CurrentUser.SetVehicles(new List<Vehicle>(await DatabaseInteraction.LoadVehicles()));
-            CurrentUser.Media = new Media(await DatabaseInteraction.LoadSeries());
-            CurrentUser.Finances = new Finances(await DatabaseInteraction.LoadAccounts(), await DatabaseInteraction.LoadAccountTypes(), await DatabaseInteraction.LoadCategories());
+            CurrentUser.Media = new AllMedia(await DatabaseInteraction.LoadSeries());
+            CurrentUser.Finances = new AllFinances(await DatabaseInteraction.LoadAccounts(), await DatabaseInteraction.LoadAccountTypes(), await DatabaseInteraction.LoadCategories());
         }
 
         /// <summary>Loads a <see cref="User"/> from the database.</summary>
@@ -105,10 +112,10 @@ namespace PersonalTracker.Models
         public static Task<bool> ModifyUser(User oldUser, User newUser) => DatabaseInteraction.ModifyUser(oldUser, newUser);
 
         /// <summary>Assigns information about the <see cref="User"/>'s database file in <see cref="AppState"/>.</summary>
-        internal static void SetUserDatabaseInformation()
+        public static void SetUserDatabaseInformation()
         {
             CurrentUserDatabaseName = $"{CurrentUser.UserIDToString}.sqlite";
-            CurrentUserConnection = $"Data Source = {CurrentUserDatabaseName}; foreign keys = true; Version = 3;";
+            CurrentUserConnection = $"Data Source = {Path.Combine(AppData.Location, CurrentUserDatabaseName)}; foreign keys = true; Version = 3;";
         }
 
         #endregion User Management
@@ -120,7 +127,7 @@ namespace PersonalTracker.Models
         /// <summary>Adds an account to the database.</summary>
         /// <param name="newAccount">Account to be added</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> AddAccount(Account newAccount)
+        public static async Task<bool> AddAccount(Account newAccount)
         {
             bool success = false;
             if (await DatabaseInteraction.AddAccount(newAccount))
@@ -138,7 +145,7 @@ namespace PersonalTracker.Models
         /// <summary>Deletes an account from the database.</summary>
         /// <param name="account">Account to be deleted</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> DeleteAccount(Account account)
+        public static async Task<bool> DeleteAccount(Account account)
         {
             bool success = false;
             if (await DatabaseInteraction.DeleteAccount(account))
@@ -157,7 +164,7 @@ namespace PersonalTracker.Models
         /// <param name="account">Account to be renamed</param>
         /// <param name="newAccountName">New account's name</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> RenameAccount(Account account, string newAccountName)
+        public static async Task<bool> RenameAccount(Account account, string newAccountName)
         {
             bool success = false;
             string oldAccountName = account.Name;
@@ -185,7 +192,7 @@ namespace PersonalTracker.Models
         /// <param name="newName">Name for new Category</param>
         /// <param name="isMajor">Is the category being added a Major Category?</param>
         /// <returns>Returns true if successful.</returns>
-        internal static async Task<bool> AddCategory(Category selectedCategory, string newName, bool isMajor)
+        public static async Task<bool> AddCategory(Category selectedCategory, string newName, bool isMajor)
         {
             bool success = false;
             if (await DatabaseInteraction.AddCategory(selectedCategory, newName, isMajor))
@@ -210,7 +217,7 @@ namespace PersonalTracker.Models
         /// <param name="oldName">Old name of the Category</param>
         /// <param name="isMajor">Is the category being renamed a Major Category?</param>
         /// <returns></returns>
-        internal static async Task<bool> RenameCategory(Category selectedCategory, string newName, string oldName, bool isMajor)
+        public static async Task<bool> RenameCategory(Category selectedCategory, string newName, string oldName, bool isMajor)
         {
             bool success = false;
             if (await DatabaseInteraction.RenameCategory(selectedCategory, newName, oldName, isMajor))
@@ -239,7 +246,7 @@ namespace PersonalTracker.Models
         /// <summary>Removes a Major Category from the database, as well as removes it from all Transactions which utilize it.</summary>
         /// <param name="selectedCategory">Selected Major Category to delete</param>
         /// <returns>Returns true if operation successful</returns>
-        internal static async Task<bool> RemoveMajorCategory(Category selectedCategory)
+        public static async Task<bool> RemoveMajorCategory(Category selectedCategory)
         {
             bool success = false;
             if (await DatabaseInteraction.RemoveMajorCategory(selectedCategory))
@@ -264,7 +271,7 @@ namespace PersonalTracker.Models
         /// <param name="selectedCategory">Selected Major Category</param>
         /// <param name="minorCategory">Selected Minor Category to delete</param>
         /// <returns>Returns true if operation successful</returns>
-        internal static async Task<bool> RemoveMinorCategory(Category selectedCategory, string minorCategory)
+        public static async Task<bool> RemoveMinorCategory(Category selectedCategory, string minorCategory)
         {
             bool success = false;
             if (await DatabaseInteraction.RemoveMinorCategory(selectedCategory, minorCategory))
@@ -318,7 +325,7 @@ namespace PersonalTracker.Models
         /// <param name="transaction">Transaction to be added</param>
         /// <param name="account">Account the transaction will be added to</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> AddFinancialTransaction(FinancialTransaction transaction, Account account)
+        public static async Task<bool> AddFinancialTransaction(FinancialTransaction transaction, Account account)
         {
             bool success = false;
             if (await DatabaseInteraction.AddFinancialTransaction(transaction, account))
@@ -349,7 +356,7 @@ namespace PersonalTracker.Models
         /// <param name="newTransaction">Transaction to replace the current one in the database</param>
         /// <param name="oldTransaction">Current Transaction in the database</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> ModifyFinancialTransaction(FinancialTransaction newTransaction, FinancialTransaction oldTransaction)
+        public static async Task<bool> ModifyFinancialTransaction(FinancialTransaction newTransaction, FinancialTransaction oldTransaction)
         {
             bool success = false;
             if (await DatabaseInteraction.ModifyFinancialTransaction(newTransaction, oldTransaction))
@@ -368,7 +375,7 @@ namespace PersonalTracker.Models
         /// <param name="transaction">Transaction to be deleted</param>
         /// <param name="account">Account the transaction will be deleted from</param>
         /// <returns>Returns true if successful</returns>
-        internal static async Task<bool> DeleteFinancialTransaction(FinancialTransaction transaction, Account account)
+        public static async Task<bool> DeleteFinancialTransaction(FinancialTransaction transaction, Account account)
         {
             bool success = false;
             if (await DatabaseInteraction.DeleteFinancialTransaction(transaction, account))
@@ -388,7 +395,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Adds a new <see cref="Contact"/> insertion to the database.</summary>
         /// <param name="newContact"><see cref="Contact"/> insertion to be added</param>
-        internal static async Task<bool> AddContact(Contact newContact)
+        public static async Task<bool> AddContact(Contact newContact)
         {
             if (await DatabaseInteraction.AddContact(newContact))
             {
@@ -401,7 +408,7 @@ namespace PersonalTracker.Models
         /// <summary>Modifies an existing contact in the database.</summary>
         /// <param name="originalContact">Contact to be modified</param>
         /// <param name="newContact">Contact with modifications</param>
-        internal static async Task<bool> ModifyContact(Contact originalContact, Contact newContact)
+        public static async Task<bool> ModifyContact(Contact originalContact, Contact newContact)
         {
             if (await DatabaseInteraction.ModifyContact(originalContact, newContact))
             {
@@ -413,7 +420,7 @@ namespace PersonalTracker.Models
 
         /// <summary>Removes a contact from the database.</summary>
         /// <param name="removeContact">Contact to be removed</param>
-        internal static async Task<bool> RemoveContact(Contact removeContact)
+        public static async Task<bool> RemoveContact(Contact removeContact)
         {
             if (await DatabaseInteraction.RemoveContact(removeContact))
             {
@@ -515,7 +522,7 @@ namespace PersonalTracker.Models
 
         #region Load
 
-        internal static async Task LoadAll() => await LoadSeries();
+        public static async Task LoadAll() => await LoadSeries();
 
         /// <summary>Loads all <see cref="Series"/> from the database.</summary>
         /// <returns>All Series</returns>
@@ -529,7 +536,7 @@ namespace PersonalTracker.Models
         /// <param name="oldSeries">Original <see cref="Series"/></param>
         /// <param name="newSeries"><see cref="Series"/> to replace original</param>
         /// <returns>True if successful</returns>
-        internal static async Task<bool> ModifySeries(Series oldSeries, Series newSeries)
+        public static async Task<bool> ModifySeries(Series oldSeries, Series newSeries)
         {
             if (await DatabaseInteraction.ModifySeries(oldSeries, newSeries))
             {
@@ -543,7 +550,7 @@ namespace PersonalTracker.Models
         /// <summary>Saves a new <see cref="Series"/> to the database.</summary>
         /// <param name="newSeries"><see cref="Series"/> to be saved</param>
         /// <returns>True if successful</returns>
-        internal static async Task<bool> NewSeries(Series newSeries)
+        public static async Task<bool> NewSeries(Series newSeries)
         {
             if (await DatabaseInteraction.NewSeries(newSeries))
             {
@@ -563,14 +570,14 @@ namespace PersonalTracker.Models
         /// <summary>Displays a new Notification in a thread-safe way.</summary>
         /// <param name="message">Message to be displayed</param>
         /// <param name="title">Title of the Notification window</param>
-        internal static void DisplayNotification(string message, string title) => Application.Current.Dispatcher.Invoke(
-            () => new Notification(message, title, NotificationButtons.OK, MainWindow).ShowDialog());
+        public static void DisplayNotification(string message, string title) => Application.Current.Dispatcher.Invoke(
+            () => new Notification(message, title, NotificationButton.OK, MainWindow).ShowDialog());
 
         /// <summary>Displays a new Notification in a thread-safe way and retrieves a boolean result upon its closing.</summary>
         /// <param name="message">Message to be displayed</param>
         /// <param name="title">Title of the Notification window</param>
         /// <returns>Returns value of clicked button on Notification.</returns>
-        internal static bool YesNoNotification(string message, string title) => Application.Current.Dispatcher.Invoke(() => (new Notification(message, title, NotificationButtons.YesNo, MainWindow).ShowDialog() == true));
+        public static bool YesNoNotification(string message, string title) => Application.Current.Dispatcher.Invoke(() => (new Notification(message, title, NotificationButton.YesNo, MainWindow).ShowDialog() == true));
 
         #endregion Notification Management
     }

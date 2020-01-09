@@ -1,8 +1,5 @@
 ﻿using PersonalTracker.Models;
-using System;
-using System.ComponentModel;
 using System.Windows;
-using System.Windows.Input;
 
 namespace PersonalTracker.Views
 {
@@ -16,7 +13,7 @@ namespace PersonalTracker.Views
         private void WindowMain_Loaded(object sender, RoutedEventArgs e)
         {
             AppState.MainWindow = this;
-            AppState.VerifyDatabaseIntegrity();
+            AppState.FileManagement();
         }
 
         #endregion Window-Manipulation Methods

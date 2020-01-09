@@ -7,7 +7,7 @@
       Style="{StaticResource PageStyle}"
       Loaded="TrackerPage_Loaded"
       Title="Personal Tracker">
-    <Grid Margin="50">
+    <Grid  HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -19,12 +19,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="360" Text="{Binding Path=WelcomeMessage, Mode=TwoWay}" TextAlignment="Center" Margin="0,0,0,20" />
-        <Button x:Name="BtnFinances" Grid.Column="0" Grid.Row="1" Width="175" Content="_Finances" Click="BtnFinances_Click" Margin="0,0,10,10" />
-        <Button x:Name="BtnFuel" Grid.Column="1" Grid.Row="1" Width="175" Content="F_uel" Click="BtnFuel_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnLenses" Grid.Column="0" Grid.Row="2" Width="175" Content="_Contact Lenses" Click="BtnLenses_Click"  Margin="0,0,10,10" />
-        <Button x:Name="BtnMedia" Grid.Column="1" Grid.Row="2" Width="175" Content="_Media" Click="BtnMedia_Click"  Margin="0,0,0,10" />
-        <Button x:Name="BtnChangePassword" Grid.Column="0" Grid.Row="3" Width="175" Content="Change _Password" Click="BtnChangePassword_Click"  Margin="0,0,10,0" />
-        <Button x:Name="BtnLogout" Grid.Column="1" Grid.Row="3" Width="175" Content="_Logout" Click="BtnLogout_Click" IsCancel="True" />
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Width="510" Text="{Binding Path=WelcomeMessage, Mode=TwoWay}" TextAlignment="Center" Margin="0,0,0,20" />
+        <Button x:Name="BtnFinances" Grid.Column="0" Grid.Row="1" Width="250" Content="_Finances" Click="BtnFinances_Click" Margin="0,0,10,10" />
+        <Button x:Name="BtnFuel" Grid.Column="1" Grid.Row="1" Width="250" Content="F_uel" Click="BtnFuel_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnLenses" Grid.Column="0" Grid.Row="2" Width="250" Content="_Contact Lenses" Click="BtnLenses_Click"  Margin="0,0,10,10" />
+        <Button x:Name="BtnMedia" Grid.Column="1" Grid.Row="2" Width="250" Content="_Media" Click="BtnMedia_Click"  Margin="0,0,0,10" />
+        <Button x:Name="BtnChangePassword" Grid.Column="0" Grid.Row="3" Width="250" Content="Change _Password" Click="BtnChangePassword_Click"  Margin="0,0,10,0" />
+        <Button x:Name="BtnLogout" Grid.Column="1" Grid.Row="3" Width="250" Content="_Logout" Click="BtnLogout_Click" IsCancel="True" />
     </Grid>
 </Page>

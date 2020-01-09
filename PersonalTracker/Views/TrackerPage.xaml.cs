@@ -1,7 +1,7 @@
 ﻿using PersonalTracker.Models;
-using PersonalTracker.Views.FuelViews;
-using PersonalTracker.Views.LensesViews;
-using PersonalTracker.Views.MediaViews;
+using PersonalTracker.Fuel.Views;
+using PersonalTracker.Lenses.Views;
+using PersonalTracker.Media.Views;
 using System.ComponentModel;
 using System.Windows;
 
@@ -39,7 +39,7 @@ namespace PersonalTracker.Views
 
         #region Click
 
-        private void BtnFinances_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new FinanceViews.FinancesPage());
+        private void BtnFinances_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new Finances.Views.FinancesPage());
 
         private void BtnFuel_Click(object sender, RoutedEventArgs e) => AppState.Navigate(new ViewAccountPage());
 

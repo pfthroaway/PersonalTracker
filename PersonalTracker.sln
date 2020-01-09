@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalTracker", "PersonalTracker\PersonalTracker.csproj", "{FF6CD4EB-78E6-43FC-946F-52CD5BC67ABA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalTracker", "PersonalTracker\PersonalTracker.csproj", "{05227F34-A4BC-4895-9011-10EE8E2F86D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{20F40385-5991-461C-9340-2F5DE0E320F4}"
 EndProject
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF6CD4EB-78E6-43FC-946F-52CD5BC67ABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF6CD4EB-78E6-43FC-946F-52CD5BC67ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF6CD4EB-78E6-43FC-946F-52CD5BC67ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF6CD4EB-78E6-43FC-946F-52CD5BC67ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05227F34-A4BC-4895-9011-10EE8E2F86D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05227F34-A4BC-4895-9011-10EE8E2F86D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05227F34-A4BC-4895-9011-10EE8E2F86D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05227F34-A4BC-4895-9011-10EE8E2F86D6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20F40385-5991-461C-9340-2F5DE0E320F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20F40385-5991-461C-9340-2F5DE0E320F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20F40385-5991-461C-9340-2F5DE0E320F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {41CAEBFD-000C-4104-BA02-F13C333702EB}
+		SolutionGuid = {527CC8B7-51CC-4F71-A371-8346632C2670}
 	EndGlobalSection
 EndGlobal

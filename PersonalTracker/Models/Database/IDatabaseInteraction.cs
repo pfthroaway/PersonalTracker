@@ -1,8 +1,8 @@
-﻿using PersonalTracker.Models.FinanceModels.Categories;
-using PersonalTracker.Models.FinanceModels.Data;
-using PersonalTracker.Models.FuelModels;
-using PersonalTracker.Models.LensesModels;
-using PersonalTracker.Models.MediaModels.MediaTypes;
+﻿using PersonalTracker.Finances.Models.Categories;
+using PersonalTracker.Finances.Models.Data;
+using PersonalTracker.Fuel.Models;
+using PersonalTracker.Lenses.Models;
+using PersonalTracker.Media.Models.MediaTypes;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,9 +12,6 @@ namespace PersonalTracker.Models.Database
     internal interface IDatabaseInteraction
     {
         #region Database Interaction
-
-        /// <summary>Creates a database for the current <see cref="User"/>.</summary>
-        void CreateCurrentUserDatabase();
 
         /// <summary>Creates a database for the current <see cref="User"/>.</summary>
         void VerifyUserDatabaseIntegrity();

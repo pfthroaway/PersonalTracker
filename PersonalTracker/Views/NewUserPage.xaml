@@ -6,7 +6,7 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="Personal Tracker - New User">
-    <Grid Margin="50">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -21,12 +21,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Username:" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="300" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtUsername" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="410" GotFocus="TxtUsername_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Text="Password:" TextAlignment="Center" GotFocus="Pswd_GotFocus" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="300" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
+        <PasswordBox x:Name="PswdPassword" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="410" GotFocus="Pswd_GotFocus" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Text="Confirm Password:" TextAlignment="Center" Margin="0,0,0,5" />
-        <PasswordBox x:Name="PswdConfirmPassword" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Width="300" Margin="0,0,0,20" />
-        <Button x:Name="BtnCreate" Grid.Column="0" Grid.Row="6" Width="145" Content="_Create" Click="BtnCreate_Click" IsDefault="True" Margin="0,0,10,0" />
-        <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="6" Width="145" Content="C_ancel" Click="BtnCancel_Click" IsCancel="True" />
+        <PasswordBox x:Name="PswdConfirmPassword" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Width="410" Margin="0,0,0,20" />
+        <Button x:Name="BtnCreate" Grid.Column="0" Grid.Row="6" Width="200" Content="_Create" Click="BtnCreate_Click" IsDefault="True" Margin="0,0,10,0" />
+        <Button x:Name="BtnCancel" Grid.Column="1" Grid.Row="6" Width="200" Content="C_ancel" Click="BtnCancel_Click" IsCancel="True" />
     </Grid>
 </Page>

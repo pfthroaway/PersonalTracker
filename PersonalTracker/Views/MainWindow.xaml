@@ -5,13 +5,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Style="{DynamicResource WindowStyle}"
+        Style="{StaticResource WindowStyle}"
         Title="{Binding Path=Content.Title, ElementName=MainFrame}"
+        Icon="\Views\Platinum.ico"
         WindowState="Maximized"
         ResizeMode="CanResize"
         SizeToContent="Manual"
-        Icon="Platinum.ico"
-        Loaded="WindowMain_Loaded">
+    Loaded="WindowMain_Loaded">
     <Viewbox Stretch="Uniform" Margin="20">
         <Grid>
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="LoginPage.xaml" />

@@ -1,0 +1,17 @@
+﻿<Page x:Class="PersonalTracker.Media.Views.MediaBooks.NewBookPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Style="{StaticResource PageStyle}"
+      Title="New Book">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="5" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button x:Name="BtnSaveExit" Width="200" Content="_Save and Exit" IsDefault="True" IsEnabled="False" Click="BtnSaveExit_Click" Margin="0,0,20,0" />
+            <Button x:Name="BtnSaveNew" Width="200" Content="Save and _New" IsEnabled="False" Click="BtnSaveNew_Click" Margin="0,0,20,0" />
+            <Button x:Name="BtnReset" Width="200" Content="_Reset" Click="BtnReset_Click" Margin="0,0,20,0" />
+            <Button x:Name="BtnBack" Width="200" Content="_Back" IsCancel="True" Click="BtnBack_Click" />
+        </StackPanel>
+    </Grid>
+</Page>
