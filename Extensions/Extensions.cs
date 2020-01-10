@@ -122,6 +122,7 @@ namespace Extensions
 
             return tcs.Task;
         }
+
         public static void ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
         {
             if (!overwrite)

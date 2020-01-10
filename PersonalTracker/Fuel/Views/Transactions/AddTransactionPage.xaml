@@ -39,10 +39,10 @@
             <Run Text="Distance:" />
             <Run Text="*" Foreground="Orange" />
         </TextBlock>
-        <DatePicker x:Name="TransactionDate" Grid.Column="0" Grid.Row="2" Width="200" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDateChanged="DatePicker_SelectedDateChanged" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtStore" Grid.Column="1" Grid.Row="2" Width="200" MaxLength="30" GotFocus="Txt_GotFocus" TextChanged="Txt_TextChanged" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtOctane" Grid.Column="2" Grid.Row="2" Width="200" MaxLength="2" GotFocus="Txt_GotFocus" TextChanged="Integer_TextChanged" PreviewKeyDown="Integer_PreviewKeyDown" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtDistance" Grid.Column="3" Grid.Row="2" Width="200" MaxLength="30" GotFocus="Txt_GotFocus" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" ToolTip="You can either input the current odometer reading or the distance since the last fuel-up." ToolTipService.ShowDuration="5000" Margin="0,0,0,10" />
+        <DatePicker x:Name="TransactionDate" Grid.Column="0" Grid.Row="2" Width="275" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDateChanged="DatePicker_SelectedDateChanged" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtStore" Grid.Column="1" Grid.Row="2" Width="275" MaxLength="30" GotFocus="Txt_GotFocus" TextChanged="Txt_TextChanged" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtOctane" Grid.Column="2" Grid.Row="2" Width="275" MaxLength="2" GotFocus="Txt_GotFocus" TextChanged="Integer_TextChanged" PreviewKeyDown="Integer_PreviewKeyDown" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtDistance" Grid.Column="3" Grid.Row="2" Width="275" MaxLength="30" GotFocus="Txt_GotFocus" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" ToolTip="You can either input the current odometer reading or the distance since the last fuel-up." ToolTipService.ShowDuration="5000" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="3" TextAlignment="Center" Margin="0,0,10,5">
             <Run Text="Gallons:" />
             <Run Text="*" Foreground="Red" />
@@ -56,16 +56,16 @@
             <Run Text="*" Foreground="Orange" />
         </TextBlock>
         <TextBlock Grid.Column="3" Grid.Row="3" Text="Range:" TextAlignment="Center" Margin="0,0,0,5" />
-        <TextBox x:Name="TxtGallons" Grid.Column="0" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtPrice" Grid.Column="1" Grid.Row="4" Width="200" MaxLength="30" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" TextChanged="Decimal_TextChanged" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtOdometer" Grid.Column="2" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" ToolTip="You can either input the current odometer reading or the distance since the last fuel-up." ToolTipService.ShowDuration="5000" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtRange" Grid.Column="3" Grid.Row="4" Width="200" MaxLength="30" TextChanged="Txt_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtGallons" Grid.Column="0" Grid.Row="4" Width="275" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtPrice" Grid.Column="1" Grid.Row="4" Width="275" MaxLength="30" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" TextChanged="Decimal_TextChanged" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtOdometer" Grid.Column="2" Grid.Row="4" Width="275" MaxLength="30" TextChanged="Decimal_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" ToolTip="You can either input the current odometer reading or the distance since the last fuel-up." ToolTipService.ShowDuration="5000" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtRange" Grid.Column="3" Grid.Row="4" Width="275" MaxLength="30" TextChanged="Txt_TextChanged" PreviewKeyDown="Decimal_PreviewKeyDown" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
         <StackPanel Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="BtnSaveAndDone" Width="135" Content="_Save and Done" Click="BtnSaveAndDone_Click" IsDefault="True" IsEnabled="False" Margin="0,0,20,0" />
-            <Button x:Name="BtnSaveAndDuplicate" Width="170" Content="_Save and Duplicate" Click="BtnSaveAndDuplicate_Click" IsEnabled="False" Margin="0,0,20,0" />
-            <Button x:Name="BtnSaveAndNew" Width="135" Content="Save and _New" Click="BtnSaveAndNew_Click" IsEnabled="False" Margin="0,0,20,0" />
-            <Button x:Name="BtnReset" Width="125" Content="_Reset" Click="BtnReset_Click" Margin="0,0,20,0" />
-            <Button x:Name="BtnCancel" Width="125" Content="_Cancel" Click="BtnCancel_Click" IsCancel="True" />
+            <Button x:Name="BtnSaveAndDone" Width="225" Content="_Save and Done" Click="BtnSaveAndDone_Click" IsDefault="True" IsEnabled="False" Margin="0,0,20,0" />
+            <Button x:Name="BtnSaveAndDuplicate" Width="275" Content="_Save and Duplicate" Click="BtnSaveAndDuplicate_Click" IsEnabled="False" Margin="0,0,20,0" />
+            <Button x:Name="BtnSaveAndNew" Width="225" Content="Save and _New" Click="BtnSaveAndNew_Click" IsEnabled="False" Margin="0,0,20,0" />
+            <Button x:Name="BtnReset" Width="200" Content="_Reset" Click="BtnReset_Click" Margin="0,0,20,0" />
+            <Button x:Name="BtnCancel" Width="200" Content="_Cancel" Click="BtnCancel_Click" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Page>

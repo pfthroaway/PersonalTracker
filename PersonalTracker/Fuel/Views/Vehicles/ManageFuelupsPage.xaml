@@ -21,32 +21,32 @@
         <ListView x:Name="LVTransactions" Grid.Column="0" Grid.Row="1" Height="610" SelectionChanged="LVTransactions_SelectionChanged" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,0,20">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=DateToString}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=DateToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Date" Click="LVTransactionsColumnHeader_Click" Content="Date" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=Store}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=Store}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Store" Click="LVTransactionsColumnHeader_Click" Content="Store" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=Octane}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Octane}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Octane" Click="LVTransactionsColumnHeader_Click" Content="Octane" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=DistanceToString}">
+                    <GridViewColumn Width="130" DisplayMemberBinding="{Binding Path=DistanceToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Distance" Click="LVTransactionsColumnHeader_Click" Content="Distance" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=OdometerToString}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=OdometerToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Odometer" Click="LVTransactionsColumnHeader_Click" Content="Odometer" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=GallonsToString}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=GallonsToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Gallons" Click="LVTransactionsColumnHeader_Click" Content="Gallons" />
                         </GridViewColumn.Header>
@@ -56,17 +56,17 @@
                             <GridViewColumnHeader Tag="MPG" Click="LVTransactionsColumnHeader_Click" Content="MPG" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="80" DisplayMemberBinding="{Binding Path=Range}">
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Range}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Range" Click="LVTransactionsColumnHeader_Click" Content="Range" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=PriceToString}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Path=PriceToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Price" Click="LVTransactionsColumnHeader_Click" Content="Price/Gal" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Path=TotalPriceToString}">
+                    <GridViewColumn Width="160" DisplayMemberBinding="{Binding Path=TotalPriceToString}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="TotalPrice" Click="LVTransactionsColumnHeader_Click" Content="Total Price" />
                         </GridViewColumn.Header>
@@ -75,11 +75,11 @@
             </ListView.View>
         </ListView>
         <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button x:Name="BtnNewTransaction" Width="160" Content="_Add Fuel-up" Click="BtnAddFuelup_Click" IsDefault="True" Margin="0,0,20,0" />
-            <Button x:Name="BtnModifyTransaction" Width="160" Content="_Modify Fuel-up" Click="BtnModifyTransaction_Click"   IsEnabled="False" Margin="0,0,20,0" />
-            <Button x:Name="BtnDeleteTransaction" Width="160" Content="_Delete Fuel-up" Click="BtnDeleteTransaction_Click" IsEnabled="False" Margin="0,0,20,0" />
-            <Button x:Name="BtnSearchTransactions" Width="160" Content="_Search Fuel-ups" Click="BtnSearchTransactions_Click"  Margin="0,0,20,0" />
-            <Button x:Name="BtnBack" Width="160" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+            <Button x:Name="BtnNewTransaction" Width="225" Content="_Add Fuel-up" Click="BtnAddFuelup_Click" IsDefault="True" Margin="0,0,20,0" />
+            <Button x:Name="BtnModifyTransaction" Width="225" Content="_Modify Fuel-up" Click="BtnModifyTransaction_Click"   IsEnabled="False" Margin="0,0,20,0" />
+            <Button x:Name="BtnDeleteTransaction" Width="225" Content="_Delete Fuel-up" Click="BtnDeleteTransaction_Click" IsEnabled="False" Margin="0,0,20,0" />
+            <Button x:Name="BtnSearchTransactions" Width="225" Content="_Search Fuel-ups" Click="BtnSearchTransactions_Click"  Margin="0,0,20,0" />
+            <Button x:Name="BtnBack" Width="225" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Page>

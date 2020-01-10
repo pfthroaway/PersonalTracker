@@ -28,8 +28,8 @@
             <Run Text="Year:" />
             <Run Text="*" Foreground="Red" />
         </TextBlock>
-        <TextBox x:Name="TxtNickname" Grid.Column="0" Grid.Row="1" Width="200" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtYear" Grid.Column="1" Grid.Row="1" Width="200" MaxLength="4" TextChanged="TextChanged" GotFocus="Txt_GotFocus" PreviewKeyDown="TxtYear_PreviewKeyDown" Margin="0,0,0,10" />
+        <TextBox x:Name="TxtNickname" Grid.Column="0" Grid.Row="1" Width="250" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtYear" Grid.Column="1" Grid.Row="1" Width="250" MaxLength="4" TextChanged="TextChanged" GotFocus="Txt_GotFocus" PreviewKeyDown="TxtYear_PreviewKeyDown" Margin="0,0,0,10" />
         <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Center" Margin="0,0,10,5">
             <Run Text="Make:" />
             <Run Text="*" Foreground="Red" />
@@ -38,10 +38,10 @@
             <Run Text="Model:" />
             <Run Text="*" Foreground="Red" />
         </TextBlock>
-        <TextBox x:Name="TxtMake" Grid.Column="0" Grid.Row="3" Width="200" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
-        <TextBox x:Name="TxtModel" Grid.Column="1" Grid.Row="3" Width="200" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
-        <Button x:Name="BtnSave" Grid.Column="0" Grid.Row="4" Width="145" Content="_Save" IsDefault="True" IsEnabled="False" Click="BtnSave_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnReset" Grid.Column="1" Grid.Row="4" Width="145" Content="_Reset" IsEnabled="False" Click="BtnReset_Click" Margin="0,0,0,10" />
-        <Button x:Name="BtnCancel" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Width="145" Content="_Cancel" IsCancel="True" Click="BtnCancel_Click" />
+        <TextBox x:Name="TxtMake" Grid.Column="0" Grid.Row="3" Width="250" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,10,10" />
+        <TextBox x:Name="TxtModel" Grid.Column="1" Grid.Row="3" Width="250" TextChanged="TextChanged" GotFocus="Txt_GotFocus" Margin="0,0,0,10" />
+        <Button x:Name="BtnSave" Grid.Column="0" Grid.Row="4" Width="200" Content="_Save" IsDefault="True" IsEnabled="False" Click="BtnSave_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnReset" Grid.Column="1" Grid.Row="4" Width="200" Content="_Reset" IsEnabled="False" Click="BtnReset_Click" Margin="0,0,0,10" />
+        <Button x:Name="BtnCancel" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Width="200" Content="_Cancel" IsCancel="True" Click="BtnCancel_Click" />
     </Grid>
 </Page>

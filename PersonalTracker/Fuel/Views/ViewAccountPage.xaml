@@ -17,10 +17,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ListView x:Name="LVVehicles" Grid.Column="0" Grid.Row="0" Height="334" SelectionChanged="LVVehicles_SelectionChanged" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,10">
+        <ListView x:Name="LVVehicles" Grid.Column="0" Grid.Row="0" SelectionChanged="LVVehicles_SelectionChanged" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,10,10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="250" DisplayMemberBinding="{Binding Path=Nickname}">
+                    <GridViewColumn Width="300" DisplayMemberBinding="{Binding Path=Nickname}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Nickname" Click="LVVehiclesColumnHeader_Click" Content="Your Vehicles" />
                         </GridViewColumn.Header>
@@ -46,11 +46,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Vehicle Make:" TextAlignment="Right" Margin="0,0,10,10" />
-                <TextBlock Grid.Column="1" Grid.Row="0" Width="200" Text="{Binding Make}" Margin="0,0,0,10" />
+                <TextBlock Grid.Column="1" Grid.Row="0" Width="250" Text="{Binding Make}" Margin="0,0,0,10" />
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Vehicle Model:" TextAlignment="Right" Margin="5,0,10,10" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Width="200" Text="{Binding Model}" Margin="0,0,0,10" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Width="250" Text="{Binding Model}" Margin="0,0,0,10" />
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Vehicle Year:" TextAlignment="Right" Margin="0,0,10,10" />
-                <TextBlock Grid.Column="1" Grid.Row="2" Width="200" Text="{Binding Year}" />
+                <TextBlock Grid.Column="1" Grid.Row="2" Width="250" Text="{Binding Year}" />
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="Miles Per Gallon:" TextAlignment="Right" Margin="0,0,10,10" />
                 <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Path=MPGToString}" Margin="0,0,0,10" />
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="Total Fuel Cost:" TextAlignment="Right" Margin="0,0,10,10" />
@@ -66,13 +66,13 @@
             </Grid>
         </GroupBox>
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button x:Name="BtnManageFuelups" Width="175" Content="_Manage Fuel-ups" IsEnabled="False" Click="BtnManageVehicle_Click" IsDefault="True" Margin="0,0,10,0" />
-            <Button x:Name="BtnModifyVehicle" Width="175" Content="_Modify Vehicle" IsEnabled="False" Click="BtnModifyVehicle_Click"  Margin="0,0,10,0" />
-            <Button x:Name="BtnDeleteVehicle" Width="175" Content="_Delete Vehicle" IsEnabled="False" Click="BtnDeleteVehicle_Click" />
+            <Button x:Name="BtnManageFuelups" Width="250" Content="_Manage Fuel-ups" IsEnabled="False" Click="BtnManageVehicle_Click" IsDefault="True" Margin="0,0,10,0" />
+            <Button x:Name="BtnModifyVehicle" Width="250" Content="_Modify Vehicle" IsEnabled="False" Click="BtnModifyVehicle_Click"  Margin="0,0,10,0" />
+            <Button x:Name="BtnDeleteVehicle" Width="250" Content="_Delete Vehicle" IsEnabled="False" Click="BtnDeleteVehicle_Click" />
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button x:Name="BtnNewVehicle" Width="175" Content="_New Vehicle" Margin="0,0,10,0" Click="BtnNewVehicle_Click" />
-            <Button x:Name="BtnBack" Width="175" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
+            <Button x:Name="BtnNewVehicle" Width="250" Content="_New Vehicle" Margin="0,0,10,0" Click="BtnNewVehicle_Click" />
+            <Button x:Name="BtnBack" Width="250" Content="_Back" Click="BtnBack_Click" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Page>
