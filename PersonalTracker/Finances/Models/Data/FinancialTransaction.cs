@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using PersonalTracker.Models;
+using System;
 
 namespace PersonalTracker.Finances.Models.Data
 {
     /// <summary>Represents a monetary transaction in an account.</summary>
-    public class FinancialTransaction : INotifyPropertyChanged
+    public class FinancialTransaction : BaseINPC
     {
         private int _id;
         private DateTime _date;
@@ -16,63 +16,63 @@ namespace PersonalTracker.Finances.Models.Data
         public int ID
         {
             get => _id;
-            private set { _id = value; OnPropertyChanged("ID"); }
+            private set { _id = value; NotifyPropertyChanged(nameof(ID)); }
         }
 
         /// <summary>Date the transaction occurred</summary>
         public DateTime Date
         {
             get => _date;
-            private set { _date = value; OnPropertyChanged("Date"); }
+            private set { _date = value; NotifyPropertyChanged(nameof(Date)); }
         }
 
         /// <summary>The entity the transaction revolves around</summary>
         public string Payee
         {
             get => _payee;
-            private set { _payee = value; OnPropertyChanged("Payee"); }
+            private set { _payee = value; NotifyPropertyChanged(nameof(Payee)); }
         }
 
         /// <summary>Primary category of which the transaction regards</summary>
         public string MajorCategory
         {
             get => _majorCategory;
-            set { _majorCategory = value; OnPropertyChanged("MajorCategory"); }
+            set { _majorCategory = value; NotifyPropertyChanged(nameof(MajorCategory)); }
         }
 
         /// <summary>Secondary category of which the transaction regards</summary>
         public string MinorCategory
         {
             get => _minorCategory;
-            set { _minorCategory = value; OnPropertyChanged("MinorCategory"); }
+            set { _minorCategory = value; NotifyPropertyChanged(nameof(MinorCategory)); }
         }
 
         /// <summary>Extra information regarding the Transaction</summary>
         public string Memo
         {
             get => _memo;
-            private set { _memo = value; OnPropertyChanged("Memo"); }
+            private set { _memo = value; NotifyPropertyChanged(nameof(Memo)); }
         }
 
         /// <summary>How much money left the account during Transaction</summary>
         public decimal Outflow
         {
             get => _outflow;
-            private set { _outflow = value; OnPropertyChanged("Outflow"); OnPropertyChanged("OutflowToString"); }
+            private set { _outflow = value; NotifyPropertyChanged(nameof(Outflow), nameof(OutflowToString)); }
         }
 
         /// <summary>How much money entered the account during Transaction</summary>
         public decimal Inflow
         {
             get => _inflow;
-            private set { _inflow = value; OnPropertyChanged("Inflow"); OnPropertyChanged("InflowToString"); }
+            private set { _inflow = value; NotifyPropertyChanged(nameof(Inflow), nameof(InflowToString)); }
         }
 
         /// <summary>Name of the account Transaction is associated with</summary>
         public string Account
         {
             get => _account;
-            set { _account = value; OnPropertyChanged("Account"); }
+            set { _account = value; NotifyPropertyChanged(nameof(Account)); }
         }
 
         #endregion Modifying Properties
@@ -89,17 +89,6 @@ namespace PersonalTracker.Finances.Models.Data
         public string OutflowToString => Outflow.ToString("C2");
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

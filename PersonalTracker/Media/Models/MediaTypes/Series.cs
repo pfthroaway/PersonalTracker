@@ -1,11 +1,11 @@
 ﻿using PersonalTracker.Media.Models.Enums;
+using PersonalTracker.Models;
 using System;
-using System.ComponentModel;
 
 namespace PersonalTracker.Media.Models.MediaTypes
 {
     /// <summary>Represents a television series.</summary>
-    public class Series : INotifyPropertyChanged
+    public class Series : BaseINPC
     {
         private string _name, _channel, _returnDate;
         private int _seasons, _episodes;
@@ -23,7 +23,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _name = value;
-                OnPropertyChanged("Name");
+                NotifyPropertyChanged(nameof(Name));
             }
         }
 
@@ -31,7 +31,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public DateTime PremiereDate
         {
             get => _premiereDate;
-            set { _premiereDate = value; OnPropertyChanged("PremiereDate"); }
+            set { _premiereDate = value; NotifyPropertyChanged(nameof(PremiereDate)); }
         }
 
         /// <summary>Rating for the Series.</summary>
@@ -41,7 +41,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _rating = value;
-                OnPropertyChanged("Rating");
+                NotifyPropertyChanged(nameof(Rating));
             }
         }
 
@@ -52,7 +52,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _seasons = value;
-                OnPropertyChanged("Seasons");
+                NotifyPropertyChanged(nameof(Seasons));
             }
         }
 
@@ -63,7 +63,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _episodes = value;
-                OnPropertyChanged("Episodes");
+                NotifyPropertyChanged(nameof(Episodes));
             }
         }
 
@@ -74,7 +74,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _status = value;
-                OnPropertyChanged("Status");
+                NotifyPropertyChanged(nameof(Status));
             }
         }
 
@@ -85,7 +85,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _channel = value;
-                OnPropertyChanged("Channel");
+                NotifyPropertyChanged(nameof(Channel));
             }
         }
 
@@ -93,7 +93,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public DateTime FinaleDate
         {
             get => _finaleDate;
-            set { _finaleDate = value; OnPropertyChanged("FinaleDate"); }
+            set { _finaleDate = value; NotifyPropertyChanged(nameof(FinaleDate)); }
         }
 
         /// <summary>Day of the week the series airs.</summary>
@@ -103,7 +103,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _day = value;
-                OnPropertyChanged("Day");
+                NotifyPropertyChanged(nameof(Day));
             }
         }
 
@@ -111,7 +111,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public DateTime Time
         {
             get => _time;
-            set { _time = value; OnPropertyChanged("Time"); }
+            set { _time = value; NotifyPropertyChanged(nameof(Time)); }
         }
 
         /// <summary>Date the series will return on.</summary>
@@ -121,7 +121,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _returnDate = value;
-                OnPropertyChanged("ReturnDate");
+                NotifyPropertyChanged(nameof(ReturnDate));
             }
         }
 
@@ -160,17 +160,6 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public string ReturnDateWithText => !string.IsNullOrWhiteSpace(ReturnDate) ? $"Returning: {ReturnDate}" : "";
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

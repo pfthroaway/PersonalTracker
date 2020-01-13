@@ -1,15 +1,14 @@
 ﻿using Extensions;
+using PersonalTracker.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace PersonalTracker.Fuel.Models
 {
     /// <summary>Represents a Vehicle owned by a User.</summary>
-    public class Vehicle : INotifyPropertyChanged, IEnumerable<FuelTransaction>, IEquatable<Vehicle>
+    public class Vehicle : BaseINPC
     {
         private string _nickname, _make, _model;
         private int _vehicleID, _year;
@@ -21,35 +20,35 @@ namespace PersonalTracker.Fuel.Models
         public int VehicleID
         {
             get => _vehicleID;
-            set { _vehicleID = value; OnPropertyChanged("VehicleID"); }
+            set { _vehicleID = value; NotifyPropertyChanged(nameof(VehicleID)); }
         }
 
         /// <summary>Vehicle nickname</summary>
         public string Nickname
         {
             get => _nickname;
-            set { _nickname = value; OnPropertyChanged("Nickname"); }
+            set { _nickname = value; NotifyPropertyChanged(nameof(Nickname)); }
         }
 
         /// <summary>Brand of car</summary>
         public string Make
         {
             get => _make;
-            set { _make = value; OnPropertyChanged("Make"); }
+            set { _make = value; NotifyPropertyChanged(nameof(Make)); }
         }
 
         /// <summary>Model of car</summary>
         public string Model
         {
             get => _model;
-            set { _model = value; OnPropertyChanged("Model"); }
+            set { _model = value; NotifyPropertyChanged(nameof(Model)); }
         }
 
         /// <summary>Model year of car</summary>
         public int Year
         {
             get => _year;
-            set { _year = value; OnPropertyChanged("Year"); }
+            set { _year = value; NotifyPropertyChanged(nameof(Year)); }
         }
 
         #endregion Modifying Properties
@@ -123,17 +122,6 @@ namespace PersonalTracker.Fuel.Models
 
         #endregion Helper Properties
 
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
-
         #region Transaction Management
 
         /// <summary>Adds a Transaction to the list of Transactions.</summary>
@@ -171,38 +159,9 @@ namespace PersonalTracker.Fuel.Models
         }
 
         /// <summary>Updates data-binding for MPG-related Properties</summary>
-        private void UpdateProperties()
-        {
-            OnPropertyChanged("Transactions");
-            OnPropertyChanged("MPG");
-            OnPropertyChanged("MPGToString");
-            OnPropertyChanged("MPGToStringWithText");
-            OnPropertyChanged("TotalCost");
-            OnPropertyChanged("TotalCostToString");
-            OnPropertyChanged("TotalCostToStringWithText");
-            OnPropertyChanged("AverageDistance");
-            OnPropertyChanged("AverageDistanceToString");
-            OnPropertyChanged("AverageDistanceToStringWithText");
-            OnPropertyChanged("AverageGallons");
-            OnPropertyChanged("AverageGallonsToString");
-            OnPropertyChanged("AverageGallonsToStringWithText");
-            OnPropertyChanged("AveragePrice");
-            OnPropertyChanged("AveragePriceToString");
-            OnPropertyChanged("AveragePriceToStringWithText");
-            OnPropertyChanged("AverageTotalPrice");
-            OnPropertyChanged("AverageTotalPriceToString");
-            OnPropertyChanged("AverageTotalPriceToStringWithText");
-        }
+        private void UpdateProperties() => NotifyPropertyChanged(nameof(Transactions), nameof(MPG), nameof(MPGToString), nameof(MPGToStringWithText), nameof(TotalCost), nameof(TotalCostToString), nameof(TotalCostToStringWithText), nameof(AverageDistance), nameof(AverageDistanceToString), nameof(AverageDistanceToStringWithText), nameof(AverageGallons), nameof(AverageGallonsToString), nameof(AverageGallonsToStringWithText), nameof(AveragePrice), nameof(AveragePriceToString), nameof(AveragePriceToStringWithText), nameof(AverageTotalPrice), nameof(AverageTotalPriceToString), nameof(AverageTotalPriceToStringWithText));
 
         #endregion Transaction Management
-
-        #region Enumerators
-
-        public IEnumerator<FuelTransaction> GetEnumerator() => Transactions.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion Enumerators
 
         #region Override Operators
 

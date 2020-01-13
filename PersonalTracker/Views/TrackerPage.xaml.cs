@@ -19,7 +19,7 @@ namespace PersonalTracker.Views
             set
             {
                 _welcomeMessage = value;
-                OnPropertyChanged(nameof(WelcomeMessage));
+                NotifyPropertyChanged(nameof(WelcomeMessage));
             }
         }
 
@@ -33,7 +33,7 @@ namespace PersonalTracker.Views
 
         /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
         /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        private void NotifyPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 

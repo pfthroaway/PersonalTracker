@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using PersonalTracker.Models;
+using System;
 
 namespace PersonalTracker.Fuel.Models
 {
     /// <summary>Represents a fuel-up Transaction for a Vehicle.</summary>
-    public class FuelTransaction : INotifyPropertyChanged, IEquatable<FuelTransaction>
+    public class FuelTransaction : BaseINPC
     {
         private string _store;
         private int _transcationID, _vehicleID, _octane, _range;
@@ -17,7 +17,7 @@ namespace PersonalTracker.Fuel.Models
         public int TranscationID
         {
             get => _transcationID;
-            set { _transcationID = value; OnPropertyChanged("TranscationID"); }
+            set { _transcationID = value; NotifyPropertyChanged(nameof(TranscationID)); }
         }
 
         /// <summary>Vehicle ID</summary>
@@ -27,7 +27,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _vehicleID = value;
-                OnPropertyChanged("VehicleID");
+                NotifyPropertyChanged(nameof(VehicleID));
             }
         }
 
@@ -38,7 +38,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _store = value;
-                OnPropertyChanged("Store");
+                NotifyPropertyChanged(nameof(Store));
             }
         }
 
@@ -49,8 +49,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _date = value;
-                OnPropertyChanged("Date");
-                OnPropertyChanged("DateToString");
+                NotifyPropertyChanged(nameof(Date), nameof(DateToString));
             }
         }
 
@@ -61,7 +60,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _octane = value;
-                OnPropertyChanged("Octane");
+                NotifyPropertyChanged(nameof(Octane));
             }
         }
 
@@ -72,7 +71,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _range = value;
-                OnPropertyChanged("Range");
+                NotifyPropertyChanged(nameof(Range));
             }
         }
 
@@ -83,10 +82,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _distance = value;
-                OnPropertyChanged("Distance");
-                OnPropertyChanged("DistanceToString");
-                OnPropertyChanged("MPG");
-                OnPropertyChanged("MPGToString");
+                NotifyPropertyChanged(nameof(Distance), nameof(DistanceToString), nameof(MPG), nameof(MPGToString));
             }
         }
 
@@ -97,10 +93,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _gallons = value;
-                OnPropertyChanged("Gallons");
-                OnPropertyChanged("GallonsToString");
-                OnPropertyChanged("MPG");
-                OnPropertyChanged("MPGToString");
+                NotifyPropertyChanged(nameof(Gallons), nameof(GallonsToString), nameof(MPG), nameof(MPGToString));
             }
         }
 
@@ -111,8 +104,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _odometer = value;
-                OnPropertyChanged("Odometer");
-                OnPropertyChanged("OdometerToString");
+                NotifyPropertyChanged(nameof(Odometer), nameof(OdometerToString));
             }
         }
 
@@ -123,10 +115,7 @@ namespace PersonalTracker.Fuel.Models
             set
             {
                 _price = value;
-                OnPropertyChanged("Price");
-                OnPropertyChanged("PriceToString");
-                OnPropertyChanged("TotalPrice");
-                OnPropertyChanged("TotalPriceToString");
+                NotifyPropertyChanged(nameof(Price), nameof(PriceToString), nameof(TotalPrice), nameof(TotalPriceToString));
             }
         }
 
@@ -162,17 +151,6 @@ namespace PersonalTracker.Fuel.Models
         public string TotalPriceToString => TotalPrice.ToString("C2");
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

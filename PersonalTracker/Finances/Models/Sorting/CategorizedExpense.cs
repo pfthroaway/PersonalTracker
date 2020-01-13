@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
+﻿using PersonalTracker.Models;
 
 namespace PersonalTracker.Finances.Models.Sorting
 {
     /// <summary>Represents a collection of expenses sorted by category.</summary>
-    internal class CategorizedExpense : INotifyPropertyChanged
+    internal class CategorizedExpense : BaseINPC
     {
         private string _majorCategory, _minorCategory;
         private decimal _expenses, _income;
@@ -17,7 +17,7 @@ namespace PersonalTracker.Finances.Models.Sorting
             private set
             {
                 _majorCategory = value;
-                OnPropertyChanged("MajorCategory");
+                NotifyPropertyChanged(nameof(MajorCategory));
             }
         }
 
@@ -28,7 +28,7 @@ namespace PersonalTracker.Finances.Models.Sorting
             private set
             {
                 _minorCategory = value;
-                OnPropertyChanged("MinorCategory");
+                NotifyPropertyChanged(nameof(MinorCategory));
             }
         }
 
@@ -39,8 +39,7 @@ namespace PersonalTracker.Finances.Models.Sorting
             set
             {
                 _income = value;
-                OnPropertyChanged("Income");
-                OnPropertyChanged("IncomeToString");
+                NotifyPropertyChanged(nameof(Income), nameof(IncomeToString));
             }
         }
 
@@ -51,8 +50,7 @@ namespace PersonalTracker.Finances.Models.Sorting
             set
             {
                 _expenses = value;
-                OnPropertyChanged("Expenses");
-                OnPropertyChanged("ExpensesToString");
+                NotifyPropertyChanged(nameof(Expenses), nameof(ExpensesToString));
             }
         }
 
@@ -67,17 +65,6 @@ namespace PersonalTracker.Finances.Models.Sorting
         public string IncomeToString => Income.ToString("C2");
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         /// <summary>Adds the values of a transaction to the month's total income/expenses.</summary>
         /// <param name="expenses">Expense value to be added</param>

@@ -1,10 +1,10 @@
 ﻿using PersonalTracker.Finances.Models.Enums;
+using PersonalTracker.Models;
 using System;
-using System.ComponentModel;
 
 namespace PersonalTracker.Finances.Models.Data
 {
-    public class CreditScore : INotifyPropertyChanged
+    public class CreditScore : BaseINPC
     {
         private DateTime _date;
         private string _source;
@@ -21,8 +21,7 @@ namespace PersonalTracker.Finances.Models.Data
             set
             {
                 _date = value;
-                OnPropertyChanged("Date");
-                OnPropertyChanged("DateToString");
+                NotifyPropertyChanged(nameof(Date), nameof(DateToString));
             }
         }
 
@@ -33,7 +32,7 @@ namespace PersonalTracker.Finances.Models.Data
             set
             {
                 _source = value;
-                OnPropertyChanged("Source");
+                NotifyPropertyChanged(nameof(Source));
             }
         }
 
@@ -44,7 +43,7 @@ namespace PersonalTracker.Finances.Models.Data
             set
             {
                 _score = value;
-                OnPropertyChanged("Score");
+                NotifyPropertyChanged(nameof(Score));
             }
         }
 
@@ -55,8 +54,7 @@ namespace PersonalTracker.Finances.Models.Data
             set
             {
                 _provider = value;
-                OnPropertyChanged("Provider");
-                OnPropertyChanged("ProviderToString");
+                NotifyPropertyChanged(nameof(Provider), nameof(ProviderToString));
             }
         }
 
@@ -67,8 +65,7 @@ namespace PersonalTracker.Finances.Models.Data
             set
             {
                 _fico = value;
-                OnPropertyChanged("FICO");
-                OnPropertyChanged("FICOToString");
+                NotifyPropertyChanged(nameof(FICO), nameof(FICOToString));
             }
         }
 
@@ -90,17 +87,6 @@ namespace PersonalTracker.Finances.Models.Data
             : "";
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

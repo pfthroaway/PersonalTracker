@@ -1,15 +1,15 @@
 ﻿using PersonalTracker.Finances.Models.Categories;
 using PersonalTracker.Finances.Models.Data;
 using PersonalTracker.Finances.Models.Sorting;
+using PersonalTracker.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 
 namespace PersonalTracker.Finances.Models
 {
     /// <summary>Represents a collection of a <see cref="User"/>'s financial <see cref="Account"/>s and <see cref="FinancialTransaction"/>s.</summary>
-    public class AllFinances : INotifyPropertyChanged
+    public class AllFinances : BaseINPC
     {
         private List<Account> _allAccounts = new List<Account>();
         private List<string> _allAccountTypes = new List<string>();
@@ -18,6 +18,8 @@ namespace PersonalTracker.Finances.Models
         private List<Month> _allMonths = new List<Month>();
         private List<Year> _allYears = new List<Year>();
 
+        #region Modifying Properties
+
         /// <summary>List of <see cref="Account"/>s owned by a <see cref="User"/>.</summary>
         public List<Account> AllAccounts
         {
@@ -25,7 +27,7 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allAccounts = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
@@ -36,7 +38,7 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allAccountTypes = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
@@ -47,7 +49,7 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allCategories = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
@@ -58,7 +60,7 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allTransactions = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
@@ -69,7 +71,7 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allMonths = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
@@ -80,20 +82,11 @@ namespace PersonalTracker.Finances.Models
             set
             {
                 _allYears = value;
-                OnPropertyChanged("AllAccounts");
+                NotifyPropertyChanged(nameof(AllAccounts));
             }
         }
 
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
+        #endregion Modifying Properties
 
         #region Load
 

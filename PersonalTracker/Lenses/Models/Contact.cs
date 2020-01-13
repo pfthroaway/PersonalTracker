@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using PersonalTracker.Models;
+using System;
 
 namespace PersonalTracker.Lenses.Models
 {
     /// <summary>Represents a contact lens.</summary>
-    public class Contact : INotifyPropertyChanged
+    public class Contact : BaseINPC
     {
         private DateTime _date, _replacementDate;
         private Side _side;
@@ -18,8 +18,7 @@ namespace PersonalTracker.Lenses.Models
             set
             {
                 _date = value;
-                OnPropertyChanged("Date");
-                OnPropertyChanged("DateToString");
+                NotifyPropertyChanged(nameof(Date), nameof(DateToString));
             }
         }
 
@@ -30,8 +29,7 @@ namespace PersonalTracker.Lenses.Models
             set
             {
                 _replacementDate = value;
-                OnPropertyChanged("ReplacementDate");
-                OnPropertyChanged("ReplacementDateToString");
+                NotifyPropertyChanged(nameof(ReplacementDate), nameof(ReplacementDateToString));
             }
         }
 
@@ -42,7 +40,7 @@ namespace PersonalTracker.Lenses.Models
             set
             {
                 _side = value;
-                OnPropertyChanged("Side");
+                NotifyPropertyChanged(nameof(Side));
             }
         }
 
@@ -60,17 +58,6 @@ namespace PersonalTracker.Lenses.Models
         public string SideToString => Side.ToString();
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

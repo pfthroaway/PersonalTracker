@@ -9,13 +9,12 @@ using PersonalTracker.Media.Models.MediaTypes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace PersonalTracker.Models
 {
     /// <summary>Represents a User in the Personal Tracker.</summary>
-    public class User : INotifyPropertyChanged, IEquatable<User>
+    public class User : BaseINPC
     {
         #region Fields
 
@@ -37,8 +36,7 @@ namespace PersonalTracker.Models
             set
             {
                 _userID = value;
-                OnPropertyChanged("UserID");
-                OnPropertyChanged("UserIDToString");
+                NotifyPropertyChanged(nameof(UserID), nameof(UserIDToString));
             }
         }
 
@@ -49,7 +47,7 @@ namespace PersonalTracker.Models
             set
             {
                 username = value;
-                OnPropertyChanged("Username");
+                NotifyPropertyChanged(nameof(Username));
             }
         }
 
@@ -60,7 +58,7 @@ namespace PersonalTracker.Models
             set
             {
                 password = value;
-                OnPropertyChanged("Password");
+                NotifyPropertyChanged(nameof(Password));
             }
         }
 
@@ -71,20 +69,9 @@ namespace PersonalTracker.Models
             set
             {
                 _finances = value;
-                OnPropertyChanged("Finances");
+                NotifyPropertyChanged(nameof(Finances));
             }
         }
-
-        ///// <summary>The <see cref="User"/>'s <see cref="ContactLenses"/>.</summary>
-        //public List<Contact> Lenses
-        //{
-        //    get => _lenses;
-        //    set
-        //    {
-        //        _lenses = value;
-        //        OnPropertyChanged("Lenses");
-        //    }
-        //}
 
         /// <summary>The <see cref="User"/>'s <see cref="Media"/>.</summary>
         public AllMedia Media
@@ -93,7 +80,7 @@ namespace PersonalTracker.Models
             set
             {
                 _media = value;
-                OnPropertyChanged("Media");
+                NotifyPropertyChanged(nameof(Media));
             }
         }
 
@@ -111,17 +98,6 @@ namespace PersonalTracker.Models
         public ReadOnlyCollection<Contact> Lenses => new ReadOnlyCollection<Contact>(_lenses);
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Contact Lenses Management
 
@@ -154,7 +130,7 @@ namespace PersonalTracker.Models
         private void UpdateContactLenses()
         {
             _lenses = _lenses.OrderByDescending(contact => contact.Date).ThenBy(contact => contact.SideToString).ToList();
-            OnPropertyChanged("Lenses");
+            NotifyPropertyChanged(nameof(Lenses));
         }
 
         /// <summary>Assigns a collection of <see cref="Contact"/> lenses to a <see cref="User"/>.</summary>
@@ -176,7 +152,7 @@ namespace PersonalTracker.Models
         {
             _vehicles.Add(newVehicle);
             _vehicles = _vehicles.OrderBy(vehicle => vehicle.Nickname).ToList();
-            OnPropertyChanged("Vehicles");
+            NotifyPropertyChanged(nameof(Vehicles));
         }
 
         /// <summary>Modifies a Vehicle in the list of Vehicles.</summary>
@@ -186,7 +162,7 @@ namespace PersonalTracker.Models
         {
             _vehicles.Replace(oldVehicle, newVehicle);
             _vehicles = _vehicles.OrderBy(trans => trans.Nickname).ToList();
-            OnPropertyChanged("Vehicles");
+            NotifyPropertyChanged(nameof(Vehicles));
         }
 
         /// <summary>Removes a Vehicle from the list of vehicles.</summary>
@@ -194,7 +170,7 @@ namespace PersonalTracker.Models
         public void RemoveVehicle(Vehicle vehicle)
         {
             _vehicles.Remove(vehicle);
-            OnPropertyChanged("Vehicles");
+            NotifyPropertyChanged(nameof(Vehicles));
         }
 
         /// <summary>Assigns a collection of <see cref="Vehicle"/>s to a <see cref="User"/>.</summary>

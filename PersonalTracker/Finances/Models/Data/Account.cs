@@ -1,14 +1,14 @@
 ﻿using PersonalTracker.Finances.Models.Enums;
+using PersonalTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace PersonalTracker.Finances.Models.Data
 {
     /// <summary>Represents an account where money is credited/debited.</summary>
-    public class Account : INotifyPropertyChanged
+    public class Account : BaseINPC
     {
         private string _name;
         private AccountTypes _accountType;
@@ -20,14 +20,14 @@ namespace PersonalTracker.Finances.Models.Data
         public string Name
         {
             get => _name;
-            set { _name = value; OnPropertyChanged("Name"); }
+            set { _name = value; NotifyPropertyChanged(nameof(Name)); }
         }
 
         /// <summary>Type of the account</summary>
         public AccountTypes AccountType
         {
             get => _accountType;
-            set { _accountType = value; OnPropertyChanged("AccountType"); }
+            set { _accountType = value; NotifyPropertyChanged(nameof(AccountType)); }
         }
 
         /// <summary>Type of the account, formatted</summary>
@@ -66,17 +66,6 @@ namespace PersonalTracker.Finances.Models.Data
 
         #endregion Helper Properties
 
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
-
         #region Transaction Management
 
         /// <summary>Adds a transaction to this account.</summary>
@@ -85,7 +74,7 @@ namespace PersonalTracker.Finances.Models.Data
         {
             _allTransactions.Add(transaction);
             Sort();
-            OnPropertyChanged("BalanceToStringWithText");
+            NotifyPropertyChanged(nameof(BalanceToStringWithText));
         }
 
         /// <summary>Modifies a transaction in this account.</summary>
@@ -118,11 +107,7 @@ namespace PersonalTracker.Finances.Models.Data
         }
 
         /// <summary>Keeps the Transactions List updated when a Transactions is added/removed/modified.</summary>
-        private void UpdateTransactions()
-        {
-            OnPropertyChanged("Transactions");
-            OnPropertyChanged("BalanceToStringWithText");
-        }
+        private void UpdateTransactions() => NotifyPropertyChanged(nameof(AllTransactions), nameof(BalanceToStringWithText));
 
         #endregion Transaction Management
 

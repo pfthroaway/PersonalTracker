@@ -1,14 +1,14 @@
 ﻿using PersonalTracker.Finances.Models.Data;
+using PersonalTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 
 namespace PersonalTracker.Finances.Models.Sorting
 {
     /// <summary>Represents a month to help determine income and expenses of transactions.</summary>
-    public class Month : INotifyPropertyChanged
+    public class Month : BaseINPC
     {
         private DateTime _monthStart;
         private List<FinancialTransaction> _allTransactions = new List<FinancialTransaction>();
@@ -22,7 +22,7 @@ namespace PersonalTracker.Finances.Models.Sorting
             private set
             {
                 _monthStart = value;
-                OnPropertyChanged("MonthStart");
+                NotifyPropertyChanged(nameof(MonthStart));
             }
         }
 
@@ -61,17 +61,6 @@ namespace PersonalTracker.Finances.Models.Sorting
 
         #endregion Helper Properties
 
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
-
         #region Transaction Management
 
         /// <summary>Adds a transaction to this month.</summary>
@@ -80,7 +69,7 @@ namespace PersonalTracker.Finances.Models.Sorting
         {
             _allTransactions.Add(transaction);
             Sort();
-            OnPropertyChanged("BalanceToStringWithText");
+            NotifyPropertyChanged(nameof(AllTransactions));
         }
 
         /// <summary>Modifies a transaction in this account.</summary>
@@ -93,7 +82,7 @@ namespace PersonalTracker.Finances.Models.Sorting
         public void RemoveTransaction(FinancialTransaction transaction)
         {
             _allTransactions.Remove(transaction);
-            OnPropertyChanged("BalanceToStringWithText");
+            NotifyPropertyChanged(nameof(AllTransactions));
         }
 
         #endregion Transaction Management

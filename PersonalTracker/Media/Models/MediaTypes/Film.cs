@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using PersonalTracker.Models;
+using System;
 
 namespace PersonalTracker.Media.Models.MediaTypes
 {
     /// <summary>Represents a film.</summary>
-    internal class Film : INotifyPropertyChanged
+    internal class Film : BaseINPC
     {
         private string _name;
         private DateTime _released;
@@ -19,7 +19,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _name = value;
-                OnPropertyChanged("Name");
+                NotifyPropertyChanged(nameof(Name));
             }
         }
 
@@ -27,7 +27,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public DateTime Released
         {
             get => _released;
-            set { _released = value; OnPropertyChanged("Released"); }
+            set { _released = value; NotifyPropertyChanged(nameof(Released)); }
         }
 
         /// <summary>Rating for the Film.</summary>
@@ -37,7 +37,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _rating = value;
-                OnPropertyChanged("Rating");
+                NotifyPropertyChanged(nameof(Rating));
             }
         }
 
@@ -49,17 +49,6 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public string ReleasedToString => Released.ToString("yyyy/MM/dd");
 
         #endregion Helper Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Override Operators
 

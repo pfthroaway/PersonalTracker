@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
+﻿using PersonalTracker.Models;
 
 namespace PersonalTracker.Media.Models.MediaTypes
 {
     /// <summary>Represents a book.</summary>
-    internal class Book : INotifyPropertyChanged
+    internal class Book : BaseINPC
     {
         private string _name, _author, _series;
         private decimal _rating;
@@ -18,7 +18,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _name = value;
-                OnPropertyChanged("Name");
+                NotifyPropertyChanged(nameof(Name));
             }
         }
 
@@ -29,7 +29,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _author = value;
-                OnPropertyChanged("Author");
+                NotifyPropertyChanged(nameof(Author));
             }
         }
 
@@ -40,12 +40,16 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _series = value;
-                OnPropertyChanged("Series");
+                NotifyPropertyChanged(nameof(Series));
             }
         }
 
         /// <summary>Rating of the <see cref="Book"/>.</summary>
-        public decimal Rating { get => _rating; set => _rating = value; }
+        public decimal Rating
+        {
+            get => _rating;
+            set { _rating = value; NotifyPropertyChanged(nameof(Rating)); }
+        }
 
         /// <summary>Year the <see cref="Book"/> was released.</summary>
         public int Year
@@ -54,22 +58,11 @@ namespace PersonalTracker.Media.Models.MediaTypes
             set
             {
                 _year = value;
-                OnPropertyChanged("Year");
+                NotifyPropertyChanged(nameof(Year));
             }
         }
 
         #endregion Modifying Properties
-
-        #region Data-Binding
-
-        /// <summary>Event that fires if a Property value has changed so that the UI can properly be updated.</summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>Invokes <see cref="PropertyChangedEventHandler"/> to update the UI when a Property value changes.</summary>
-        /// <param name="property">Name of Property whose value has changed</param>
-        private void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        #endregion Data-Binding
 
         #region Constructors
 

@@ -36,16 +36,17 @@ namespace PersonalTracker.Models
 
         #endregion User
 
+        #region Database Interaction
+
+        private static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
+
+        /// <summary>Handles verification of required files.</summary>
         internal static void FileManagement()
         {
             if (!Directory.Exists(AppData.Location))
                 Directory.CreateDirectory(AppData.Location);
             DatabaseInteraction.VerifyDatabaseIntegrity();
         }
-
-        #region Database Interaction
-
-        private static readonly SQLiteDatabaseInteraction DatabaseInteraction = new SQLiteDatabaseInteraction();
 
         #endregion Database Interaction
 
