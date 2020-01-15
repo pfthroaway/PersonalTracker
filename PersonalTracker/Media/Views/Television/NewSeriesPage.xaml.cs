@@ -70,7 +70,7 @@ namespace PersonalTracker.Media.Views.MediaSeries
 
         #region Click
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e) => ClosePage();
+        private void BtnBack_Click(object sender, RoutedEventArgs e) => AppState.GoBack();
 
         private void BtnReset_Click(object sender, RoutedEventArgs e) => Reset();
 
@@ -83,7 +83,7 @@ namespace PersonalTracker.Media.Views.MediaSeries
         private async void BtnSaveExit_Click(object sender, RoutedEventArgs e)
         {
             await Save();
-            ClosePage();
+            AppState.GoBack();
         }
 
         #endregion Click
@@ -103,9 +103,6 @@ namespace PersonalTracker.Media.Views.MediaSeries
         #endregion GotFocus
 
         #region Page-Manipulation Methods
-
-        /// <summary>Closes the Page.</summary>
-        private void ClosePage() => AppState.GoBack();
 
         /// <summary>Initializes a new instance of NewSeriesPage.</summary>
         public NewSeriesPage()

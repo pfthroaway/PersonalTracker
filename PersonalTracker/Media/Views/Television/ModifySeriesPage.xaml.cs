@@ -29,10 +29,10 @@ namespace PersonalTracker.Media.Views.MediaSeries
             TxtRating.Text = SelectedSeries.Rating.ToString();
             TxtSeasons.Text = SelectedSeries.Seasons.ToString();
             TxtEpisodes.Text = SelectedSeries.Episodes.ToString();
-            CmbStatus.SelectedItem = SelectedSeries.Status.ToString();
+            CmbStatus.Text = SelectedSeries.Status.ToString();
             TxtChannel.Text = SelectedSeries.Channel;
             DateFinale.Text = SelectedSeries.FinaleDateToString;
-            CmbDay.SelectedItem = SelectedSeries.Day.ToString();
+            CmbDay.Text = SelectedSeries.Day.ToString();
             TxtTime.Text = SelectedSeries.TimeToString;
             TxtReturnDate.Text = SelectedSeries.ReturnDate;
         }
@@ -103,17 +103,6 @@ namespace PersonalTracker.Media.Views.MediaSeries
         {
             InitializeComponent();
             TxtName.Focus();
-            CmbStatus.Items.Add("Airing");
-            CmbStatus.Items.Add("Ended");
-            CmbStatus.Items.Add("Hiatus");
-            CmbStatus.Items.Add("Nope");
-            CmbDay.Items.Add("Sunday");
-            CmbDay.Items.Add("Monday");
-            CmbDay.Items.Add("Tuesday");
-            CmbDay.Items.Add("Wednesday");
-            CmbDay.Items.Add("Thursday");
-            CmbDay.Items.Add("Friday");
-            CmbDay.Items.Add("Saturday");
         }
 
         private void ModifySeriesPage_OnLoaded(object sender, RoutedEventArgs e) => Reset();
