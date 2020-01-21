@@ -8,7 +8,6 @@ namespace PersonalTracker.Media.Views
     public partial class MediaPage
     {
         //TODO Implement other types of Media: film, books, and music.
-        //TODO Make Media Tracker more easily navigated.
 
         #region Click
 

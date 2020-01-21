@@ -11,7 +11,7 @@ namespace PersonalTracker.Views
     {
         #region Click
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e) => ClosePage();
+        private void BtnCancel_Click(object sender, RoutedEventArgs e) => AppState.GoBack();
 
         private async void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
@@ -25,7 +25,7 @@ namespace PersonalTracker.Views
                         if (!await AppState.CreateUser(newUser))
                             TxtUsername.Focus();
                         else
-                            ClosePage();
+                            AppState.GoBack();
                     }
                     else
                     {
@@ -49,9 +49,6 @@ namespace PersonalTracker.Views
         #endregion Click
 
         #region Page-Manipulation Methods
-
-        /// <summary>Closes the Page.</summary>
-        private void ClosePage() => AppState.GoBack();
 
         public NewUserPage()
         {
