@@ -6,6 +6,6 @@ namespace PersonalTracker
     public static class AppData
     {
         internal static string Location = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PersonalTracker");
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PF Software", "PersonalTracker");
     }
 }

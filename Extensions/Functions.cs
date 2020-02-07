@@ -291,11 +291,9 @@ namespace Extensions
                 min = lowerLimit;
             if (max > upperLimit)
                 max = upperLimit;
-            int result = min < max
+            return min < max
                 ? ThreadSafeRandom.ThisThreadsRandom.Next(min, max + 1)
                 : ThreadSafeRandom.ThisThreadsRandom.Next(max, min + 1);
-
-            return result;
         }
 
         #endregion Random Number Generation

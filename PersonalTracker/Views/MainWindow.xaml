@@ -11,7 +11,9 @@
         WindowState="Maximized"
         ResizeMode="CanResize"
         SizeToContent="Manual"
-    Loaded="WindowMain_Loaded">
+        MinHeight="600"
+        MinWidth="1032"
+        Loaded="WindowMain_Loaded">
     <Viewbox Stretch="Uniform" Margin="20">
         <Grid>
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Source="LoginPage.xaml" />
