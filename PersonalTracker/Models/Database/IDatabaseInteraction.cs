@@ -48,11 +48,10 @@ namespace PersonalTracker.Models.Database
         /// <returns><see cref="User"/></returns>
         Task<User> LoadUser(string username);
 
-        /// <summary>Modifies a <see cref="User"/>.</summary>
-        /// <param name="oldUser"><see cref="User"/> to be modified</param>
-        /// <param name="newUser"><see cref="User"/></param>
+        /// <summary>Modifies a <see cref="User"/>'s name/password without modifying ID.</summary>
+        /// <param name="modifyUser"><see cref="User"/> to be modified</param>
         /// <returns>True if successful</returns>
-        Task<bool> ModifyUser(User oldUser, User newUser);
+        Task<bool> ModifyUser(User modifyUser);
 
         #endregion User Management
 

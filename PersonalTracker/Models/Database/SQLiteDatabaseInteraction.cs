@@ -129,21 +129,19 @@ namespace PersonalTracker.Models.Database
             return new User(Int32Helper.Parse(ds.Tables[0].Rows[0]["UserID"]), ds.Tables[0].Rows[0]["Username"].ToString(), ds.Tables[0].Rows[0]["Password"].ToString());
         }
 
-        /// <summary>Modifies a <see cref="User"/>.</summary>
-        /// <param name="oldUser"><see cref="User"/> to be modified</param>
-        /// <param name="newUser"><see cref="User"/></param>
+        /// <summary>Modifies a <see cref="User"/>'s name/password without modifying ID.</summary>
+        /// <param name="modifyUser"><see cref="User"/> to be modified</param>
         /// <returns>True if successful</returns>
-        public Task<bool> ModifyUser(User oldUser, User newUser)
+        public Task<bool> ModifyUser(User modifyUser)
         {
             SQLiteCommand cmd = new SQLiteCommand
             {
-                CommandText = "UPDATE Users SET [Username] = @name, [Password] = @password WHERE [Username] = @oldName AND [Password] = @oldPassword"
+                CommandText = "UPDATE Users SET [Username] = @name, [Password] = @password WHERE [UserID] = @id"
             };
 
-            cmd.Parameters.AddWithValue("@name", newUser.Username);
-            cmd.Parameters.AddWithValue("@password", newUser.Password);
-            cmd.Parameters.AddWithValue("@oldName", oldUser.Username);
-            cmd.Parameters.AddWithValue("@oldPassword", oldUser.Password);
+            cmd.Parameters.AddWithValue("@id", modifyUser.UserID);
+            cmd.Parameters.AddWithValue("@name", modifyUser.Username);
+            cmd.Parameters.AddWithValue("@password", modifyUser.Password);
 
             return SQLiteHelper.ExecuteCommand(_con, cmd);
         }
@@ -807,7 +805,7 @@ namespace PersonalTracker.Models.Database
             if (ds.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in ds.Tables[0].Rows)
-                    allBooks.Add(new Book(dr["Name"].ToString(), dr["Author"].ToString(), dr["Series"].ToString(), DecimalHelper.Parse(dr["Rating"]), Int32Helper.Parse(dr["Year"])));
+                    allBooks.Add(new Book(dr["Name"].ToString(), dr["Author"].ToString(), dr["Series"].ToString(), DecimalHelper.Parse(dr["Number"]), DecimalHelper.Parse(dr["Rating"]), Int32Helper.Parse(dr["Year"])));
             }
 
             return allBooks;

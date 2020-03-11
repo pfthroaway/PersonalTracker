@@ -106,11 +106,10 @@ namespace PersonalTracker.Models
         /// <returns><see cref="User"/></returns>
         public static Task<User> LoadUser(string username) => DatabaseInteraction.LoadUser(username);
 
-        /// <summary>Modifies a <see cref="User"/>.</summary>
-        /// <param name="oldUser"><see cref="User"/> to be modified</param>
-        /// <param name="newUser"><see cref="User"/></param>
+        /// <summary>Modifies a <see cref="User"/>'s name/password without modifying ID.</summary>
+        /// <param name="modifyUser"><see cref="User"/> to be modified</param>
         /// <returns>True if successful</returns>
-        public static Task<bool> ModifyUser(User oldUser, User newUser) => DatabaseInteraction.ModifyUser(oldUser, newUser);
+        public static Task<bool> ModifyUser(User modifyUser) => DatabaseInteraction.ModifyUser(modifyUser);
 
         /// <summary>Assigns information about the <see cref="User"/>'s database file in <see cref="AppState"/>.</summary>
         public static void SetUserDatabaseInformation()

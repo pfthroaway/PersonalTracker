@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace ExtensionsCore.DataTypeHelpers
+namespace Extensions.DataTypeHelpers
 {
     /// <summary>Extension class to more easily parse longs.</summary>
     public static class LongHelper

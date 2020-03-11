@@ -6,7 +6,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
     internal class Book : BaseINPC
     {
         private string _name, _author, _series;
-        private decimal _rating;
+        private decimal _number, _rating;
         private int _year;
 
         #region Modifying Properties
@@ -44,6 +44,13 @@ namespace PersonalTracker.Media.Models.MediaTypes
             }
         }
 
+        /// <summary>Number of the <see cref="Book"/> in the series.</summary>
+        public decimal Number
+        {
+            get => _number;
+            set { _number = value; NotifyPropertyChanged(nameof(Number)); }
+        }
+
         /// <summary>Rating of the <see cref="Book"/>.</summary>
         public decimal Rating
         {
@@ -75,20 +82,22 @@ namespace PersonalTracker.Media.Models.MediaTypes
         /// <param name="name">Author of the <see cref="Book"/>.</param>
         /// <param name="author">Author of the <see cref="Book"/>.</param>
         /// <param name="series">Series of the <see cref="Book"/>.</param>
+        /// <param name="number">Number of the <see cref="Book"/> in the series.</param>
         /// <param name="rating">Rating of the <see cref="Book"/>.</param>
         /// <param name="year">Year the <see cref="Book"/> was released.</param>
-        public Book(string name, string author, string series, decimal rating, int year)
+        public Book(string name, string author, string series, decimal number, decimal rating, int year)
         {
             Name = name;
             Author = author;
             Series = series;
+            Number = number;
             Rating = rating;
             Year = year;
         }
 
         /// <summary>Replaces this instance of <see cref="Book"/> with another instance.</summary>
         /// <param name="other">Instance of <see cref="Book"/> to replace this instance</param>
-        public Book(Book other) : this(other.Name, other.Author, other.Series, other.Rating, other.Year)
+        public Book(Book other) : this(other.Name, other.Author, other.Series, other.Number, other.Rating, other.Year)
         {
         }
 

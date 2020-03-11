@@ -69,10 +69,13 @@ namespace Extensions
         /// <param name="newText">Text to be added</param>
         public static void AddTextToTextBox(TextBox tb, string newText)
         {
-            tb.Text = string.IsNullOrWhiteSpace(tb.Text) ? newText : $"{tb.Text}\n\n{newText}";
-            tb.Focus();
-            tb.CaretIndex = tb.Text.Length;
-            tb.ScrollToEnd();
+            if (newText.Trim().Length > 0)
+            {
+                tb.Text = string.IsNullOrWhiteSpace(tb.Text.Trim()) ? newText.Trim() : $"{tb.Text.Trim()}\n\n{newText.Trim()}";
+                tb.Focus();
+                tb.CaretIndex = tb.Text.Length;
+                tb.ScrollToEnd();
+            }
         }
 
         /// <summary>Modifies a ListView to be sortable by a newly clicked column.</summary>
