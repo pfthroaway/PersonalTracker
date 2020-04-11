@@ -37,6 +37,7 @@ namespace PersonalTracker.Media.Views.MediaSeries
             CmbDay.SelectedIndex = -1;
             TxtTime.Text = "";
             TxtReturnDate.Text = "";
+            TxtName.Focus();
         }
 
         /// <summary>Saves the current <see cref="Series"/>.</summary>

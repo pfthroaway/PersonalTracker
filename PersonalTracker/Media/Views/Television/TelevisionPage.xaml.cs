@@ -58,7 +58,7 @@ namespace PersonalTracker.Media.Views.MediaSeries
             else if (RadEnded.IsChecked.Value)
                 RefreshItemsSource(_series = AppState.CurrentUser.Media.AllSeries.ToList().FindAll(series => series.Status == SeriesStatus.Ended).OrderBy(series => series.Name).ToList());
             else if (RadHiatus.IsChecked.Value)
-                RefreshItemsSource(_series = AppState.CurrentUser.Media.AllSeries.ToList().FindAll(series => series.Status == SeriesStatus.Hiatus).OrderBy(series => series.ReturnDateWithText).ThenBy(series => series.Name).ToList());
+                RefreshItemsSource(_series = AppState.CurrentUser.Media.AllSeries.ToList().FindAll(series => series.Status == SeriesStatus.Hiatus).OrderBy(series => series.Name).ToList());
             else if (RadNope.IsChecked.Value)
                 RefreshItemsSource(_series = AppState.CurrentUser.Media.AllSeries.ToList().FindAll(series => series.Status == SeriesStatus.Nope).OrderBy(series => series.Name).ToList());
         }
