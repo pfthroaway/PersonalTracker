@@ -139,7 +139,7 @@ namespace PersonalTracker.Media.Models.MediaTypes
         public string EpisodesToString => Episodes != 0 ? $"Episodes: {Episodes}" : "";
 
         /// <summary>Time the series currently airs, formatted.</summary>
-        public string TimeToString => (!string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing) || Status == SeriesStatus.Hiatus ? Time.ToString("hh:mm tt") : "";
+        public string TimeToString => !string.IsNullOrEmpty(Name) && Time.TimeOfDay.TotalMinutes != 0 ? Time.ToString("h:mm tt") : "";
 
         /// <summary>Day of week, formatted.</summary>
         public string DayToString => (!string.IsNullOrEmpty(Name) && Status == SeriesStatus.Airing) || Status == SeriesStatus.Hiatus ? Day.ToString() : "";
