@@ -726,7 +726,7 @@ namespace PersonalTracker.Models.Database
         /// <returns>Returns true if deletion is successful.</returns>
         public Task<bool> DeleteVehicle(Vehicle deleteVehicle)
         {
-            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM FuelTransactions WHERE [VehicleID] = @vehicleID, DELETE FROM Vehicles WHERE [VehicleID] = @vehicleID" };
+            SQLiteCommand cmd = new SQLiteCommand { CommandText = "DELETE FROM FuelTransactions WHERE [VehicleID] = @vehicleID; DELETE FROM Vehicles WHERE [VehicleID] = @vehicleID" };
             cmd.Parameters.AddWithValue("@vehicleID", deleteVehicle.VehicleID);
 
             return SQLiteHelper.ExecuteCommand(AppState.CurrentUserConnection, cmd);
